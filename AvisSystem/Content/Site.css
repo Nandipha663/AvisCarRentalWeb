@@ -1,0 +1,2118 @@
+﻿/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    margin-top: 25px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/*Avis Logo */
+.navbar-brand.avis-logo {
+    color: #FFFFFF !important;
+    font-size: 50px;
+    font-weight: 900;
+}
+
+
+.red-line {
+    border: none;
+    border-top: 20px solid #c8102e;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set widths on the form inputs since otherwise they're 100% wide */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="select"] {
+    max-width: 280px;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+    .body-content {
+        padding: 0;
+    }
+}
+
+/*Login Page */
+/* LOGIN PAGE */
+
+.login-page {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+    background-color: red !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    box-sizing: border-box;
+}
+
+.login-card {
+    width: 420px;
+    background: rgba(255, 255, 255, 0.96);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+}
+
+.login-logo {
+    text-align: center;
+    font-size: 42px;
+    font-weight: bold;
+    color: #c8102e;
+    margin-bottom: 10px;
+}
+
+.login-card h2 {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.login-subtitle {
+    text-align: center;
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.login-card label {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.login-card .form-control {
+    height: 45px;
+    border-radius: 7px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.login-button {
+    width: 100%;
+    background-color: #c8102e;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 7px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+    .login-button:hover {
+        background-color: #a80e24;
+    }
+
+.register-link {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.register-link a {
+    color: #c8102e;
+    font-weight: bold;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+ .register-link a:hover {
+     text-decoration: underline;
+ }
+
+/* =========================
+   REGISTRATION PAGE
+   ========================= */
+
+.register-page {
+    min-height: 100vh;
+    background-image: url('/Content/images/AvisBackgroungImage.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+
+/* MAIN CARD */
+
+.register-card {
+    width: 900px;
+    max-width: 100%;
+    min-height: 560px;
+    display: flex;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+
+
+/* =========================
+   LEFT SIDE
+   ========================= */
+
+.register-left {
+    width: 35%;
+    background: #c8102e;
+    color: white;
+    padding: 50px 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.register-logo {
+    font-size: 42px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    margin-bottom: 35px;
+}
+
+
+.register-left h2 {
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+
+.register-left p {
+    font-size: 15px;
+    line-height: 1.7;
+    opacity: 0.95;
+}
+
+
+.register-info {
+    margin-top: 40px;
+    font-size: 13px;
+    opacity: 0.85;
+}
+
+
+/* =========================
+   RIGHT SIDE
+   ========================= */
+
+.register-right {
+    width: 65%;
+    padding: 40px 45px;
+}
+
+
+    .register-right h2 {
+        margin: 0;
+        font-size: 28px;
+        color: #222;
+    }
+
+
+.register-subtitle {
+    color: #777;
+    margin-top: 5px;
+    margin-bottom: 25px;
+}
+
+
+/* =========================
+   FORM ROWS
+   ========================= */
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+
+.form-group {
+    flex: 1;
+}
+
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 6px;
+        color: #333;
+    }
+
+
+.form-control {
+    width: 100%;
+    height: 42px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+
+    .form-control:focus {
+        border-color: #c8102e;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(200,16,46,0.1);
+    }
+
+
+.text-danger {
+    display: block;
+    font-size: 12px;
+    margin-top: 4px;
+    color: #dc3545;
+}
+
+
+/* =========================
+   TERMS
+   ========================= */
+
+.terms {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #666;
+}
+
+
+    .terms input {
+        margin-right: 6px;
+    }
+
+
+.terms-link {
+    color: #c8102e;
+    text-decoration: none;
+}
+
+
+    .terms-link:hover {
+        text-decoration: underline;
+    }
+
+
+/* =========================
+   BUTTONS
+   ========================= */
+
+.register-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+
+.cancel-button,
+.signup-button {
+    height: 42px;
+    padding: 0 25px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+.cancel-button {
+    background: white;
+    color: #555;
+    border: 1px solid #ccc;
+}
+
+
+    .cancel-button:hover {
+        background: #f5f5f5;
+    }
+
+
+.signup-button {
+    background: #c8102e;
+    color: white;
+    border: none;
+}
+
+
+    .signup-button:hover {
+        background: #a80d27;
+    }
+
+
+/* =========================
+   LOGIN LINK
+   ========================= */
+
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    color: #777;
+}
+
+
+    .login-link a {
+        color: #c8102e;
+        font-weight: 600;
+        text-decoration: none;
+        margin-left: 5px;
+    }
+
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 768px) {
+
+    .register-card {
+        flex-direction: column;
+    }
+
+    .register-left {
+        width: 100%;
+        padding: 30px;
+    }
+
+    .register-right {
+        width: 100%;
+        padding: 30px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* Background of dropdown menu */
+
+}
+
+    /* ==============================
+   CONTACT PAGE
+   ============================== */
+
+    .contact-page {
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px 20px 60px 20px;
+        box-sizing: border-box;
+    }
+
+/* =========================================
+   AVIS LOCATION MAP
+   ========================================= */
+
+.contact-map-container {
+    width: 100%;
+    height: 500px;
+    margin-top: 25px;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid #dddddd;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+}
+
+#avisMap {
+    width: 100%;
+    height: 500px !important;
+    min-height: 500px;
+    display: block;
+}
+
+
+/* =========================================
+   RED AVIS MARKER
+   ========================================= */
+
+.avis-red-marker {
+    background: transparent !important;
+    border: none !important;
+}
+
+.red-dot {
+    width: 18px;
+    height: 18px;
+    background: #c8102e;
+    border: 3px solid white;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+    /* ==============================
+   MAIN HEADING
+   ============================== */
+
+    .contact-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+        .contact-header h1 {
+            font-size: 50px;
+            font-weight: 800;
+            color: #000000;
+            margin: 0 0 12px 0;
+        }
+
+        .contact-header p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 17px;
+            color: #666666;
+            line-height: 1.6;
+        }
+
+
+    /* ==============================
+   FOUR MAIN CONTACT CARDS
+   ============================== */
+
+    .contact-section {
+        width: 100%;
+        box-sizing: border-box;
+        background-color: #ffffff;
+        border: 1px solid #dddddd;
+        border-radius: 10px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    }
+
+
+    /* ==============================
+   SECTION HEADINGS
+   ============================== */
+
+    .section-title {
+        margin-bottom: 20px;
+    }
+
+        .section-title h2 {
+            margin: 0 0 7px 0;
+            font-size: 28px;
+            font-weight: 700;
+            /* RED */
+            color: #c8102e;
+        }
+
+        .section-title p {
+            margin: 0;
+            color: #666666;
+        }
+
+
+    /* ==============================
+   OPTIONS INSIDE EACH CARD
+   ============================== */
+
+    .contact-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+
+    /* SMALLER OPTION BOXES */
+
+    .contact-card {
+        flex: 1 1 250px;
+        min-width: 0;
+        padding: 20px;
+        background-color: #f8f8f8;
+        border: 1px solid #e1e1e1;
+        border-radius: 7px;
+        box-sizing: border-box;
+    }
+
+
+        .contact-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 19px;
+            font-weight: 600;
+            color: #222222;
+        }
+
+
+        .contact-card p {
+            margin-bottom: 12px;
+            color: #666666;
+            line-height: 1.5;
+        }
+
+
+        .contact-card a {
+            color: #c8102e;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+            .contact-card a:hover {
+                text-decoration: underline;
+            }
+
+
+    /* ==============================
+   OTHER ENQUIRIES CARD
+   ============================== */
+
+    .general-contact {
+        width: 100%;
+        box-sizing: border-box;
+        background-color: #ffffff;
+        border: 1px solid #dddddd;
+        border-radius: 10px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        text-align: center;
+    }
+
+
+        .general-contact h2 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+            font-weight: 700;
+            /* RED */
+            color: #c8102e;
+        }
+
+
+        .general-contact p {
+            color: #666666;
+        }
+
+
+        .general-contact a {
+            color: #c8102e;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+
+    /* ==============================
+   MOBILE / SMALL SCREENS
+   ============================== */
+
+    @media (max-width: 768px) {
+
+        .contact-page {
+            padding: 30px 15px 50px 15px;
+        }
+
+        .contact-header h1 {
+            font-size: 38px;
+        }
+
+        .contact-header p {
+            font-size: 16px;
+        }
+
+        .contact-section {
+            padding: 20px;
+        }
+
+        .section-title h2 {
+            font-size: 25px;
+        }
+
+        .contact-cards {
+            flex-direction: column;
+        }
+
+        .contact-card {
+            width: 100%;
+        }
+    }
+
+    /* =========================
+   FOOTER
+   ========================= */
+
+    .site-footer {
+        margin-top: 50px;
+        padding: 25px 0;
+        border-top: 1px solid #ddd;
+        background-color: #ffffff;
+    }
+
+    .footer-content {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 0 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+    /* LEFT SIDE */
+
+    .footer-left p {
+        margin: 0;
+        color: #666;
+    }
+
+
+    /* RIGHT SIDE */
+
+    .footer-right {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
+
+        .footer-right a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 10px;
+        }
+
+            .footer-right a:hover {
+                color: #c8102e;
+                text-decoration: underline;
+            }
+
+
+    /* MOBILE */
+
+    @media (max-width: 768px) {
+
+        .footer-content {
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+    }
+
+
+/* ==========================================
+   FLEET PAGE
+   ========================================== */
+
+.fleet-page {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+
+/* ==========================================
+   PAGE HEADING
+   ========================================== */
+
+.fleet-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+    .fleet-heading h1 {
+        margin: 0 0 10px 0;
+        font-size: 42px;
+        font-weight: 700;
+        color: #000000;
+    }
+
+    .fleet-heading p {
+        margin: 0;
+        font-size: 17px;
+        color: #666666;
+    }
+
+
+/* ==========================================
+   VEHICLE CARD
+   ========================================== */
+
+.fleet-card {
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-sizing: border-box;
+    /* Same type of card effect as login/register */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+
+/* ==========================================
+   CATEGORY + EXAMPLE
+   ========================================== */
+
+.fleet-card-heading {
+    margin-bottom: 25px;
+}
+
+    .fleet-card-heading h2 {
+        margin: 0 0 6px 0;
+        color: #000000;
+        font-size: 30px;
+        font-weight: 800;
+    }
+
+    .fleet-card-heading h3 {
+        margin: 0;
+        color: #c8102e;
+        font-size: 19px;
+        font-weight: 600;
+    }
+
+
+/* ==========================================
+   IMAGE + DESCRIPTION
+   ========================================== */
+
+.fleet-details {
+    display: flex;
+    width: 100%;
+    gap: 30px;
+    align-items: stretch;
+}
+
+
+/* ==========================================
+   IMAGE
+   ========================================== */
+
+.fleet-image {
+    width: 45%;
+    height: 250px;
+    background-color: #f8f8f8;
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+    .fleet-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+    }
+
+
+/* ==========================================
+   DESCRIPTION
+   ========================================== */
+
+.fleet-description {
+    flex: 1;
+    background-color: #f8f8f8;
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+    padding: 25px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+    .fleet-description p {
+        margin: 0;
+        color: #555555;
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+
+/* ==========================================
+   BOOK NOW BUTTON
+   ========================================== */
+
+.fleet-booking-top {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.fleet-booking-bottom {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.fleet-book-button {
+    display: inline-block;
+    background-color: #c8102e;
+    color: white !important;
+    padding: 12px 45px;
+    border-radius: 6px;
+    font-size: 17px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+    .fleet-book-button:hover {
+        background-color: #a80d26;
+        color: white !important;
+        text-decoration: none;
+    }
+
+
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media (max-width: 768px) {
+
+    .fleet-page {
+        padding: 30px 15px;
+    }
+
+    .fleet-heading h1 {
+        font-size: 34px;
+    }
+
+    .fleet-card {
+        padding: 20px;
+    }
+
+    .fleet-details {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .fleet-image {
+        width: 100%;
+        height: 250px;
+    }
+
+    .fleet-description {
+        width: 100%;
+    }
+}
+
+
+/* ==========================================
+   CUSTOMER BOOKING PAGE
+   ========================================== */
+
+.booking-page {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 45px 20px 60px 20px;
+    box-sizing: border-box;
+}
+
+
+/* ==========================================
+   HEADING
+   ========================================== */
+
+.booking-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+    .booking-heading h1 {
+        margin: 0 0 10px 0;
+        color: #000000;
+        font-size: 40px;
+        font-weight: 800;
+    }
+
+    .booking-heading p {
+        margin: 0;
+        color: #666666;
+        font-size: 18px;
+    }
+
+
+/* ==========================================
+   MAIN BOOKING CARD
+   ========================================== */
+
+.booking-card {
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 15px;
+    padding: 35px;
+    box-sizing: border-box;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    margin-bottom: 55px;
+}
+
+
+/* ==========================================
+   BOOKING SECTIONS
+   ========================================== */
+
+.booking-section {
+    margin-bottom: 25px;
+}
+
+.booking-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #222222;
+}
+
+    .booking-label i {
+        color: #c8102e;
+        margin-right: 8px;
+    }
+
+
+/* ==========================================
+   DROPDOWN
+   ========================================== */
+
+.booking-dropdown {
+    width: 100%;
+    height: 48px;
+    padding: 8px 14px;
+    border: 1px solid #cccccc;
+    border-radius: 7px;
+    background-color: #ffffff;
+    font-size: 16px;
+    color: #333333;
+    box-sizing: border-box;
+}
+
+    .booking-dropdown:focus {
+        outline: none;
+        border-color: #c8102e;
+        box-shadow: 0 0 0 2px rgba(200, 16, 46, 0.1);
+    }
+
+
+/* ==========================================
+   DIFFERENT LOCATION CHECKBOX
+   ========================================== */
+
+.different-location {
+    margin-bottom: 25px;
+}
+
+.different-checkbox {
+    font-size: 15px;
+    color: #555555;
+}
+
+    .different-checkbox input {
+        margin-right: 8px;
+    }
+
+
+/* ==========================================
+   RETURN LOCATION
+   ========================================== */
+
+.return-location {
+    display: none;
+}
+
+
+/* ==========================================
+   DATE + TIME
+   ========================================== */
+
+.booking-date-time {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.date-time-column {
+    flex: 1;
+}
+
+    .date-time-column h3 {
+        margin: 0 0 12px 0;
+        color: #222222;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+
+/* ==========================================
+   DATE / TIME INPUTS
+   ========================================== */
+
+.input-with-icon {
+    position: relative;
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+    .input-with-icon i {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #c8102e;
+        font-size: 17px;
+        z-index: 2;
+    }
+
+.booking-input {
+    width: 100%;
+    height: 48px;
+    padding: 8px 12px 8px 43px;
+    border: 1px solid #cccccc;
+    border-radius: 7px;
+    font-size: 15px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+
+    .booking-input:focus {
+        outline: none;
+        border-color: #c8102e;
+        box-shadow: 0 0 0 2px rgba(200, 16, 46, 0.1);
+    }
+
+
+/* ==========================================
+   SEARCH BUTTON
+   ========================================== */
+
+.search-button-container {
+    width: 100%;
+    margin-top: 10px;
+}
+
+
+/* ==========================================
+   ERROR HANDLING MESSAGE
+   ========================================== */
+
+.input-error {
+    border: 2px solid red !important;
+    background-color: #fff0f0 !important;
+}
+
+.validation-message {
+    display: block;
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.search-vehicles-button {
+    width: 100%;
+    height: 52px;
+    background-color: #c8102e;
+    color: #ffffff;
+    border: none;
+    border-radius: 7px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+    .search-vehicles-button:hover {
+        background-color: #a80d26;
+    }
+
+
+/* ==========================================
+   BENEFITS
+   ========================================== */
+
+.booking-benefits {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 55px;
+}
+
+.benefit-item {
+    flex: 1;
+    text-align: center;
+}
+
+.benefit-icon {
+    width: 55px;
+    height: 55px;
+    margin: 0 auto 15px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #c8102e;
+    color: #ffffff;
+    font-size: 22px;
+}
+
+.benefit-item h2 {
+    margin: 0 0 8px 0;
+    color: #222222;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.benefit-item p {
+    margin: 0;
+    color: #666666;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* ==========================================
+   WIDE BANNER IMAGE
+   ========================================== */
+
+.booking-banner {
+    width: 110%;
+    height: 600px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    margin-left: -5%;
+}
+
+    .booking-banner img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media (max-width: 768px) {
+
+    .booking-page {
+        padding: 30px 15px;
+    }
+
+    .booking-heading h1 {
+        font-size: 32px;
+    }
+
+    .booking-heading p {
+        font-size: 16px;
+    }
+
+    .booking-card {
+        padding: 25px 20px;
+    }
+
+    .booking-date-time {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .booking-benefits {
+        flex-direction: column;
+        gap: 35px;
+    }
+
+    .booking-banner {
+        height: 220px;
+    }
+}
+
+
+
+/* =========================================
+   CHOOSE VEHICLE PAGE
+   ========================================= */
+
+.vehicle-page {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px 60px 20px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   HEADING
+   ========================================= */
+
+.vehicle-heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+    .vehicle-heading h1 {
+        margin: 0 0 8px 0;
+        font-size: 42px;
+        font-weight: 800;
+        color: #000000;
+    }
+
+.vehicle-subtitle {
+    margin: 0;
+    font-size: 17px;
+    color: #666666;
+}
+
+
+/* =========================================
+   BOOKING SUMMARY
+   ========================================= */
+
+.booking-summary {
+    display: flex;
+    gap: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 22px 25px;
+    margin-bottom: 35px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+    border: 1px solid #dddddd;
+}
+
+
+.summary-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+    .summary-item i {
+        font-size: 24px;
+        color: #c8102e;
+    }
+
+
+    .summary-item span {
+        display: block;
+        font-size: 13px;
+        color: #777777;
+        margin-bottom: 3px;
+    }
+
+
+    .summary-item strong {
+        display: block;
+        font-size: 15px;
+        color: #222222;
+    }
+
+
+/* =========================================
+   CATEGORY CARD
+   ========================================= */
+
+.vehicle-category {
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 14px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.10);
+}
+
+
+/* =========================================
+   CATEGORY HEADER
+   ========================================= */
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+    .category-header h2 {
+        margin: 0 0 5px 0;
+        font-size: 28px;
+        font-weight: 800;
+        color: #000000;
+    }
+
+
+    .category-header h3 {
+        margin: 0;
+        font-size: 17px;
+        font-weight: 600;
+        color: #c8102e;
+    }
+
+
+/* =========================================
+   VIEW MORE BUTTON
+   ========================================= */
+
+.details-button {
+    background: white;
+    color: #c8102e;
+    border: 2px solid #c8102e;
+    border-radius: 6px;
+    padding: 9px 18px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+    .details-button:hover {
+        background: #c8102e;
+        color: white;
+    }
+
+
+/* =========================================
+   VEHICLE LIST
+   ========================================= */
+
+.vehicle-list {
+    margin-top: 25px;
+}
+
+
+/* =========================================
+   INDIVIDUAL VEHICLE
+   ========================================= */
+
+.vehicle-card {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    padding: 20px;
+    background: #f8f8f8;
+    border: 1px solid #e2e2e2;
+    border-radius: 10px;
+}
+
+
+/* =========================================
+   VEHICLE IMAGE
+   ========================================= */
+
+.vehicle-image {
+    width: 250px;
+    height: 160px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+
+    .vehicle-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+
+/* =========================================
+   VEHICLE INFORMATION
+   ========================================= */
+
+.vehicle-info {
+    flex: 1;
+}
+
+
+    .vehicle-info h3 {
+        margin: 0 0 5px 0;
+        font-size: 22px;
+        font-weight: 700;
+        color: #222222;
+    }
+
+
+.vehicle-category-name {
+    color: #c8102e;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+
+.vehicle-features {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+
+    .vehicle-features span {
+        font-size: 13px;
+        color: #555555;
+    }
+
+
+    .vehicle-features i {
+        color: #c8102e;
+        margin-right: 4px;
+    }
+
+
+/* =========================================
+   PRICE
+   ========================================= */
+
+.vehicle-price {
+    text-align: center;
+    min-width: 130px;
+}
+
+
+    .vehicle-price strong {
+        display: block;
+        font-size: 22px;
+        font-weight: 800;
+        color: #c8102e;
+        margin-bottom: 12px;
+    }
+
+
+/* =========================================
+   SELECT BUTTON
+   ========================================= */
+
+.select-vehicle-button {
+    background: #c8102e;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 25px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+
+    .select-vehicle-button:hover {
+        background: #a80d27;
+    }
+
+
+/* =========================================
+   TOTAL AMOUNT AND PAYMENT BUTTONS
+   ========================================= */
+
+.booking-total-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 14px;
+    padding: 25px 30px;
+    margin-top: 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.10);
+}
+
+
+/* TOTAL AMOUNT */
+
+.total-amount {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+    .total-amount span {
+        font-size: 20px;
+        font-weight: 700;
+        color: #222222;
+    }
+
+    .total-amount label {
+        font-size: 24px;
+        font-weight: 800;
+        color: #c8102e;
+    }
+
+
+/* PAYMENT BUTTONS */
+
+.payment-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+
+/* PAY NOW */
+
+.pay-now-button {
+    background: #c8102e;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 28px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+    .pay-now-button:hover {
+        background: #a80d27;
+        transform: translateY(-1px);
+    }
+
+
+/* PAY LATER */
+
+.pay-later-button {
+    background: white;
+    color: #c8102e;
+    border: 2px solid #c8102e;
+    border-radius: 6px;
+    padding: 10px 28px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+    .pay-later-button:hover {
+        background: #c8102e;
+        color: white;
+    }
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    .vehicle-heading h1 {
+        font-size: 34px;
+    }
+
+
+    .booking-summary {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+
+    .category-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+
+    .vehicle-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+
+    .vehicle-image {
+        width: 100%;
+        height: 220px;
+    }
+
+
+    .vehicle-price {
+        text-align: left;
+    }
+
+    .booking-total-section {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+
+    .total-amount {
+        justify-content: space-between;
+    }
+
+    .payment-buttons {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .pay-now-button,
+    .pay-later-button {
+        width: 100%;
+    }
+}
+
+/* =========================================
+   PAYMENT PAGE
+   ========================================= */
+
+.payment-card h2 {
+    color: #c8102e;
+}
+
+.payment-page {
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding-bottom: 50px;
+}
+
+    .payment-page > h3 {
+        text-align: center;
+        color: #000000;
+        font-weight: 700;
+        font-size: 24px;
+        margin-bottom: 8px;
+    }
+
+    .payment-page > h1 {
+        text-align: center;
+        font-size: 18px;
+        font-weight: 400;
+        color: #666666;
+        margin-top: 0;
+        margin-bottom: 35px;
+    }
+
+
+/* =========================================
+   GENERAL CARD
+   ========================================= */
+
+.payment-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 30px 35px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.10);
+    border: 1px solid #eeeeee;
+}
+
+    .payment-card h2 {
+        margin: 0 0 8px 0;
+        font-size: 24px;
+        font-weight: 700;
+        color: #222222;
+    }
+
+.card-description {
+    color: #777777;
+    font-size: 14px;
+    margin-bottom: 28px;
+}
+
+
+/* =========================================
+   BOOKING SUMMARY
+   ========================================= */
+
+.booking-content {
+    display: flex;
+    gap: 30px;
+    align-items: stretch;
+}
+
+
+/* VEHICLE IMAGE */
+
+.vehicle-image-container {
+    width: 300px;
+    min-width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f7f7f7;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.selected-vehicle-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+
+/* BOOKING INFORMATION */
+
+
+
+.booking-information {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px 30px;
+}
+
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+
+    .summary-item i {
+        font-size: 22px;
+        color: #c8102e;
+        width: 30px;
+        text-align: center;
+    }
+
+
+    .summary-item span {
+        display: block;
+        font-size: 13px;
+        color: #777777;
+        margin-bottom: 5px;
+    }
+
+
+    .summary-item strong {
+        display: block;
+        font-size: 15px;
+        color: #222222;
+    }
+
+
+/* =========================================
+   PERSONAL DETAILS
+   ========================================= */
+
+.details-form {
+    width: 100%;
+}
+
+
+.form-group {
+    width: 100%;
+    margin-bottom: 24px;
+}
+
+
+    .form-group label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #333333;
+        margin-bottom: 9px;
+    }
+
+
+    .form-group input {
+        width: 100%;
+        box-sizing: border-box;
+        height: 55px;
+        padding: 0 18px;
+        border: 1px solid #dddddd;
+        border-radius: 12px;
+        background: #fafafa;
+        font-size: 15px;
+        color: #222222;
+        outline: none;
+        transition: all 0.2s ease;
+    }
+
+
+        .form-group input:focus {
+            border-color: #c8102e;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.10);
+        }
+
+
+        .form-group input::placeholder {
+            color: #aaaaaa;
+        }
+
+/* =========================================
+   FORM SECTION HEADINGS
+   ========================================= */
+
+.form-section-title {
+    margin-top: 32px;
+    margin-bottom: 22px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+    .form-section-title h3 {
+        margin: 0 0 5px 0;
+        font-size: 18px;
+        font-weight: 700;
+        color: #222222;
+    }
+
+    .form-section-title p {
+        margin: 0;
+        font-size: 13px;
+        color: #777777;
+    }
+
+
+/* =========================================
+   PAYMENT METHODS
+   ========================================= */
+
+.payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+
+.payment-option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 17px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+
+    .payment-option:hover {
+        border-color: #c8102e;
+        background: #fff8f9;
+    }
+
+
+    .payment-option input {
+        position: absolute;
+        opacity: 0;
+    }
+
+
+/* CUSTOM CIRCLE */
+
+.radio-circle {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #bbbbbb;
+    border-radius: 50%;
+    position: relative;
+}
+
+
+.payment-option input:checked + .radio-circle {
+    border-color: #c8102e;
+}
+
+
+    .payment-option input:checked + .radio-circle::after {
+        content: "";
+        width: 10px;
+        height: 10px;
+        background: #c8102e;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+
+.payment-option span:last-child {
+    font-size: 15px;
+    font-weight: 600;
+    color: #333333;
+}
+
+
+.payment-option i {
+    color: #c8102e;
+    margin-right: 6px;
+}
+
+
+/* =========================================
+   PAYMENT INFORMATION BOX
+   ========================================= */
+
+.payment-method-box {
+    display: none;
+    background: #fafafa;
+    border: 1px solid #e2e2e2;
+    border-radius: 14px;
+    padding: 25px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+
+    .payment-method-box h3 {
+        margin: 0 0 22px 0;
+        font-size: 18px;
+        color: #222222;
+    }
+
+
+/* =========================================
+   CARD PAYMENT ROW
+   ========================================= */
+
+.payment-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+
+/* =========================================
+   EFT DETAILS
+   ========================================= */
+
+.bank-details {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #eeeeee;
+}
+
+
+    .bank-details div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 13px 0;
+        border-bottom: 1px solid #eeeeee;
+    }
+
+
+        .bank-details div:last-child {
+            border-bottom: none;
+        }
+
+
+    .bank-details span {
+        color: #777777;
+        font-size: 14px;
+    }
+
+
+    .bank-details strong {
+        color: #222222;
+        font-size: 14px;
+    }
+
+
+.eft-note {
+    margin-top: 18px;
+    font-size: 13px;
+    color: #777777;
+}
+
+
+/* =========================================
+   CASH
+   ========================================= */
+
+.amount-due {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 22px;
+    border: 1px solid #eeeeee;
+}
+
+
+    .amount-due span {
+        color: #777777;
+        font-size: 15px;
+    }
+
+
+    .amount-due strong {
+        font-size: 22px;
+        color: #c8102e;
+    }
+
+
+/* =========================================
+   CONFIRM PAYMENT BUTTON
+   ========================================= */
+
+.confirm-payment-btn {
+    width: 100%;
+    height: 58px;
+    border: none;
+    border-radius: 12px;
+    background: #ff0000;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.2s ease;
+}
+
+
+    .confirm-payment-btn:hover {
+        background: #d90000;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 15px rgba(255, 0, 0, 0.25);
+    }
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    .payment-page {
+        width: 94%;
+    }
+
+    .payment-card {
+        padding: 25px 20px;
+    }
+
+    .booking-content {
+        flex-direction: column;
+    }
+
+    .vehicle-image-container {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .booking-information {
+        grid-template-columns: 1fr;
+    }
+
+    .payment-row {
+        grid-template-columns: 1fr;
+    }
+}

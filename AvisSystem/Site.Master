@@ -1,0 +1,270 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="AvisSystem.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - Avis Car Rental</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>  
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+
+       <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+            <div class="container">
+                <a class="navbar-brand avis-logo" runat="server" href="~/">AVIS</a>
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                       <asp:LoginView runat="server">
+
+    <AnonymousTemplate>
+
+        <li class="nav-item">
+            <a class="nav-link" runat="server" href="~/">
+                Home
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" runat="server" href="~/CustomerPages/MakeBooking.aspx">
+                Make Booking
+            </a>
+        </li>
+
+    </AnonymousTemplate>
+
+</asp:LoginView>
+
+                        <!-- LOGGED-IN MENU -->
+                 <asp:LoginView runat="server">
+                       <LoggedInTemplate>
+
+                           <!-- Dashboard -->
+    <li class="nav-item">
+        <a class="nav-link" runat="server" href="~/AvisPages/Dashboard.aspx">
+            Dashboard
+        </a>
+    </li>
+
+                        <!--BOOKINGS DROPDOWN-->
+                       <li class="nav-item dropdown">
+   <a class="nav-link dropdown-toggle"  href="#"  id="bookingsBtn">Bookings<span class="caret"></span> </a> 
+     <ul class="dropdown-menu"  id="bookingsMenu">  
+       <li><a class="dropdown-item" href="/AvisPages/UpdateBookings">Update Bookings</a></li>
+      </ul>
+</li>
+
+                              <!--RENTAL DROPDOWN-->
+                    <li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle"  href="#"  id="rentalBtn">Rental<span class="caret"></span> </a> 
+  <ul class="dropdown-menu"  id="rentalMenu">  
+   <li><a class="dropdown-item" href="/AvisPages/AddRental">Add Rental Agreement</a></li>
+    <li><a class="dropdown-item" href="/AvisPages/UpdateRentals">Update Existing Rentals</a></li>
+    </ul>
+  </li>
+
+                                       <!--INSPECTION REPORTSs DROPDOWN-->
+                    <li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle" href="#"  id="inspectionReportsBtn">Inspection Reports<span class="caret"></span> </a> 
+  <ul class="dropdown-menu"  id="inspectionReportsMenu">  
+   <li><a class="dropdown-item" href="/AvisPages/AddInspectionReport">Add Inspection Report</a></li>
+   <li><a class="dropdown-item" href="/AvisPages/ViewVehicleInspectionReports">View Inspection Reports</a></li> 
+    </ul>
+  </li>
+
+                                       <!--VEHICLE RETURN DROPDOWN-->
+                    <li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle" href="#"  id="vehicleReturnBtn">Vehicle Return<span class="caret"></span> </a> 
+  <ul class="dropdown-menu"  id="vehicleReturnMenu">  
+   <li><a class="dropdown-item" href="/AvisPages/AddVehicleReturn">Add Vehicle_Return</a></li>
+    <li><a class="dropdown-item" href="/AvisPages/UpdateVehicleReturn">Update Vehicle_Return</a></li>
+    </ul>
+  </li>
+
+                                                               <!--PAYMENT DROPDOWN-->
+                    <li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle"  href="#" id="paymentBtn" >Payments<span class="caret"></span> </a> 
+  <ul class="dropdown-menu" id="paymentMenu">  
+    <li><a class="dropdown-item" href="/AvisPages/AddPayment">Add Payments</a></li>
+    <li><a class="dropdown-item" href="/AvisPages/ViewPayments">View Payments</a></li>
+    </ul>
+ </li>
+
+                                                               <!-- CLAIMS DROPDOWN-->
+                    <li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle" href="#"  id="ClaimsBtn">Claims<span class="caret"></span> </a> 
+  <ul class="dropdown-menu"  id="ClaimsMenu">  
+   <li><a class="dropdown-item" href="/AvisPages/AddClaim">Add a Claim</a></li>
+    <li><a class="dropdown-item" href="/AvisPages/ViewClaims">View Claims</a></li>
+    </ul>
+  </li>
+
+                                            <!-- BRANCH DROPDOWN-->
+                    <li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle"  href="#" id="branchBtn" >Branches<span class="caret"></span> </a> 
+  <ul class="dropdown-menu" id="branchMenu">  
+    <li><a class="dropdown-item" href="/AvisPages/ViewBranches">View Branches</a></li>
+    </ul>
+  </li>
+
+               </LoggedInTemplate>
+                             </asp:LoginView>
+                    </ul>
+                    <asp:LoginView runat="server" ViewStateMode="Disabled">
+                        <AnonymousTemplate>
+                            <ul class="navbar-nav navbar-right">
+                               <!-- <li><a runat="server" class="nav-link" href="~/Account/Register">Register</a></li> -->
+                                <li><a runat="server" class="nav-link" href="~/Account/Login"><i class="fa-solid fa-user"></i>Sign Up</a></li>
+                            </ul>
+                        </AnonymousTemplate>
+                        <LoggedInTemplate>
+                            <ul class="navbar-nav navbar-right">
+                                <li><a runat="server" class="nav-link" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> !</a></li>
+                                <li>
+                                    <asp:LoginStatus runat="server" CssClass="nav-link" LogoutAction="Redirect" LogoutText="Log out" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
+                                </li>
+                            </ul>
+                        </LoggedInTemplate>
+                    </asp:LoginView>
+                </div>
+            </div>
+        </nav>
+        <div class="container body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr />
+
+            <!--FOOTER-->
+           <footer class="site-footer">
+
+    <div class="footer-content">
+
+        <!-- LEFT SIDE -->
+        <!-- <div class="footer-left">
+            <p>
+                &copy; <%: DateTime.Now.Year %> - Avis Car Rental
+            </p>
+        </div> -->
+
+        <!-- RIGHT SIDE -->
+        <div class="footer-right">
+
+            <a runat="server" href="~/About">
+                About
+            </a>
+
+            <a runat="server" href="~/Contact">
+                Contact
+            </a>
+
+            <a runat="server" href="~/TermsAndConditions">
+                 Terms and Conditions
+            </a>
+
+            <a runat="server" href="~/PrivacyPolicy">
+                 Privacy Policy
+            </a>
+
+        </div>
+
+    </div>
+
+</footer>
+
+        </div>
+    </form>
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/Scripts/bootstrap.js") %>
+    </asp:PlaceHolder>
+
+    <!-- VehicleReturn drop down menu toggle script -->
+    <script>
+    document.getElementById("vehicleReturnBtn").onclick = function (e) {
+        e.preventDefault();
+        document.getElementById("vehicleReturnMenu").classList.toggle("show");
+    };
+   </script>
+
+     <!--Payment drop down menu toggle script -->
+ <script>
+     document.getElementById("paymentBtn").onclick = function (e) {
+         e.preventDefault();
+         document.getElementById("paymentMenu").classList.toggle("show");
+     };
+ </script>
+
+        <!--Inspection Reports drop down menu toggle script -->
+<script>
+    document.getElementById("inspectionReportsBtn").onclick = function (e) {
+        e.preventDefault();
+        document.getElementById("inspectionReportsMenu").classList.toggle("show");
+    };
+</script>
+
+        <!--Rental drop down menu toggle script -->
+<script>
+    document.getElementById("rentalBtn").onclick = function (e) {
+        e.preventDefault();
+        document.getElementById("rentalMenu").classList.toggle("show");
+    };
+</script>
+
+        <!--Bookings drop down menu toggle script -->
+<script>
+    document.getElementById("bookingsBtn").onclick = function (e) {
+        e.preventDefault();
+        document.getElementById("bookingsMenu").classList.toggle("show");
+    };
+</script>
+
+            <!--Claims drop down menu toggle script -->
+<script>
+    document.getElementById("ClaimsBtn").onclick = function (e) {
+        e.preventDefault();
+        document.getElementById("ClaimsMenu").classList.toggle("show");
+    };
+</script>
+
+                <!--Branch drop down menu toggle script -->
+<script>
+    document.getElementById("branchBtn").onclick = function (e) {
+        e.preventDefault();
+        document.getElementById("branchMenu").classList.toggle("show");
+    };
+</script>
+
+</body>
+</html>
