@@ -89,7 +89,6 @@
         ========================================= */
 
         .clear-filters {
-            height: 46px;
             padding: 0 20px;
             background: #ffffff;
             border: 1px solid #cccccc;
@@ -143,134 +142,129 @@
 
 
         .filters {
-            display: flex;
-            gap: 20px;
-            align-items: flex-end;
-        }
+display: flex;
+gap: 20px;
+align-items: flex-end;
+width: 100%;
+}
 
+.filter-group {
+flex: 1;
+min-width: 0;
+}
 
-        .filter-group {
-            flex: 1;
-        }
+.filter-group label {
+display: block;
+font-size: 13px;
+font-weight: 600;
+color: #555555;
+margin-bottom: 7px;
+}
 
-        .filter-group label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: #555555;
-            margin-bottom: 7px;
-        }
+.filter-group input,
+.filter-group select {
+width: 100%;
+height: 43px;
+border: 1px solid #d8d8d8;
+border-radius: 7px;
+padding: 0 13px;
+box-sizing: border-box;
+color: #444444;
+font-size: 14px;
+background: #ffffff;
+outline: none;
+}
 
+.filter-group input:focus,
+.filter-group select:focus {
+border-color: #c8102e;
+}
 
-        .date-input {
-            position: relative;
-        }
+.filter-button-group {
+flex-shrink: 0;
+flex-direction: column;
+align-items: stretch;
+}
 
-        .date-input i {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #c8102e;
-            pointer-events: none;
-        }
+.clear-filters {
+padding: 0 20px;
+background: #ffffff;
+border: 1px solid #cccccc;
+border-radius: 8px;
+color: #444444;
+font-size: 14px;
+font-weight: 600;
+cursor: pointer;
+transition: 0.2s ease;
+white-space: nowrap;
+}
 
-        .filter-group input,
-        .filter-group select {
-            width: 100%;
-            height: 43px;
-            border: 1px solid #d8d8d8;
-            border-radius: 7px;
-            padding: 0 40px 0 13px;
-            box-sizing: border-box;
-            color: #444444;
-            font-size: 14px;
-            background: #ffffff;
-            outline: none;
-        }
+.clear-filters:hover {
+border-color: #c8102e;
+color: #c8102e;
+}
 
-        .filter-group select {
-            padding: 0 13px;
-        }
-
-        .filter-group input:focus,
-        .filter-group select:focus {
-            border-color: #c8102e;
-        }
 
 
         /* =========================================
-           MAIN CONTENT
+           MAIN CONTENT :  GRIDVIEW + SUMMARY
         ========================================= */
 
         .booking-content {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) 360px;
-            gap: 22px;
-            align-items: start;
-        }
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    width: 100%;
+}
 
 
         /* =========================================
            TABLE CARD
         ========================================= */
 
-        .table-card {
-            background: #ffffff;
-            border: 1px solid #e1e1e1;
-            border-radius: 10px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-            overflow: hidden;
+        .table-card { min-width: 0; 
+                      background: #ffffff; 
+                      border: 1px solid #e1e1e1; 
+                      border-radius: 10px; 
+                      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06); 
+                      overflow: hidden; 
+
+        } 
+        .table-wrapper { width: 100%; 
+                         overflow-x: auto; 
+
         }
 
-        .table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-        }
+        .booking-table { width: 100%; 
+                         min-width: 1250px; 
+                         border-collapse: collapse; 
+                         font-family: Arial, sans-serif; 
+                         font-size: 13px; 
 
-        .booking-table {
-            width: 100%;
-            min-width: 1250px;
-            border-collapse: collapse;
-        }
+        } 
+        /* Red headers with white text */ 
+        .booking-table th { background-color: #c8102e; 
+                            color: #ffffff; 
+                            font-size: 12px; 
+                            font-weight: 700; 
+                            text-align: left; 
+                            padding: 15px 13px; 
+                            border: none; 
+                            white-space: nowrap; 
 
+        } 
+        /* Booking details */ 
+          .booking-table td { padding: 13px; 
+                              border-bottom: 1px solid #eeeeee; 
+                              color: #333333; 
+                              white-space: nowrap; 
 
-        .booking-table th {
-            background: #f7f7f7;
-            color: #555555;
-            font-size: 12px;
-            font-weight: 700;
-            text-align: left;
-            padding: 15px 13px;
-            border-bottom: 1px solid #dddddd;
-            white-space: nowrap;
-        }
-
-
-        .booking-table td {
-            padding: 15px 13px;
-            border-bottom: 1px solid #eeeeee;
-            color: #555555;
-            font-size: 13px;
-            white-space: nowrap;
-        }
-
-
-        .booking-table tbody tr:hover {
-            background: #fafafa;
-        }
-
-
-        .booking-id {
-            color: #c8102e;
-            font-weight: 700;
-        }
-
-
-        .amount {
-            font-weight: 700;
-            color: #222222;
-        }
+          } 
+          /* Alternating light-pink rows */ 
+          .booking-table tr:nth-child(even) td { background-color: #fff5f6; } 
+          
+          /* Light-pink hover effect */ 
+          .booking-table tr:hover td { background-color: #ffe5e9; }
 
 
         /* =========================================
@@ -336,44 +330,15 @@
            BOOKING SUMMARY
         ========================================= */
 
-        .summary-card {
-            background: #ffffff;
-            border: 1px solid #e1e1e1;
-            border-radius: 10px;
-            padding: 25px;
-            box-sizing: border-box;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-            position: sticky;
-            top: 20px;
-        }
+        .summary-card { min-width: 0; 
+                        background: #ffffff; 
+                        border: 1px solid #e1e1e1; 
+                        border-radius: 10px; 
+                        padding: 25px; 
+                        box-sizing: border-box; 
+                        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06); 
+                         
 
-
-        .summary-heading {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            padding-bottom: 18px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #eeeeee;
-        }
-
-
-        .summary-booking-id {
-            color: #c8102e;
-            font-size: 20px;
-            font-weight: 800;
-        }
-
-
-        .summary-status {
-            display: inline-block;
-            background: #e7f0ff;
-            color: #2563a8;
-            padding: 5px 11px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
         }
 
 
@@ -494,50 +459,15 @@
            RESPONSIVE
         ========================================= */
 
-        @media (max-width: 1100px) {
+        @media (max-width: 1100px) { 
+            .booking-content { 
+                grid-template-columns: minmax(0, 1fr); 
 
-            .booking-content {
-                grid-template-columns: 1fr;
-            }
+            } 
+            .summary-card { 
+                position: static; 
 
-            .summary-card {
-                position: static;
-            }
-
-        }
-
-
-        @media (max-width: 700px) {
-
-            .booking-page {
-                padding: 30px 15px 50px;
-            }
-
-            .booking-header h1 {
-                font-size: 34px !important;
-            }
-
-            .search-row {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .clear-filters {
-                width: 100%;
-            }
-
-            .filters {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .summary-dates {
-                grid-template-columns: 1fr;
-            }
-
-            .summary-actions {
-                flex-direction: column;
-            }
+            } 
 
         }
 
@@ -568,22 +498,10 @@
         ========================================= -->
 
         <div class="search-row">
-
             <div class="search-box">
-
                 <i class="fas fa-search"></i>
-
-                <input
-                    type="text"
-                    placeholder="Search bookings by customer's name" />
-
+                <asp:TextBox ID="TextBox1" runat="server" AutoPostBack="True" placeholder="Search bookings by customer's name"></asp:TextBox>
             </div>
-
-
-            <button type="button" class="clear-filters">
-                Clear Filters
-            </button>
-
         </div>
 
 
@@ -593,319 +511,120 @@
         ========================================= -->
 
         <div class="filter-card">
+<div class="filter-title">
+    <i class="fas fa-filter"></i>
+    <h2>Filters</h2>
+</div>
 
-            <div class="filter-title">
+<div class="filters">
 
-                <i class="fas fa-filter"></i>
+    <!-- FROM DATE -->
+    <div class="filter-group">
+        <label>From Date</label>
+        <asp:TextBox TextMode="Date" ID="txtFromDate" runat="server"></asp:TextBox>
+        
+    </div>
+    
+    <!-- TO DATE -->
+    <div class="filter-group">
+        <label>To Date</label>
+        <asp:TextBox TextMode="Date" ID="txtToDate" runat="server"></asp:TextBox>
+        
+    </div>
 
-                <h2>Filters</h2>
+    <!-- STATUS -->
+    <div class="filter-group">
+        <label>Status</label>
 
-            </div>
+        <asp:DropDownList ID="DDLStatuses" runat="server" AutoPostBack="True" >
+            <asp:ListItem Value="AllStatuses">All Statuses</asp:ListItem>
+        <asp:ListItem Value="Pending">Pending</asp:ListItem>
+        <asp:ListItem Value="Confirmed">Confirmed</asp:ListItem>
+        <asp:ListItem Value="Checked Out">Checked Out</asp:ListItem>
+        <asp:ListItem Value="Cancelled">Cancelled</asp:ListItem>
+        <asp:ListItem Value="Completed">Completed</asp:ListItem>
 
+        </asp:DropDownList>
+        
+    </div>
 
-            <div class="filters">
+    <!-- CLEAR FILTERS BUTTON -->
+    <div class="filter-button-group">
 
+    <asp:Button ID="btnFilter"
+        runat="server"
+        Text="Filter"
+        style="background-color:#c8102e; color:white; border:none; 
+               border-radius:8px; height:43px; padding:0 20px; 
+               cursor:pointer;" OnClick="btnFilter_Click" />
 
-                <!-- FROM DATE -->
+    <asp:Button ID="btnClearFilters"
+        runat="server"
+        Text="Clear Filters"
+        CssClass="clear-filters" />
 
-                <div class="filter-group">
-
-                    <label>From Date</label>
-
-                    <div class="date-input">
-
-                        <input type="date" />
-
-                        
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- TO DATE -->
-
-                <div class="filter-group">
-
-                    <label>To Date</label>
-
-                    <div class="date-input">
-
-                        <input type="date" />
-
-                        
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- STATUS -->
-
-                <div class="filter-group">
-
-                    <label>Status</label>
-
-                    <select>
-
-                        <option>All Statuses</option>
-                        <option>Pending</option>
-                        <option>Confirmed</option>
-                        <option>Checked Out</option>
-                        <option>Cancelled</option>
-                        <option>Completed</option>
-
-                    </select>
-
-                </div>
+</div>
 
 
-            </div>
+</div>
 
-        </div>
+
+</div>
+
 
 
 
         <!-- =========================================
              TABLE + SUMMARY
         ========================================= -->
+        <asp:SqlDataSource ID="SqlDSBookingSearch" runat="server" ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>" SelectCommand="SELECT BookingID, CustomerID, VehicleVinNo, [Booking Date], [PickUp Date], ExpectedReturnDate, Status, [Invoice Amount], EmployeeID, FullName, Position, PickUpBranchName, DropOffBranchName, BranchName, CustomerFullName, LastUpdated, RefundStatus, Vehicle_make, Vehicle_model FROM BOOKING WHERE (CustomerFullName LIKE @CustName + '%' OR @CustName = '') AND (@FromDate IS NULL OR [PickUp Date] >= @FromDate) AND (@ToDate IS NULL OR [PickUp Date] < DATEADD(DAY, 1, @ToDate)) AND (@Status = 'AllStatuses' OR Status = @Status)">
+            <SelectParameters>
+                <asp:ControlParameter ControlID="TextBox1" Name="CustName" PropertyName="Text" Type="String"
+                    ConvertEmptyStringToNull="False"
+                    DefaultValue="" />
+                <asp:ControlParameter ControlID="txtFromDate" PropertyName="Text" Name="FromDate"></asp:ControlParameter>
+                <asp:ControlParameter ControlID="txtToDate" PropertyName="Text" Name="ToDate"></asp:ControlParameter>
+                <asp:ControlParameter ControlID="DDLStatuses" PropertyName="SelectedValue" Name="Status"></asp:ControlParameter>
+            </SelectParameters>
+    </asp:SqlDataSource>
 
-        <div class="booking-content">
-
-
-            <!-- =====================================
-                 BOOKINGS TABLE
-            ====================================== -->
-
-            <div class="table-card">
-
+        <div class="booking-content"> 
+            <!-- BOOKING GRIDVIEW --> 
+            <div class="table-card"> 
                 <div class="table-wrapper">
 
-                    <table class="booking-table">
-
-                        <thead>
-
-                            <tr>
-
-                                <th>BookingID</th>
-                                <th>CustomerName</th>
-                                <th>Vehicle</th>
-                                <th>BookingDate</th>
-                                <th>PickUpDate</th>
-                                <th>ExpectedReturnDate</th>
-                                <th>Status</th>
-                                <th>PickupBranch</th>
-                                <th>DropoffBranch</th>
-                                <th>Refund Status</th>
-                                <th>Invoice Amount</th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody>
-
-
-                            <!-- BOOKING 1 -->
-
-                            <tr>
-
-                                <td class="booking-id">BK001</td>
-
-                                <td>John Smith</td>
-
-                                <td>Toyota Corolla</td>
-
-                                <td>28/08/2026</td>
-
-                                <td>01/09/2026</td>
-
-                                <td>05/09/2026</td>
-
-                                <td>
-                                    <span class="status status-confirmed">
-                                        Confirmed
-                                    </span>
-                                </td>
-
-                                <td>King Shaka Airport</td>
-
-                                <td>Umhlanga</td>
-
-                                <td>
-                                    <span class="refund-eligible">
-                                        Eligible
-                                    </span>
-                                </td>
-
-                                <td class="amount">R 2,450.00</td>
-
-                            </tr>
-
-
-
-                            <!-- BOOKING 2 -->
-
-                            <tr>
-
-                                <td class="booking-id">BK002</td>
-
-                                <td>Sarah Williams</td>
-
-                                <td>Volkswagen Polo</td>
-
-                                <td>30/08/2026</td>
-
-                                <td>01/09/2026</td>
-
-                                <td>03/09/2026</td>
-
-                                <td>
-                                    <span class="status status-pending">
-                                        Pending
-                                    </span>
-                                </td>
-
-                                <td>Durban Downtown</td>
-
-                                <td>King Shaka Airport</td>
-
-                                <td>
-                                    <span class="refund-eligible">
-                                        Eligible
-                                    </span>
-                                </td>
-
-                                <td class="amount">R 1,650.00</td>
-
-                            </tr>
-
-
-
-                            <!-- BOOKING 3 -->
-
-                            <tr>
-
-                                <td class="booking-id">BK003</td>
-
-                                <td>David Johnson</td>
-
-                                <td>BMW 3 Series</td>
-
-                                <td>25/08/2026</td>
-
-                                <td>27/08/2026</td>
-
-                                <td>01/09/2026</td>
-
-                                <td>
-                                    <span class="status status-checkedout">
-                                        Checked Out
-                                    </span>
-                                </td>
-
-                                <td>OR Tambo Airport</td>
-
-                                <td>OR Tambo Airport</td>
-
-                                <td>
-                                    <span class="refund-not-eligible">
-                                        Not Eligible
-                                    </span>
-                                </td>
-
-                                <td class="amount">R 4,850.00</td>
-
-                            </tr>
-
-
-
-                            <!-- BOOKING 4 -->
-
-                            <tr>
-
-                                <td class="booking-id">BK004</td>
-
-                                <td>Emily Brown</td>
-
-                                <td>Hyundai i20</td>
-
-                                <td>22/08/2026</td>
-
-                                <td>24/08/2026</td>
-
-                                <td>28/08/2026</td>
-
-                                <td>
-                                    <span class="status status-cancelled">
-                                        Cancelled
-                                    </span>
-                                </td>
-
-                                <td>Cape Town Airport</td>
-
-                                <td>Cape Town Airport</td>
-
-                                <td>
-                                    <span class="refund-eligible">
-                                        Eligible
-                                    </span>
-                                </td>
-
-                                <td class="amount">R 2,100.00</td>
-
-                            </tr>
-
-
-
-                            <!-- BOOKING 5 -->
-
-                            <tr>
-
-                                <td class="booking-id">BK005</td>
-
-                                <td>Michael Adams</td>
-
-                                <td>Mercedes-Benz A-Class</td>
-
-                                <td>15/08/2026</td>
-
-                                <td>17/08/2026</td>
-
-                                <td>22/08/2026</td>
-
-                                <td>
-                                    <span class="status status-completed">
-                                        Completed
-                                    </span>
-                                </td>
-
-                                <td>George Airport</td>
-
-                                <td>George Airport</td>
-
-                                <td>
-                                    <span class="refund-not-eligible">
-                                        Not Eligible
-                                    </span>
-                                </td>
-
-                                <td class="amount">R 5,250.00</td>
-
-                            </tr>
-
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </div>
-
+        <asp:GridView ID="GVBooking" runat="server"
+    CssClass="booking-table"
+    DataSourceID="SqlDSBookingSearch"
+    AutoGenerateColumns="False"
+    DataKeyNames="BookingID"
+    AllowPaging="True"
+    ShowHeaderWhenEmpty="True"
+    EmptyDataText="No bookings found." OnSelectedIndexChanged="GVBooking_SelectedIndexChanged">
+            <Columns>
+                <asp:BoundField DataField="BookingID" HeaderText="BookingID" InsertVisible="False" ReadOnly="True" SortExpression="BookingID" />
+                <asp:BoundField DataField="CustomerID" HeaderText="CustomerID" SortExpression="CustomerID" />
+                <asp:BoundField DataField="VehicleVinNo" HeaderText="VehicleVinNo" SortExpression="VehicleVinNo" />
+                <asp:BoundField DataField="Booking Date" HeaderText="Booking Date" SortExpression="Booking Date" />
+                <asp:BoundField DataField="PickUp Date" HeaderText="PickUp Date" SortExpression="PickUp Date" />
+                <asp:BoundField DataField="ExpectedReturnDate" HeaderText="ExpectedReturnDate" SortExpression="ExpectedReturnDate" />
+                <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" />
+                <asp:BoundField DataField="Invoice Amount" HeaderText="Invoice Amount" SortExpression="Invoice Amount" />
+                <asp:BoundField DataField="EmployeeID" HeaderText="EmployeeID" SortExpression="EmployeeID" />
+                <asp:BoundField DataField="FullName" HeaderText="FullName" SortExpression="FullName" />
+                <asp:BoundField DataField="Position" HeaderText="Position" SortExpression="Position" />
+                <asp:BoundField DataField="PickUpBranchName" HeaderText="PickUpBranchName" SortExpression="PickUpBranchName" />
+                <asp:BoundField DataField="DropOffBranchName" HeaderText="DropOffBranchName" SortExpression="DropOffBranchName" />
+                <asp:BoundField DataField="BranchName" HeaderText="BranchName" SortExpression="BranchName" />
+                <asp:BoundField DataField="CustomerFullName" HeaderText="CustomerFullName" SortExpression="CustomerFullName" />
+                <asp:BoundField DataField="LastUpdated" HeaderText="LastUpdated" SortExpression="LastUpdated" />
+                <asp:BoundField DataField="RefundStatus" HeaderText="RefundStatus" SortExpression="RefundStatus" />
+                <asp:BoundField DataField="Vehicle_make" HeaderText="Vehicle_make" SortExpression="Vehicle_make" />
+                <asp:BoundField DataField="Vehicle_model" HeaderText="Vehicle_model" SortExpression="Vehicle_model" />
+            </Columns>
+    </asp:GridView>
+  </div> 
+</div>
 
 
             <!-- =====================================
@@ -920,11 +639,16 @@
                 <div class="summary-heading">
 
                     <span class="summary-booking-id">
-                        BK001
+                        <!--BookingID-->
+                        <asp:Label ID="Label1" runat="server" Text="BKID:"></asp:Label>
+                        
+                        <asp:Label ID="LblBID" runat="server" Text="BookingID"></asp:Label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </span>
 
                     <span class="summary-status">
-                        Confirmed
+                        <!--Booking Summary-->
+                        <asp:Label ID="LblStatus" runat="server" Text="Booking Status"></asp:Label>
                     </span>
 
                 </div>
@@ -942,7 +666,8 @@
                         </span>
 
                         <span class="summary-value">
-                            John Smith
+                            <!-- Customer's name -->
+                            <asp:Label ID="LblCustN" runat="server" Text="Customer's Name"></asp:Label>
                         </span>
 
                     </div>
@@ -958,7 +683,9 @@
                         </span>
 
                         <span class="summary-value">
-                            Toyota Corolla
+                            <!--Vehicle -->
+                            <asp:Label ID="LblVehicle_make" runat="server" Text="Make  "></asp:Label>
+                            <asp:Label ID="LblVehicle_model" runat="server" Text="Model"></asp:Label>
                         </span>
 
                     </div>
@@ -976,7 +703,8 @@
                             </span>
 
                             <span class="summary-value">
-                                28/08/2026
+                                <!-- Booking Date-->
+                                <asp:Label ID="LblBDate" runat="server" Text="Booking Date"></asp:Label>
                             </span>
 
                         </div>
@@ -989,7 +717,8 @@
                             </span>
 
                             <span class="summary-value">
-                                01/09/2026
+                                <!--Pick Up Date-->
+                                <asp:Label ID="LblPDate" runat="server" Text="Pick Up Date"></asp:Label>
                             </span>
 
                         </div>
@@ -1005,7 +734,8 @@
                         </span>
 
                         <span class="summary-value">
-                            05/09/2026
+                            <!--Expected return date-->
+                            <asp:Label ID="LblRDate" runat="server" Text="Expected Return Date"></asp:Label>
                         </span>
 
                     </div>
@@ -1021,7 +751,8 @@
                         </span>
 
                         <span class="summary-value">
-                            King Shaka Airport
+                            <!--PickUp Branch-->
+                            <asp:Label ID="LblPBranch" runat="server" Text="Pickup Branch"></asp:Label>
                         </span>
 
                     </div>
@@ -1037,7 +768,8 @@
                         </span>
 
                         <span class="summary-value">
-                            Umhlanga
+                            <!--Dropoff Branch-->
+                            <asp:Label ID="LblDBranch" runat="server" Text="Dropoff Branch"></asp:Label>
                         </span>
 
                     </div>
@@ -1055,7 +787,8 @@
                     </span>
 
                     <span class="summary-total-amount">
-                        R 2,450.00
+                        <!--Total Amount-->
+                        <asp:Label ID="LblTotAmt" runat="server" Text="Total Amount"></asp:Label>
                     </span>
 
                 </div>
@@ -1064,21 +797,105 @@
 
                 <!-- ACTION BUTTONS -->
 
+                <asp:SqlDataSource ID="SqlDSCancelBooking" runat="server" ConflictDetection="CompareAllValues" ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True" DeleteCommand="DELETE FROM [BOOKING] WHERE [BookingID] = @original_BookingID AND [CustomerID] = @original_CustomerID AND [VehicleVinNo] = @original_VehicleVinNo AND [Booking Date] = @original_Booking_Date AND [PickUp Date] = @original_PickUp_Date AND [ExpectedReturnDate] = @original_ExpectedReturnDate AND [Status] = @original_Status AND (([Invoice Amount] = @original_Invoice_Amount) OR ([Invoice Amount] IS NULL AND @original_Invoice_Amount IS NULL)) AND (([EmployeeID] = @original_EmployeeID) OR ([EmployeeID] IS NULL AND @original_EmployeeID IS NULL)) AND (([FullName] = @original_FullName) OR ([FullName] IS NULL AND @original_FullName IS NULL)) AND (([Position] = @original_Position) OR ([Position] IS NULL AND @original_Position IS NULL)) AND (([PickUpBranchName] = @original_PickUpBranchName) OR ([PickUpBranchName] IS NULL AND @original_PickUpBranchName IS NULL)) AND (([DropOffBranchName] = @original_DropOffBranchName) OR ([DropOffBranchName] IS NULL AND @original_DropOffBranchName IS NULL)) AND (([BranchName] = @original_BranchName) OR ([BranchName] IS NULL AND @original_BranchName IS NULL)) AND (([CustomerFullName] = @original_CustomerFullName) OR ([CustomerFullName] IS NULL AND @original_CustomerFullName IS NULL)) AND (([LastUpdated] = @original_LastUpdated) OR ([LastUpdated] IS NULL AND @original_LastUpdated IS NULL)) AND [RefundStatus] = @original_RefundStatus AND (([Vehicle_make] = @original_Vehicle_make) OR ([Vehicle_make] IS NULL AND @original_Vehicle_make IS NULL)) AND (([Vehicle_model] = @original_Vehicle_model) OR ([Vehicle_model] IS NULL AND @original_Vehicle_model IS NULL))" InsertCommand="INSERT INTO [BOOKING] ([CustomerID], [VehicleVinNo], [Booking Date], [PickUp Date], [ExpectedReturnDate], [Status], [Invoice Amount], [EmployeeID], [FullName], [Position], [PickUpBranchName], [DropOffBranchName], [BranchName], [CustomerFullName], [LastUpdated], [RefundStatus], [Vehicle_make], [Vehicle_model]) VALUES (@CustomerID, @VehicleVinNo, @Booking_Date, @PickUp_Date, @ExpectedReturnDate, @Status, @Invoice_Amount, @EmployeeID, @FullName, @Position, @PickUpBranchName, @DropOffBranchName, @BranchName, @CustomerFullName, @LastUpdated, @RefundStatus, @Vehicle_make, @Vehicle_model)" OldValuesParameterFormatString="original_{0}" ProviderName="System.Data.SqlClient" SelectCommand="SELECT * FROM [BOOKING]" UpdateCommand="UPDATE [BOOKING] SET Status = 'Cancelled'
+        
+WHERE BookingID = @BookingID
+   AND Status NOT IN ('Checked Out', 'Completed', 'Cancelled')">
+                    <DeleteParameters>
+                        <asp:Parameter Name="original_BookingID" Type="Int32" />
+                        <asp:Parameter Name="original_CustomerID" Type="Int32" />
+                        <asp:Parameter Name="original_VehicleVinNo" Type="String" />
+                        <asp:Parameter Name="original_Booking_Date" Type="DateTime" />
+                        <asp:Parameter Name="original_PickUp_Date" Type="DateTime" />
+                        <asp:Parameter Name="original_ExpectedReturnDate" Type="DateTime" />
+                        <asp:Parameter Name="original_Status" Type="String" />
+                        <asp:Parameter Name="original_Invoice_Amount" Type="Decimal" />
+                        <asp:Parameter Name="original_EmployeeID" Type="Int32" />
+                        <asp:Parameter Name="original_FullName" Type="String" />
+                        <asp:Parameter Name="original_Position" Type="String" />
+                        <asp:Parameter Name="original_PickUpBranchName" Type="String" />
+                        <asp:Parameter Name="original_DropOffBranchName" Type="String" />
+                        <asp:Parameter Name="original_BranchName" Type="String" />
+                        <asp:Parameter Name="original_CustomerFullName" Type="String" />
+                        <asp:Parameter Name="original_LastUpdated" Type="DateTime" />
+                        <asp:Parameter Name="original_RefundStatus" Type="String" />
+                        <asp:Parameter Name="original_Vehicle_make" Type="String" />
+                        <asp:Parameter Name="original_Vehicle_model" Type="String" />
+                    </DeleteParameters>
+                    <InsertParameters>
+                        <asp:Parameter Name="CustomerID" Type="Int32" />
+                        <asp:Parameter Name="VehicleVinNo" Type="String" />
+                        <asp:Parameter Name="Booking_Date" Type="DateTime" />
+                        <asp:Parameter Name="PickUp_Date" Type="DateTime" />
+                        <asp:Parameter Name="ExpectedReturnDate" Type="DateTime" />
+                        <asp:Parameter Name="Status" Type="String" />
+                        <asp:Parameter Name="Invoice_Amount" Type="Decimal" />
+                        <asp:Parameter Name="EmployeeID" Type="Int32" />
+                        <asp:Parameter Name="FullName" Type="String" />
+                        <asp:Parameter Name="Position" Type="String" />
+                        <asp:Parameter Name="PickUpBranchName" Type="String" />
+                        <asp:Parameter Name="DropOffBranchName" Type="String" />
+                        <asp:Parameter Name="BranchName" Type="String" />
+                        <asp:Parameter Name="CustomerFullName" Type="String" />
+                        <asp:Parameter Name="LastUpdated" Type="DateTime" />
+                        <asp:Parameter Name="RefundStatus" Type="String" />
+                        <asp:Parameter Name="Vehicle_make" Type="String" />
+                        <asp:Parameter Name="Vehicle_model" Type="String" />
+                    </InsertParameters>
+                    <UpdateParameters>
+                        <asp:Parameter Name="CustomerID" Type="Int32" />
+                        <asp:Parameter Name="VehicleVinNo" Type="String" />
+                        <asp:Parameter Name="Booking_Date" Type="DateTime" />
+                        <asp:Parameter Name="PickUp_Date" Type="DateTime" />
+                        <asp:Parameter Name="ExpectedReturnDate" Type="DateTime" />
+                        <asp:Parameter Name="Status" Type="String" />
+                        <asp:Parameter Name="Invoice_Amount" Type="Decimal" />
+                        <asp:Parameter Name="EmployeeID" Type="Int32" />
+                        <asp:Parameter Name="FullName" Type="String" />
+                        <asp:Parameter Name="Position" Type="String" />
+                        <asp:Parameter Name="PickUpBranchName" Type="String" />
+                        <asp:Parameter Name="DropOffBranchName" Type="String" />
+                        <asp:Parameter Name="BranchName" Type="String" />
+                        <asp:Parameter Name="CustomerFullName" Type="String" />
+                        <asp:Parameter Name="LastUpdated" Type="DateTime" />
+                        <asp:Parameter Name="RefundStatus" Type="String" />
+                        <asp:Parameter Name="Vehicle_make" Type="String" />
+                        <asp:Parameter Name="Vehicle_model" Type="String" />
+                        <asp:Parameter Name="original_BookingID" Type="Int32" />
+                        <asp:Parameter Name="original_CustomerID" Type="Int32" />
+                        <asp:Parameter Name="original_VehicleVinNo" Type="String" />
+                        <asp:Parameter Name="original_Booking_Date" Type="DateTime" />
+                        <asp:Parameter Name="original_PickUp_Date" Type="DateTime" />
+                        <asp:Parameter Name="original_ExpectedReturnDate" Type="DateTime" />
+                        <asp:Parameter Name="original_Status" Type="String" />
+                        <asp:Parameter Name="original_Invoice_Amount" Type="Decimal" />
+                        <asp:Parameter Name="original_EmployeeID" Type="Int32" />
+                        <asp:Parameter Name="original_FullName" Type="String" />
+                        <asp:Parameter Name="original_Position" Type="String" />
+                        <asp:Parameter Name="original_PickUpBranchName" Type="String" />
+                        <asp:Parameter Name="original_DropOffBranchName" Type="String" />
+                        <asp:Parameter Name="original_BranchName" Type="String" />
+                        <asp:Parameter Name="original_CustomerFullName" Type="String" />
+                        <asp:Parameter Name="original_LastUpdated" Type="DateTime" />
+                        <asp:Parameter Name="original_RefundStatus" Type="String" />
+                        <asp:Parameter Name="original_Vehicle_make" Type="String" />
+                        <asp:Parameter Name="original_Vehicle_model" Type="String" />
+                    </UpdateParameters>
+                </asp:SqlDataSource>
                 <div class="summary-actions">
 
-                    <button type="button" class="cancel-btn">
+                    <!-- <button type="button" class="cancel-btn">
                         Cancel Booking
-                    </button>
-
-                    <button type="button" class="delete-btn">
+                    </button> -->
+                    <asp:Button ID="BtnCancelBooking" runat="server" Text="Cancel Booking" class="delete-btn" CssClass="clear-filters"   OnClick="btnCancelBooking_Click"  OnClientClick ="return confirm('Are you sure you want to cancel this booking?');" ForeColor="Red" Width="368px" Height="49px" />
+                    <asp:Button ID="BtnClear" runat="server" Text="Clear" OnClick="BtnClear_Click" Width="368px" Height="49px"   class="cancel-btn" />
+                    <!-- <button type="button" class="delete-btn">
                         Delete Booking
-                    </button>
+                    </button> -->
 
                 </div>
-
-
             </aside>
-
+            <asp:Label ID="lblCancelMessage" runat="server" Text="Label" Visible="False"></asp:Label>
 
         </div>
 
