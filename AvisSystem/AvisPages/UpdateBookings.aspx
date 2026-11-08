@@ -187,16 +187,17 @@ align-items: stretch;
 }
 
 .clear-filters {
-padding: 0 20px;
-background: #ffffff;
-border: 1px solid #cccccc;
-border-radius: 8px;
-color: #444444;
-font-size: 14px;
-font-weight: 600;
-cursor: pointer;
-transition: 0.2s ease;
-white-space: nowrap;
+    height: 43px;
+    padding: 0 20px;
+    background: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    color: #444444;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+    white-space: nowrap;
 }
 
 .clear-filters:hover {
@@ -554,14 +555,14 @@ color: #c8102e;
     <asp:Button ID="btnFilter"
         runat="server"
         Text="Filter"
-        style="background-color:#c8102e; color:white; border:none; 
-               border-radius:8px; height:43px; padding:0 20px; 
-               cursor:pointer;" OnClick="btnFilter_Click" />
+        style="border-style: none; border-color: inherit; border-width: medium; background-color:#c8102e; color:white; border-radius:8px; padding:0 20px; 
+               cursor:pointer;" OnClick="btnFilter_Click" Width="170px" Height="43px"/>
 
     <asp:Button ID="btnClearFilters"
         runat="server"
         Text="Clear Filters"
-        CssClass="clear-filters" />
+        CssClass="clear-filters"
+        OnClick="btnClearFilters_Click" />
 
 </div>
 
@@ -577,15 +578,36 @@ color: #c8102e;
         <!-- =========================================
              TABLE + SUMMARY
         ========================================= -->
-        <asp:SqlDataSource ID="SqlDSBookingSearch" runat="server" ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>" SelectCommand="SELECT BookingID, CustomerID, VehicleVinNo, [Booking Date], [PickUp Date], ExpectedReturnDate, Status, [Invoice Amount], EmployeeID, FullName, Position, PickUpBranchName, DropOffBranchName, BranchName, CustomerFullName, LastUpdated, RefundStatus, Vehicle_make, Vehicle_model FROM BOOKING WHERE (CustomerFullName LIKE @CustName + '%' OR @CustName = '') AND (@FromDate IS NULL OR [PickUp Date] >= @FromDate) AND (@ToDate IS NULL OR [PickUp Date] < DATEADD(DAY, 1, @ToDate)) AND (@Status = 'AllStatuses' OR Status = @Status)">
+        <asp:SqlDataSource ID="SqlDSBookingSearch" runat="server" CancelSelectOnNullParameter="False" ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>" SelectCommand="SELECT BookingID, CustomerID, VehicleVinNo, [Booking Date], [PickUp Date], ExpectedReturnDate, Status, [Invoice Amount], EmployeeID, FullName, Position, PickUpBranchName, DropOffBranchName, BranchName, CustomerFullName, LastUpdated, RefundStatus, Vehicle_make, Vehicle_model FROM BOOKING WHERE (CustomerFullName LIKE @CustName + '%' OR @CustName = '') AND (@FromDate IS NULL OR [PickUp Date] >= @FromDate) AND (@ToDate IS NULL OR [PickUp Date] < DATEADD(DAY, 1, @ToDate)) AND (@Status = 'AllStatuses' OR Status = @Status)">
             <SelectParameters>
-                <asp:ControlParameter ControlID="TextBox1" Name="CustName" PropertyName="Text" Type="String"
-                    ConvertEmptyStringToNull="False"
-                    DefaultValue="" />
-                <asp:ControlParameter ControlID="txtFromDate" PropertyName="Text" Name="FromDate"></asp:ControlParameter>
-                <asp:ControlParameter ControlID="txtToDate" PropertyName="Text" Name="ToDate"></asp:ControlParameter>
-                <asp:ControlParameter ControlID="DDLStatuses" PropertyName="SelectedValue" Name="Status"></asp:ControlParameter>
-            </SelectParameters>
+                <asp:ControlParameter 
+        ControlID="TextBox1" 
+        Name="CustName" 
+        PropertyName="Text" 
+        Type="String"
+        ConvertEmptyStringToNull="False"
+        DefaultValue="" />
+
+    <asp:ControlParameter 
+        ControlID="txtFromDate" 
+        Name="FromDate" 
+        PropertyName="Text" 
+        Type="DateTime"
+        ConvertEmptyStringToNull="True" />
+
+    <asp:ControlParameter 
+        ControlID="txtToDate" 
+        Name="ToDate" 
+        PropertyName="Text" 
+        Type="DateTime"
+        ConvertEmptyStringToNull="True" />
+
+    <asp:ControlParameter 
+        ControlID="DDLStatuses" 
+        Name="Status" 
+        PropertyName="SelectedValue" 
+        Type="String" />
+    </SelectParameters>
     </asp:SqlDataSource>
 
         <div class="booking-content"> 
@@ -602,6 +624,7 @@ color: #c8102e;
     ShowHeaderWhenEmpty="True"
     EmptyDataText="No bookings found." OnSelectedIndexChanged="GVBooking_SelectedIndexChanged">
             <Columns>
+                <asp:CommandField ShowSelectButton="True" />
                 <asp:BoundField DataField="BookingID" HeaderText="BookingID" InsertVisible="False" ReadOnly="True" SortExpression="BookingID" />
                 <asp:BoundField DataField="CustomerID" HeaderText="CustomerID" SortExpression="CustomerID" />
                 <asp:BoundField DataField="VehicleVinNo" HeaderText="VehicleVinNo" SortExpression="VehicleVinNo" />
@@ -843,6 +866,7 @@ WHERE BookingID = @BookingID
                         <asp:Parameter Name="Vehicle_model" Type="String" />
                     </InsertParameters>
                     <UpdateParameters>
+                        <asp:Parameter Name="BookingID" Type="Int32" />
                         <asp:Parameter Name="CustomerID" Type="Int32" />
                         <asp:Parameter Name="VehicleVinNo" Type="String" />
                         <asp:Parameter Name="Booking_Date" Type="DateTime" />
@@ -887,8 +911,8 @@ WHERE BookingID = @BookingID
                     <!-- <button type="button" class="cancel-btn">
                         Cancel Booking
                     </button> -->
-                    <asp:Button ID="BtnCancelBooking" runat="server" Text="Cancel Booking" class="delete-btn" CssClass="clear-filters"   OnClick="btnCancelBooking_Click"  OnClientClick ="return confirm('Are you sure you want to cancel this booking?');" ForeColor="Red" Width="368px" Height="49px" />
-                    <asp:Button ID="BtnClear" runat="server" Text="Clear" OnClick="BtnClear_Click" Width="368px" Height="49px"   class="cancel-btn" />
+                    <asp:Button ID="BtnCancelBooking" runat="server" Text="Cancel Booking" class="cancel-btn" CssClass="clear-filters"   OnClick="btnCancelBooking_Click"  OnClientClick ="return confirm('Are you sure you want to cancel this booking?');" ForeColor="Red" Width="368px" Height="49px" />
+                    <asp:Button ID="BtnClear" runat="server" Text="Clear" OnClick="BtnClear_Click" Width="368px" Height="49px"  class="delete-btn"   />
                     <!-- <button type="button" class="delete-btn">
                         Delete Booking
                     </button> -->

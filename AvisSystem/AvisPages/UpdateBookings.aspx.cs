@@ -19,11 +19,6 @@ namespace AvisSystem.AvisPages
 
                 DDLStatuses.SelectedValue = "AllStatuses";
 
-                SqlDSBookingSearch.SelectParameters["CustName"].DefaultValue = "";
-                SqlDSBookingSearch.SelectParameters["FromDate"].DefaultValue = null;
-                SqlDSBookingSearch.SelectParameters["ToDate"].DefaultValue = null;
-                SqlDSBookingSearch.SelectParameters["Status"].DefaultValue = "AllStatuses";
-
                 GVBooking.DataBind();
             }
         }
@@ -173,6 +168,17 @@ namespace AvisSystem.AvisPages
                 string.IsNullOrWhiteSpace(txtToDate.Text)
                 ? null : txtToDate.Text;
 
+            GVBooking.DataBind();
+        }
+
+        protected void btnClearFilters_Click(object sender, EventArgs e)
+        {
+            TextBox1.Text = "";
+            txtFromDate.Text = "";
+            txtToDate.Text = "";
+            DDLStatuses.SelectedValue = "AllStatuses";
+
+            GVBooking.PageIndex = 0;
             GVBooking.DataBind();
         }
     }

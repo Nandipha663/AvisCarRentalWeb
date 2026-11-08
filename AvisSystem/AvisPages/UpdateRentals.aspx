@@ -73,62 +73,104 @@
             color: white;
         }
 
-        /* FILTER CARD */
+        /* =========================================
+           FILTER CARD
+        ========================================= */
+
         .filter-card {
-            background: white;
-            border: 1px solid #e5e5e5;
+            background: #ffffff;
+            border: 1px solid #e1e1e1;
             border-radius: 10px;
-            padding: 20px;
+            padding: 22px 25px;
             margin-bottom: 25px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
         }
 
+
         .filter-title {
-            font-size: 17px;
-            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 9px;
             margin-bottom: 18px;
-            color: #333;
         }
 
         .filter-title i {
             color: #c8102e;
-            margin-right: 8px;
+            font-size: 18px;
         }
+
+        .filter-title h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: #222222;
+        }
+
 
         .filters {
-            display: flex;
-            gap: 20px;
-            align-items: end;
-        }
+display: flex;
+gap: 20px;
+align-items: flex-end;
+width: 100%;
+}
 
-        .filter-group {
-            flex: 1;
-        }
+.filter-group {
+flex: 1;
+min-width: 0;
+}
 
-        .filter-group label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 7px;
-            color: #555;
-        }
+.filter-group label {
+display: block;
+font-size: 13px;
+font-weight: 600;
+color: #555555;
+margin-bottom: 7px;
+}
 
-        .filter-group input,
-        .filter-group select {
-            width: 100%;
-            height: 42px;
-            border: 1px solid #ddd;
-            border-radius: 7px;
-            padding: 0 12px;
-            font-size: 14px;
-            background: white;
-        }
+.filter-group input,
+.filter-group select {
+width: 100%;
+height: 43px;
+border: 1px solid #d8d8d8;
+border-radius: 7px;
+padding: 0 13px;
+box-sizing: border-box;
+color: #444444;
+font-size: 14px;
+background: #ffffff;
+outline: none;
+}
 
-        .filter-group input:focus,
-        .filter-group select:focus {
-            outline: none;
-            border-color: #c8102e;
-        }
+.filter-group input:focus,
+.filter-group select:focus {
+border-color: #c8102e;
+}
+
+.filter-button-group {
+flex-shrink: 0;
+flex-direction: column;
+align-items: stretch;
+}
+
+.clear-filters {
+    height: 43px;
+    padding: 0 20px;
+    background: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    color: #444444;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+    white-space: nowrap;
+}
+
+.clear-filters:hover {
+border-color: #c8102e;
+color: #c8102e;
+}
+
 
         /* MAIN CONTENT */
         .content-layout {
@@ -138,47 +180,53 @@
             align-items: start;
         }
 
-        /* TABLE CARD */
-        .table-card {
-            background: white;
-            border: 1px solid #e5e5e5;
-            border-radius: 10px;
-            overflow-x: auto;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        }
+ /* =========================================
+   TABLE CARD
+========================================= */
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 1050px;
-        }
+.table-card { min-width: 0; 
+              background: #ffffff; 
+              border: 1px solid #e1e1e1; 
+              border-radius: 10px; 
+              box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06); 
+              overflow: hidden; 
 
-        th {
-            background: #fafafa;
-            color: #555;
-            font-size: 13px;
-            font-weight: 700;
-            padding: 15px 14px;
-            text-align: left;
-            border-bottom: 1px solid #e5e5e5;
-            white-space: nowrap;
-        }
+} 
+.table-wrapper { width: 100%; 
+                 overflow-x: auto; 
 
-        td {
-            padding: 15px 14px;
-            font-size: 13px;
-            color: #444;
-            border-bottom: 1px solid #eee;
-            white-space: nowrap;
-        }
+}
 
-        tr:last-child td {
-            border-bottom: none;
-        }
+.booking-table { width: 100%; 
+                 min-width: 1250px; 
+                 border-collapse: collapse; 
+                 font-family: Arial, sans-serif; 
+                 font-size: 13px; 
 
-        tr:hover td {
-            background: #fafafa;
-        }
+} 
+/* Red headers with white text */ 
+.booking-table th { background-color: #c8102e; 
+                    color: #ffffff; 
+                    font-size: 12px; 
+                    font-weight: 700; 
+                    text-align: left; 
+                    padding: 15px 13px; 
+                    border: none; 
+                    white-space: nowrap; 
+
+} 
+/* Booking details */ 
+  .booking-table td { padding: 13px; 
+                      border-bottom: 1px solid #eeeeee; 
+                      color: #333333; 
+                      white-space: nowrap; 
+
+  } 
+  /* Alternating light-pink rows */ 
+  .booking-table tr:nth-child(even) td { background-color: #fff5f6; } 
+  
+  /* Light-pink hover effect */ 
+  .booking-table tr:hover td { background-color: #ffe5e9; }
 
         /* RENTAL STATUS */
         .status {
@@ -333,186 +381,109 @@
 
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text"
-                       placeholder="Search rentals by customer's name" />
+                <asp:TextBox ID="TxtSearch" runat="server" placeholder="Search rentals by customer's name"></asp:TextBox>
+                
             </div>
 
-            <button type="button" class="clear-btn">
-                Clear Filters
-            </button>
-
+            
         </div>
 
 
-        <!-- FILTERS -->
+        <!-- =========================================
+             FILTERS
+        ========================================= -->
+
         <div class="filter-card">
+<div class="filter-title">
+    <i class="fas fa-filter"></i>
+    <h2>Filters</h2>
+</div>
 
-            <div class="filter-title">
-                <i class="fas fa-filter"></i>
-                Filters
-            </div>
+<div class="filters">
 
-            <div class="filters">
+    <!-- FROM DATE -->
+    <div class="filter-group">
+        <label>From Date</label>
+        <asp:TextBox TextMode="Date" ID="txtFromDate" runat="server"></asp:TextBox>
+        
+    </div>
+    
+    <!-- TO DATE -->
+    <div class="filter-group">
+        <label>To Date</label>
+        <asp:TextBox TextMode="Date" ID="txtToDate" runat="server"></asp:TextBox>
+        
+    </div>
 
-                <div class="filter-group">
-                    <label>From Date</label>
-                    <input type="date" />
-                </div>
+    <!-- STATUS -->
+    <div class="filter-group">
+        <label>Status</label>
 
-                <div class="filter-group">
-                    <label>To Date</label>
-                    <input type="date" />
-                </div>
+        <asp:DropDownList ID="DDLStatuses" runat="server" AutoPostBack="True" >
+            <asp:ListItem Value="AllStatuses">All Statuses</asp:ListItem>
+        <asp:ListItem Value="Active">Pending</asp:ListItem>
+        <asp:ListItem Value="Completed">Confirmed</asp:ListItem>
+        
+        </asp:DropDownList>
+        
+    </div>
 
-                <div class="filter-group">
-                    <label>Rental Status</label>
-                    <select>
-                        <option>All Statuses</option>
-                        <option>Active</option>
-                        <option>Completed</option>
-                    </select>
-                </div>
+    <!-- CLEAR FILTERS BUTTON -->
+    <div class="filter-button-group">
 
-            </div>
+    <asp:Button ID="btnFilter"
+        runat="server"
+        Text="Filter"
+        style="border-style: none; border-color: inherit; border-width: medium; background-color:#c8102e; color:white; border-radius:8px; padding:0 20px; 
+               cursor:pointer;" OnClick="btnFilter_Click" Width="170px" Height="43px"/>
 
-        </div>
+    <asp:Button ID="btnClearFilters"
+        runat="server"
+        Text="Clear Filters"
+        CssClass="clear-filters"
+        OnClick="btnClearFilters_Click" />
+
+</div>
 
 
+</div>
+
+
+</div>
+
+        <asp:SqlDataSource ID="SqlDSRental" runat="server" ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT RentalID, BookingID, CustomerID, CustomerName, VehicleVinNo, EmployeeID, EmployeeName, PickupDate, StartDate, ExpectedReturnDate, RentalStatus, DepositAmount, VehicleMakeModel FROM RENTAL WHERE (CustomerName LIKE @CustName + '%') AND (@FromDate IS NULL OR [PickUp Date] >= @FromDate) AND (@ToDate IS NULL OR [PickUp Date] < DATEADD(DAY, 1, @ToDate)) AND (@Status = 'AllStatuses' OR Status = @Status)">
+            <SelectParameters>
+                <asp:ControlParameter ControlID="TxtSearch" PropertyName="Text" Name="CustName"></asp:ControlParameter>
+            </SelectParameters>
+        </asp:SqlDataSource>
         <!-- TABLE + SUMMARY -->
-        <div class="content-layout">
 
+            <div class="booking-content"> 
+                <!-- RENTALS TABLE -->
+    <div class="table-card"> 
+        <div class="table-wrapper">
+            <asp:GridView ID="GVRental" runat="server" CssClass="booking-table" CancelSelectOnNullParameter="False" DataSourceID="SqlDSRental" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="RentalID">
+                <Columns>
+                    <asp:CommandField ShowSelectButton="True" />
+                    <asp:BoundField DataField="RentalID" HeaderText="RentalID" ReadOnly="True" InsertVisible="False" SortExpression="RentalID"></asp:BoundField>
+                    <asp:BoundField DataField="BookingID" HeaderText="BookingID" SortExpression="BookingID"></asp:BoundField>
+                    <asp:BoundField DataField="CustomerID" HeaderText="CustomerID" SortExpression="CustomerID"></asp:BoundField>
+                    <asp:BoundField DataField="CustomerName" HeaderText="CustomerName" SortExpression="CustomerName"></asp:BoundField>
+                    <asp:BoundField DataField="VehicleVinNo" HeaderText="VehicleVinNo" SortExpression="VehicleVinNo"></asp:BoundField>
+                    <asp:BoundField DataField="EmployeeID" HeaderText="EmployeeID" SortExpression="EmployeeID"></asp:BoundField>
+                    <asp:BoundField DataField="EmployeeName" HeaderText="EmployeeName" SortExpression="EmployeeName"></asp:BoundField>
+                    <asp:BoundField DataField="PickupDate" HeaderText="PickupDate" SortExpression="PickupDate"></asp:BoundField>
+                    <asp:BoundField DataField="StartDate" HeaderText="StartDate" SortExpression="StartDate"></asp:BoundField>
+                    <asp:BoundField DataField="ExpectedReturnDate" HeaderText="ExpectedReturnDate" SortExpression="ExpectedReturnDate"></asp:BoundField>
+                    <asp:BoundField DataField="RentalStatus" HeaderText="RentalStatus" SortExpression="RentalStatus"></asp:BoundField>
+                    <asp:BoundField DataField="DepositAmount" HeaderText="DepositAmount" SortExpression="DepositAmount"></asp:BoundField>
+                    <asp:BoundField DataField="VehicleMakeModel" HeaderText="VehicleMakeModel" SortExpression="VehicleMakeModel"></asp:BoundField>
 
-            <!-- RENTALS TABLE -->
-            <div class="table-card">
+                </Columns>
+            </asp:GridView>
 
-                <table>
-
-                    <thead>
-                        <tr>
-                            <th>RentalID</th>
-                            <th>BookingID</th>
-                            <th>CustomerName</th>
-                            <th>Vehicle</th>
-                            <th>PickUpDate</th>
-                            <th>ExpectedReturnDate</th>
-                            <th>Rental Status</th>
-                            <th>EmplID</th>
-                            <th>EmpName</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        <tr>
-                            <td>R001</td>
-                            <td>BK001</td>
-                            <td>John Smith</td>
-                            <td>Toyota Corolla</td>
-                            <td>01/09/2026</td>
-                            <td>05/09/2026</td>
-                            <td>
-                                <span class="status status-active">
-                                    Active
-                                </span>
-                            </td>
-                            <td>E001</td>
-                            <td>Thabo Mokoena</td>
-                            <td>
-                                <button type="button" class="view-btn">
-                                    View
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>R002</td>
-                            <td>BK003</td>
-                            <td>David Johnson</td>
-                            <td>BMW 3 Series</td>
-                            <td>27/08/2026</td>
-                            <td>01/09/2026</td>
-                            <td>
-                                <span class="status status-active">
-                                    Active
-                                </span>
-                            </td>
-                            <td>E002</td>
-                            <td>Nomsa Dlamini</td>
-                            <td>
-                                <button type="button" class="view-btn">
-                                    View
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>R003</td>
-                            <td>BK005</td>
-                            <td>Michael Adams</td>
-                            <td>Mercedes-Benz A-Class</td>
-                            <td>17/08/2026</td>
-                            <td>22/08/2026</td>
-                            <td>
-                                <span class="status status-completed">
-                                    Completed
-                                </span>
-                            </td>
-                            <td>E003</td>
-                            <td>Sipho Naidoo</td>
-                            <td>
-                                <button type="button" class="view-btn">
-                                    View
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>R004</td>
-                            <td>BK006</td>
-                            <td>Emily Brown</td>
-                            <td>Hyundai i20</td>
-                            <td>10/08/2026</td>
-                            <td>14/08/2026</td>
-                            <td>
-                                <span class="status status-completed">
-                                    Completed
-                                </span>
-                            </td>
-                            <td>E004</td>
-                            <td>Lerato Khumalo</td>
-                            <td>
-                                <button type="button" class="view-btn">
-                                    View
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>R005</td>
-                            <td>BK007</td>
-                            <td>Sarah Williams</td>
-                            <td>Volkswagen Polo</td>
-                            <td>06/08/2026</td>
-                            <td>09/08/2026</td>
-                            <td>
-                                <span class="status status-completed">
-                                    Completed
-                                </span>
-                            </td>
-                            <td>E001</td>
-                            <td>Thabo Mokoena</td>
-                            <td>
-                                <button type="button" class="view-btn">
-                                    View
-                                </button>
-                            </td>
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
+            </div>
+        </div>
             </div>
 
 
@@ -574,7 +545,5 @@
             </div>
 
         </div>
-
-    </div>
 
 </asp:Content>
