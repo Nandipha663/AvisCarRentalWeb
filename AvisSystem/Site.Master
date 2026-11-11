@@ -139,6 +139,10 @@
     <li><a class="dropdown-item" href="/AvisPages/ViewBranches">View Branches</a></li>
     </ul>
   </li>
+                           <li id="navReports" runat="server" visible="true">
+        <a runat="server" href="~/AvisPages/Reports.aspx">Reports</a>
+    </li>
+</ul>
 
                </LoggedInTemplate>
                              </asp:LoginView>
