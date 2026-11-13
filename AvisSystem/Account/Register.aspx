@@ -3,7 +3,7 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div class="register-page">
 
-        <div class="register-card">
+        <div class="register-card"></div>
 
             <!-- LEFT SIDE -->
             <div class="register-left">
@@ -12,7 +12,20 @@
                     AVIS
                 </div>
 
-                <h2>Join AVIS</h2>
+                <h2>Join AVIS<asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>" InsertCommand="INSERT INTO CUSTOMER(FullName, Address, ContactNumber, EmailAddress, LicenceNumber, LicenceCode, CustomerUsername, CustomerPassword, LicenceCountryOfIssue) VALUES (@FullName, @Address, @ContactNumber, @EmailAddress, @LicenceNumber,@LicenceCode, @CustomerUsername, @CustomerPassword, @LicenceCountryOfIssue)" SelectCommand="SELECT * FROM CUSTOMER">
+                    <InsertParameters>
+                        <asp:Parameter Name="FullName" />
+                        <asp:Parameter Name="Address" />
+                        <asp:Parameter Name="ContactNumber" />
+                        <asp:Parameter Name="EmailAddress" />
+                        <asp:Parameter Name="LicenceNumber" />
+                        <asp:Parameter Name="LicenceCode" />
+                        <asp:Parameter Name="CustomerUsername" />
+                        <asp:Parameter Name="CustomerPassword" />
+                        <asp:Parameter Name="LicenceCountryOfIssue" />
+                    </InsertParameters>
+                    </asp:SqlDataSource>
+                </h2>
 
                 <p>
                     Create your account to manage
@@ -175,49 +188,23 @@
                 <!-- ROW 3 -->
                 <div class="form-row">
 
-                    <!-- BRANCH -->
+                    <!-- LICENCE NUMBER -->
                     <div class="form-group">
 
                         <asp:Label
                             runat="server"
-                            AssociatedControlID="Branch"
-                            Text="Branch">
+                            AssociatedControlID="TextBox1"
+                            Text="Licence Number">
                         </asp:Label>
 
-                        <asp:DropDownList
-                            runat="server"
-                            ID="Branch"
-                            CssClass="form-control">
-
-                            <asp:ListItem
-                                Text="Select Branch"
-                                Value="">
-                            </asp:ListItem>
-
-                            <asp:ListItem
-                                Text="Durban">
-                            </asp:ListItem>
-
-                            <asp:ListItem
-                                Text="Pietermaritzburg">
-                            </asp:ListItem>
-
-                            <asp:ListItem
-                                Text="Johannesburg">
-                            </asp:ListItem>
-
-                            <asp:ListItem
-                                Text="Cape Town">
-                            </asp:ListItem>
-
-                        </asp:DropDownList>
+                        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
 
                         <asp:RequiredFieldValidator
                             runat="server"
-                            ControlToValidate="Branch"
+                            ControlToValidate="TextBox1"
                             InitialValue=""
                             CssClass="text-danger"
-                            ErrorMessage="Please select a branch."
+                            ErrorMessage="Please input licence number."
                             Display="Dynamic">
                         </asp:RequiredFieldValidator>
 
@@ -229,49 +216,98 @@
 
                         <asp:Label
                             runat="server"
-                            AssociatedControlID="Position"
-                            Text="Position">
+                            AssociatedControlID="DropDownList1"
+                            Text="Licence Code">
                         </asp:Label>
 
-                        <asp:DropDownList
-                            runat="server"
-                            ID="Position"
-                            CssClass="form-control">
-
-                            <asp:ListItem
-                                Text="Select Position"
-                                Value="">
-                            </asp:ListItem>
-
-                            <asp:ListItem
-                                Text="Manager">
-                            </asp:ListItem>
-
-                            <asp:ListItem
-                                Text="Rental Agent">
-                            </asp:ListItem>
-
-                            <asp:ListItem
-                                Text="Inspector">
-                            </asp:ListItem>
-
-                        </asp:DropDownList>
+                        <asp:DropDownList ID="DropDownList1" runat="server">
+    <asp:ListItem Value="" Text="-- Select code --" />
+    <asp:ListItem>A1</asp:ListItem>
+    <asp:ListItem>A</asp:ListItem>
+    <asp:ListItem>B</asp:ListItem>
+    <asp:ListItem>C1</asp:ListItem>
+    <asp:ListItem>C</asp:ListItem>
+    <asp:ListItem>EB</asp:ListItem>
+    <asp:ListItem>EC1</asp:ListItem>
+    <asp:ListItem>EC</asp:ListItem>
+</asp:DropDownList>
 
                         <asp:RequiredFieldValidator
                             runat="server"
-                            ControlToValidate="Position"
+                            ControlToValidate="DropDownList1"
                             InitialValue=""
                             CssClass="text-danger"
-                            ErrorMessage="Please select a position."
+                            ErrorMessage="Please select licence code."
                             Display="Dynamic">
                         </asp:RequiredFieldValidator>
 
                     </div>
 
                 </div>
+                    <!-- LICENCE COUNTRY OF ISSUE -->
+    <div class="form-group">
 
+        <asp:Label
+            runat="server"
+            AssociatedControlID="LicenceCountry"
+            Text="Licence Country of Issue">
+        </asp:Label>
+
+        <asp:DropDownList
+            runat="server"
+            ID="LicenceCountry"
+            CssClass="form-control">
+            <asp:ListItem Value="" Text="-- Select country --" />
+            <asp:ListItem>South Africa</asp:ListItem>
+            <asp:ListItem>Botswana</asp:ListItem>
+            <asp:ListItem>Eswatini</asp:ListItem>
+            <asp:ListItem>Lesotho</asp:ListItem>
+            <asp:ListItem>Malawi</asp:ListItem>
+            <asp:ListItem>Mozambique</asp:ListItem>
+            <asp:ListItem>Namibia</asp:ListItem>
+            <asp:ListItem>Zambia</asp:ListItem>
+            <asp:ListItem>Zimbabwe</asp:ListItem>
+            <asp:ListItem>Other</asp:ListItem>
+        </asp:DropDownList>
+
+        <asp:RequiredFieldValidator
+            runat="server"
+            ControlToValidate="LicenceCountry"
+            InitialValue=""
+            CssClass="text-danger"
+            ErrorMessage="Please select country of issue."
+            Display="Dynamic">
+        </asp:RequiredFieldValidator>
+
+    </div>
 
                 <!-- ROW 4 -->
+                  <!-- PHYSICAL ADDRESS -->
+  <div class="form-group">
+
+      <asp:Label
+          runat="server"
+          AssociatedControlID="PhysicalAddress"
+          Text="Physical Address">
+      </asp:Label>
+
+      <asp:TextBox
+          runat="server"
+          ID="PhysicalAddress"
+          CssClass="form-control"
+          placeholder="Enter physical address">
+      </asp:TextBox>
+
+      <asp:RequiredFieldValidator
+          runat="server"
+          ControlToValidate="PhysicalAddress"
+          CssClass="text-danger"
+          ErrorMessage="Physical address is required."
+          Display="Dynamic">
+      </asp:RequiredFieldValidator>
+
+  </div>
+
                 <div class="form-row">
 
                     <!-- PASSWORD -->
@@ -367,6 +403,13 @@
         Text="You must agree to the Terms and Conditions.">
     </asp:Label>
                 </div>
+                <br />
+
+<asp:Label ID="lblMessage"
+    runat="server"
+    Visible="false"
+    Font-Bold="true">
+</asp:Label>
 
 
                 <!-- BUTTONS -->
@@ -385,6 +428,8 @@
                         OnClick="CreateUser_Click" />
 
                 </div>
+                
+
 
 
                 <!-- LOGIN LINK -->
@@ -404,5 +449,5 @@
 
         </div>
 
-    </div>
+  
 </asp:Content>
