@@ -167,6 +167,7 @@
     <Content Include="AvisPages\AddRental.aspx" />
     <Content Include="AvisPages\AddVehicleReturn.aspx" />
     <Content Include="AvisPages\Dashboard.aspx" />
+    <Content Include="AvisPages\Reports.aspx" />
     <Content Include="AvisPages\UpdateBookings.aspx" />
     <Content Include="AvisPages\UpdateRentals.aspx" />
     <Content Include="AvisPages\UpdateVehicleReturn.aspx" />
@@ -446,6 +447,13 @@
     </Compile>
     <Compile Include="AvisPages\Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AvisPages\Reports.aspx.cs">
+      <DependentUpon>Reports.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AvisPages\Reports.aspx.designer.cs">
+      <DependentUpon>Reports.aspx</DependentUpon>
     </Compile>
     <Compile Include="AvisPages\UpdateBookings.aspx.cs">
       <DependentUpon>UpdateBookings.aspx</DependentUpon>

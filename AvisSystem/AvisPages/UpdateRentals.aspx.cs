@@ -11,6 +11,25 @@ namespace AvisSystem.AvisPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                txtFromDate.Text = "";
+                txtToDate.Text = "";
+
+                DDLStatuses.SelectedValue = "AllStatuses";
+
+                GVRental.DataBind();
+            }
+
+        }
+
+        protected void btnFilter_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        protected void btnClearFilters_Click(object sender, EventArgs e)
+        {
 
         }
     }
