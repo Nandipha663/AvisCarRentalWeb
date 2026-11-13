@@ -192,6 +192,7 @@
             <asp:BoundField DataField="CustomerFullName" HeaderText="CustomerFullName" SortExpression="CustomerFullName" />
             <asp:BoundField DataField="Vehicle_make" HeaderText="Vehicle_make" SortExpression="Vehicle_make" />
             <asp:BoundField DataField="Vehicle_model" HeaderText="Vehicle_model" SortExpression="Vehicle_model" />
+            <asp:BoundField DataField="Status" HeaderText="Status" />
         </Columns>
     </asp:GridView>
         </div>
@@ -250,6 +251,7 @@
                 <label>Pick-up Date</label>
                 <asp:TextBox ID="txtPickUpDate"
                     runat="server"
+                    TextMode="Date"
                     CssClass="modern-input readonly-input"
                     ReadOnly="True" />
             </div>
@@ -258,6 +260,7 @@
                 <label>Expected Return Date</label>
                 <asp:TextBox ID="txtExpectedReturnDate"
                     runat="server"
+                    TextMode="Date"
                     CssClass="modern-input readonly-input"
                     ReadOnly="True" />
             </div>
@@ -277,6 +280,7 @@
                 <label>Rental Start Date</label>
                 <asp:TextBox ID="txtStartDate"
                     runat="server"
+                    TextMode="Date"
                     CssClass="modern-input readonly-input"
                     ReadOnly="True" />
             </div>
@@ -303,8 +307,31 @@
 
 
     <div class="button-area">
+        <asp:SqlDataSource ID="SqlDSEmployee" runat="server" ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT * FROM [EMPLOYEE] WHERE ([EmailAddress] = @EmailAddress)">
+            <SelectParameters>
+                <asp:Parameter Name="EmailAddress" Type="String"></asp:Parameter>
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <asp:DetailsView ID="DVEmployees" runat="server" Height="50px" Width="125px" Visible="False" DataSourceID="SqlDSEmployee" AutoGenerateRows="False" DataKeyNames="EmployeeID">
+            <Fields>
+                <asp:BoundField DataField="EmployeeID" HeaderText="EmployeeID" InsertVisible="False" ReadOnly="True" SortExpression="EmployeeID" />
+                <asp:BoundField DataField="Fullname" HeaderText="Fullname" SortExpression="Fullname" />
+                <asp:BoundField DataField="EmailAddress" HeaderText="EmailAddress" SortExpression="EmailAddress" />
+                <asp:BoundField DataField="Position" HeaderText="Position" SortExpression="Position" />
+                <asp:BoundField DataField="ContactNumber" HeaderText="ContactNumber" SortExpression="ContactNumber" />
+                <asp:BoundField DataField="EmploymentStatus" HeaderText="EmploymentStatus" SortExpression="EmploymentStatus" />
+                <asp:BoundField DataField="Username" HeaderText="Username" SortExpression="Username" />
+                <asp:BoundField DataField="Password" HeaderText="Password" SortExpression="Password" />
+                <asp:BoundField DataField="BranchName" HeaderText="BranchName" SortExpression="BranchName" />
+            </Fields>
+        </asp:DetailsView>
 
+        <asp:Label ID="LblStatus" runat="server" Text="Active"></asp:Label>
         <asp:Button ID="BtnClear" runat="server" Text="🧹Clear" CssClass="action-btn clear-btn" OnClick="btnClear_Click" />
+        <!-- Add Rental SqlDS -->
+        <asp:Button ID="BtnAddRental" runat="server" Text="✔Add Rental"  CssClass="action-btn add-btn" OnClick="btnAddRental_Click"  />
+        
+    </div>
         <asp:SqlDataSource ID="SqlDSAddRental" runat="server" ConflictDetection="CompareAllValues" ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True" DeleteCommand="DELETE FROM [RENTAL] WHERE [RentalID] = @original_RentalID AND [BookingID] = @original_BookingID AND [CustomerID] = @original_CustomerID AND (([CustomerName] = @original_CustomerName) OR ([CustomerName] IS NULL AND @original_CustomerName IS NULL)) AND [VehicleVinNo] = @original_VehicleVinNo AND [EmployeeID] = @original_EmployeeID AND (([EmployeeName] = @original_EmployeeName) OR ([EmployeeName] IS NULL AND @original_EmployeeName IS NULL)) AND (([PickupDate] = @original_PickupDate) OR ([PickupDate] IS NULL AND @original_PickupDate IS NULL)) AND (([StartDate] = @original_StartDate) OR ([StartDate] IS NULL AND @original_StartDate IS NULL)) AND (([ExpectedReturnDate] = @original_ExpectedReturnDate) OR ([ExpectedReturnDate] IS NULL AND @original_ExpectedReturnDate IS NULL)) AND (([RentalStatus] = @original_RentalStatus) OR ([RentalStatus] IS NULL AND @original_RentalStatus IS NULL)) AND (([DepositAmount] = @original_DepositAmount) OR ([DepositAmount] IS NULL AND @original_DepositAmount IS NULL)) AND (([VehicleMakeModel] = @original_VehicleMakeModel) OR ([VehicleMakeModel] IS NULL AND @original_VehicleMakeModel IS NULL))" InsertCommand="INSERT INTO [RENTAL] ([BookingID], [CustomerID], [CustomerName], [VehicleVinNo], [EmployeeID], [EmployeeName], [PickupDate], [StartDate], [ExpectedReturnDate], [RentalStatus], [DepositAmount], [VehicleMakeModel]) VALUES (@BookingID, @CustomerID, @CustomerName, @VehicleVinNo, @EmployeeID, @EmployeeName, @PickupDate, @StartDate, @ExpectedReturnDate, @RentalStatus, @DepositAmount, @VehicleMakeModel)" OldValuesParameterFormatString="original_{0}" ProviderName="System.Data.SqlClient" SelectCommand="SELECT * FROM [RENTAL]" UpdateCommand="UPDATE [RENTAL] SET [BookingID] = @BookingID, [CustomerID] = @CustomerID, [CustomerName] = @CustomerName, [VehicleVinNo] = @VehicleVinNo, [EmployeeID] = @EmployeeID, [EmployeeName] = @EmployeeName, [PickupDate] = @PickupDate, [StartDate] = @StartDate, [ExpectedReturnDate] = @ExpectedReturnDate, [RentalStatus] = @RentalStatus, [DepositAmount] = @DepositAmount, [VehicleMakeModel] = @VehicleMakeModel WHERE [RentalID] = @original_RentalID AND [BookingID] = @original_BookingID AND [CustomerID] = @original_CustomerID AND (([CustomerName] = @original_CustomerName) OR ([CustomerName] IS NULL AND @original_CustomerName IS NULL)) AND [VehicleVinNo] = @original_VehicleVinNo AND [EmployeeID] = @original_EmployeeID AND (([EmployeeName] = @original_EmployeeName) OR ([EmployeeName] IS NULL AND @original_EmployeeName IS NULL)) AND (([PickupDate] = @original_PickupDate) OR ([PickupDate] IS NULL AND @original_PickupDate IS NULL)) AND (([StartDate] = @original_StartDate) OR ([StartDate] IS NULL AND @original_StartDate IS NULL)) AND (([ExpectedReturnDate] = @original_ExpectedReturnDate) OR ([ExpectedReturnDate] IS NULL AND @original_ExpectedReturnDate IS NULL)) AND (([RentalStatus] = @original_RentalStatus) OR ([RentalStatus] IS NULL AND @original_RentalStatus IS NULL)) AND (([DepositAmount] = @original_DepositAmount) OR ([DepositAmount] IS NULL AND @original_DepositAmount IS NULL)) AND (([VehicleMakeModel] = @original_VehicleMakeModel) OR ([VehicleMakeModel] IS NULL AND @original_VehicleMakeModel IS NULL))">
             <DeleteParameters>
                 <asp:Parameter Name="original_RentalID" Type="Int32" />
@@ -331,7 +358,7 @@
                 <asp:ControlParameter ControlID="txtPickUpDate" Name="PickupDate" PropertyName="Text" Type="DateTime" />
                 <asp:ControlParameter ControlID="txtStartDate" Name="StartDate" PropertyName="Text" Type="DateTime" />
                 <asp:ControlParameter ControlID="txtExpectedReturnDate" Name="ExpectedReturnDate" PropertyName="Text" Type="DateTime" />
-                <asp:ControlParameter Name="RentalStatus" Type="String" />
+                <asp:ControlParameter Name="RentalStatus" Type="String" ControlID="LblStatus" PropertyName="Text" />
                 <asp:Parameter Name="DepositAmount" Type="Decimal" />
                 <asp:ControlParameter ControlID="txtVehicleMakeModel" Name="VehicleMakeModel" PropertyName="Text" Type="String" />
             </InsertParameters>
@@ -363,11 +390,54 @@
                 <asp:Parameter Name="original_VehicleMakeModel" Type="String" />
             </UpdateParameters>
         </asp:SqlDataSource>
-        <!-- Add Rental SqlDS -->
-        <asp:Button ID="BtnAddRental" runat="server" Text="✔Add Rental"  CssClass="action-btn add-btn" OnClick="btnAddRental_Click"  />
-        
-    </div>
-
+    <asp:SqlDataSource ID="SqlDSBookingStatus" runat="server" ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True" DeleteCommand="DELETE FROM [BOOKING] WHERE [BookingID] = @original_BookingID AND [CustomerID] = @original_CustomerID AND [VehicleVinNo] = @original_VehicleVinNo AND [Booking Date] = @original_Booking_Date AND [PickUp Date] = @original_PickUp_Date AND [ExpectedReturnDate] = @original_ExpectedReturnDate AND [Status] = @original_Status AND (([Invoice Amount] = @original_Invoice_Amount) OR ([Invoice Amount] IS NULL AND @original_Invoice_Amount IS NULL)) AND (([EmployeeID] = @original_EmployeeID) OR ([EmployeeID] IS NULL AND @original_EmployeeID IS NULL)) AND (([FullName] = @original_FullName) OR ([FullName] IS NULL AND @original_FullName IS NULL)) AND (([Position] = @original_Position) OR ([Position] IS NULL AND @original_Position IS NULL)) AND (([PickUpBranchName] = @original_PickUpBranchName) OR ([PickUpBranchName] IS NULL AND @original_PickUpBranchName IS NULL)) AND (([DropOffBranchName] = @original_DropOffBranchName) OR ([DropOffBranchName] IS NULL AND @original_DropOffBranchName IS NULL)) AND (([BranchName] = @original_BranchName) OR ([BranchName] IS NULL AND @original_BranchName IS NULL)) AND (([CustomerFullName] = @original_CustomerFullName) OR ([CustomerFullName] IS NULL AND @original_CustomerFullName IS NULL)) AND (([LastUpdated] = @original_LastUpdated) OR ([LastUpdated] IS NULL AND @original_LastUpdated IS NULL)) AND [RefundStatus] = @original_RefundStatus AND (([Vehicle_make] = @original_Vehicle_make) OR ([Vehicle_make] IS NULL AND @original_Vehicle_make IS NULL)) AND (([Vehicle_model] = @original_Vehicle_model) OR ([Vehicle_model] IS NULL AND @original_Vehicle_model IS NULL))" InsertCommand="INSERT INTO [BOOKING] ([CustomerID], [VehicleVinNo], [Booking Date], [PickUp Date], [ExpectedReturnDate], [Status], [Invoice Amount], [EmployeeID], [FullName], [Position], [PickUpBranchName], [DropOffBranchName], [BranchName], [CustomerFullName], [LastUpdated], [RefundStatus], [Vehicle_make], [Vehicle_model]) VALUES (@CustomerID, @VehicleVinNo, @Booking_Date, @PickUp_Date, @ExpectedReturnDate, @Status, @Invoice_Amount, @EmployeeID, @FullName, @Position, @PickUpBranchName, @DropOffBranchName, @BranchName, @CustomerFullName, @LastUpdated, @RefundStatus, @Vehicle_make, @Vehicle_model)" OldValuesParameterFormatString="original_{0}" ProviderName="System.Data.SqlClient" SelectCommand="SELECT * FROM [BOOKING]" UpdateCommand="UPDATE [BOOKING] SET Status = 'Checked Out'
+    WHERE BookingID = @BookingID
+   AND Status = 'Confirmed'">
+        <DeleteParameters>
+            <asp:Parameter Name="original_BookingID" Type="Int32"></asp:Parameter>
+            <asp:Parameter Name="original_CustomerID" Type="Int32"></asp:Parameter>
+            <asp:Parameter Name="original_VehicleVinNo" Type="String"></asp:Parameter>
+            <asp:Parameter Name="original_Booking_Date" Type="DateTime"></asp:Parameter>
+            <asp:Parameter Name="original_PickUp_Date" Type="DateTime"></asp:Parameter>
+            <asp:Parameter Name="original_ExpectedReturnDate" Type="DateTime"></asp:Parameter>
+            <asp:Parameter Name="original_Status" Type="String"></asp:Parameter>
+            <asp:Parameter Name="original_Invoice_Amount" Type="Decimal"></asp:Parameter>
+            <asp:Parameter Name="original_EmployeeID" Type="Int32"></asp:Parameter>
+            <asp:Parameter Name="original_FullName" Type="String"></asp:Parameter>
+            <asp:Parameter Name="original_Position" Type="String"></asp:Parameter>
+            <asp:Parameter Name="original_PickUpBranchName" Type="String"></asp:Parameter>
+            <asp:Parameter Name="original_DropOffBranchName" Type="String"></asp:Parameter>
+            <asp:Parameter Name="original_BranchName" Type="String"></asp:Parameter>
+            <asp:Parameter Name="original_CustomerFullName" Type="String"></asp:Parameter>
+            <asp:Parameter Name="original_LastUpdated" Type="DateTime"></asp:Parameter>
+            <asp:Parameter Name="original_RefundStatus" Type="String"></asp:Parameter>
+            <asp:Parameter Name="original_Vehicle_make" Type="String"></asp:Parameter>
+            <asp:Parameter Name="original_Vehicle_model" Type="String"></asp:Parameter>
+        </DeleteParameters>
+        <InsertParameters>
+            <asp:Parameter Name="CustomerID" Type="Int32"></asp:Parameter>
+            <asp:Parameter Name="VehicleVinNo" Type="String"></asp:Parameter>
+            <asp:Parameter Name="Booking_Date" Type="DateTime"></asp:Parameter>
+            <asp:Parameter Name="PickUp_Date" Type="DateTime"></asp:Parameter>
+            <asp:Parameter Name="ExpectedReturnDate" Type="DateTime"></asp:Parameter>
+            <asp:Parameter Name="Status" Type="String"></asp:Parameter>
+            <asp:Parameter Name="Invoice_Amount" Type="Decimal"></asp:Parameter>
+            <asp:Parameter Name="EmployeeID" Type="Int32"></asp:Parameter>
+            <asp:Parameter Name="FullName" Type="String"></asp:Parameter>
+            <asp:Parameter Name="Position" Type="String"></asp:Parameter>
+            <asp:Parameter Name="PickUpBranchName" Type="String"></asp:Parameter>
+            <asp:Parameter Name="DropOffBranchName" Type="String"></asp:Parameter>
+            <asp:Parameter Name="BranchName" Type="String"></asp:Parameter>
+            <asp:Parameter Name="CustomerFullName" Type="String"></asp:Parameter>
+            <asp:Parameter Name="LastUpdated" Type="DateTime"></asp:Parameter>
+            <asp:Parameter Name="RefundStatus" Type="String"></asp:Parameter>
+            <asp:Parameter Name="Vehicle_make" Type="String"></asp:Parameter>
+            <asp:Parameter Name="Vehicle_model" Type="String"></asp:Parameter>
+        </InsertParameters>
+        <UpdateParameters>
+            <asp:Parameter Name="BookingID" Type="Int32" />
+        </UpdateParameters>
+    </asp:SqlDataSource>
 
     <asp:Label ID="lblMessage"
         runat="server"
