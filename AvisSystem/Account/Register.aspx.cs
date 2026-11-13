@@ -137,7 +137,7 @@ namespace AvisSystem.Account
                     throw new Exception("Customer information was not saved.");
                 }
             }
-            catch (Exception )
+            catch (Exception ex )
             {
                 //  Remove Identity account if CUSTOMER insertion fails
                 IdentityResult deleteResult = manager.Delete(user);
