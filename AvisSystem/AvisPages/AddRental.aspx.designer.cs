@@ -123,6 +123,33 @@ namespace AvisSystem.AvisPages
         protected global::System.Web.UI.WebControls.TextBox txtEmployeeName;
 
         /// <summary>
+        /// SqlDSEmployee control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDSEmployee;
+
+        /// <summary>
+        /// DVEmployees control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DetailsView DVEmployees;
+
+        /// <summary>
+        /// LblStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblStatus;
+
+        /// <summary>
         /// BtnClear control.
         /// </summary>
         /// <remarks>
@@ -130,6 +157,15 @@ namespace AvisSystem.AvisPages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnClear;
+
+        /// <summary>
+        /// BtnAddRental control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnAddRental;
 
         /// <summary>
         /// SqlDSAddRental control.
@@ -141,13 +177,13 @@ namespace AvisSystem.AvisPages
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDSAddRental;
 
         /// <summary>
-        /// BtnAddRental control.
+        /// SqlDSBookingStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnAddRental;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDSBookingStatus;
 
         /// <summary>
         /// lblMessage control.

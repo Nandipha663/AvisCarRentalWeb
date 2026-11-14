@@ -32,5 +32,40 @@ namespace AvisSystem.AvisPages
         {
 
         }
+
+        protected void GVRental_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LblID.Text = GVRental.SelectedRow.Cells[1].Text;
+            LblStatus.Text = GVRental.SelectedRow.Cells[11].Text;
+            LblCust.Text = GVRental.SelectedRow.Cells[4].Text;
+            LblVehicle.Text = GVRental.SelectedRow.Cells[13].Text;
+        }
+
+        protected void BtnClear_Click(object sender, EventArgs e)
+        {
+            LblID.Text = "ID";
+            LblStatus.Text = "Status";
+            LblCust.Text = "Customer's Name";
+            LblVehicle.Text = "Vehicle";
+        }
+
+        protected void BtnDelete_Click(object sender, EventArgs e)
+        {
+            if (GVRental.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            int rentalID = Convert.ToInt32(
+                GVRental.DataKeys[GVRental.SelectedIndex].Value
+            );
+
+            SqlDSDeleteRental.DeleteParameters["RentalID"].DefaultValue =
+                rentalID.ToString();
+
+            SqlDSDeleteRental.Delete();
+
+            GVRental.DataBind();
+        }
     }
 }
