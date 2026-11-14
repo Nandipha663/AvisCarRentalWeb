@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace AvisSystem
 {
-    public partial class TermsAndConditions : System.Web.UI.Page
+    public partial class TermsAndConditions : AvisSystem.Models.SecurePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -161,6 +161,7 @@
     <Content Include="Account\ResetPasswordConfirmation.aspx" />
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
+    <Content Include="AvisPages\AccessDenied.aspx" />
     <Content Include="AvisPages\AddClaim.aspx" />
     <Content Include="AvisPages\AddInspectionReport.aspx" />
     <Content Include="AvisPages\AddPayment.aspx" />
@@ -406,6 +407,13 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="AvisPages\AccessDenied.aspx.cs">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AvisPages\AccessDenied.aspx.designer.cs">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AvisPages\AddClaim.aspx.cs">
       <DependentUpon>AddClaim.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -633,7 +641,11 @@
     <Compile Include="ManagerPages\ViewUpdateEmployees.aspx.designer.cs">
       <DependentUpon>ViewUpdateEmployees.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\AvisRoles.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\SecurePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="PrivacyPolicy.aspx.cs">
       <DependentUpon>PrivacyPolicy.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

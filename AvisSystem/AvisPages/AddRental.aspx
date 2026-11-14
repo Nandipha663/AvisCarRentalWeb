@@ -197,9 +197,7 @@
         </div>
 </div>
         </div>
-    
-
-
+   
     <div class="selected-rental-card">
 
         <h3 class="section-title">Selected Booking Details</h3>

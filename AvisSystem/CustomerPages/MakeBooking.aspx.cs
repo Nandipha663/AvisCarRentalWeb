@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace AvisSystem.CustomerPages
 {
-    public partial class MakeBooking : System.Web.UI.Page
+    public partial class MakeBooking : AvisSystem.Models.CustomerPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

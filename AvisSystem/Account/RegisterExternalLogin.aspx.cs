@@ -8,7 +8,7 @@ using AvisSystem.Models;
 
 namespace AvisSystem.Account
 {
-    public partial class RegisterExternalLogin : System.Web.UI.Page
+    public partial class RegisterExternalLogin : AvisSystem.Models.SecurePage
     {
         protected string ProviderName
         {

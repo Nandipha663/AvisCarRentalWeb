@@ -25,38 +25,52 @@ namespace AvisSystem.Account
 
         protected void LogIn(object sender, EventArgs e)
         {
-            if (IsValid)
+            if (!IsValid) return;
+
+            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var signinManager = Context.GetOwinContext().GetUserManager<ApplicationSignInManager>();
+
+            // accept a username OR an email address
+            string typed = Email.Text.Trim();
+            var found = manager.FindByName(typed) ?? manager.FindByEmail(typed);
+            string loginName = found != null ? found.UserName : typed;
+
+            // inactive accounts are refused
+            if (!AvisSystem.Models.AvisRoles.IsActive(loginName))
             {
-                // Validate the user password
-                var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                var signinManager = Context.GetOwinContext().GetUserManager<ApplicationSignInManager>();
-
-                // This doen't count login failures towards account lockout
-                // To enable password failures to trigger lockout, change to shouldLockout: true
-                var result = signinManager.PasswordSignIn(Email.Text, Password.Text, RememberMe.Checked, shouldLockout: false);
-
-                switch (result)
-                {
-                    case SignInStatus.Success:
-                        //IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
-                        Response.Redirect("~/AvisPages/Dashboard.aspx");
-                        break;
-                    case SignInStatus.LockedOut:
-                        Response.Redirect("/Account/Lockout");
-                        break;
-                    case SignInStatus.RequiresVerification:
-                        Response.Redirect(String.Format("/Account/TwoFactorAuthenticationSignIn?ReturnUrl={0}&RememberMe={1}", 
-                                                        Request.QueryString["ReturnUrl"],
-                                                        RememberMe.Checked),
-                                          true);
-                        break;
-                    case SignInStatus.Failure:
-                    default:
-                        FailureText.Text = "Invalid login attempt";
-                        ErrorMessage.Visible = true;
-                        break;
-                }
+                FailureText.Text = "This account is inactive. Please contact the branch.";
+                ErrorMessage.Visible = true;
+                return;
             }
+
+            var result = signinManager.PasswordSignIn(loginName, Password.Text,
+                                                      RememberMe.Checked, shouldLockout: false);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    var user = manager.FindByName(loginName);
+                    var roles = manager.GetRoles(user.Id);
+
+                    string returnUrl = Request.QueryString["ReturnUrl"];
+                    // only follow ReturnUrl if it is a path on this site (blocks redirects to other websites)
+                    bool isLocal = !string.IsNullOrEmpty(returnUrl)
+                                   && returnUrl.StartsWith("/")
+                                   && !returnUrl.StartsWith("//")
+                                   && !returnUrl.StartsWith("/\\");
+
+                    if (isLocal)
+                        Response.Redirect(returnUrl);
+                    else
+                        Response.Redirect(AvisSystem.Models.AvisRoles.HomePageFor(roles));
+                    break;
+
+                default:
+                    FailureText.Text = "Invalid login attempt";
+                    ErrorMessage.Visible = true;
+                    break;
+
+            }
+        
         }
     }
 }

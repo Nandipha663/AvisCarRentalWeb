@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace AvisSystem.AvisPages
 {
-    public partial class AddRental : System.Web.UI.Page
+    public partial class AddRental : AvisSystem.Models.SecurePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

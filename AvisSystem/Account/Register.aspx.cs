@@ -93,6 +93,12 @@ namespace AvisSystem.Account
                 ErrorMessage.Visible = true;
                 return;
             }
+            if (result.Succeeded)
+            {
+                manager.AddToRole(user.Id, AvisSystem.Models.AvisRoles.Customer);   // NEW
+                signInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
+                Response.Redirect("~/CustomerPages/Vehicles.aspx");                     // CHANGED
+            }
 
             //  Insert customer details into CUSTOMER
             try

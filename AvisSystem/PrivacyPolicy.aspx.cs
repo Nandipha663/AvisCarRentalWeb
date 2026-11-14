@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace AvisSystem
 {
-    public partial class PrivacyPolicy : System.Web.UI.Page
+    public partial class PrivacyPolicy : AvisSystem.Models.SecurePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

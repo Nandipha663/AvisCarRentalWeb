@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace AvisSystem.CustomerPages
 {
-    public partial class Branches : System.Web.UI.Page
+    public partial class Branches : AvisSystem.Models.SecurePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

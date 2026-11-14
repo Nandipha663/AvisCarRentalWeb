@@ -68,84 +68,48 @@
 
 </asp:LoginView>
 
-                        <!-- LOGGED-IN MENU -->
-                 <asp:LoginView runat="server">
-                       <LoggedInTemplate>
+                       <!-- LOGGED-IN MENU: each role sees only its own links -->
+<asp:LoginView runat="server">
+    <RoleGroups>
 
-                           <!-- Dashboard -->
-    <li class="nav-item">
-        <a class="nav-link" runat="server" href="~/AvisPages/Dashboard.aspx">
-            Dashboard
-        </a>
-    </li>
+        <asp:RoleGroup Roles="Manager">
+            <ContentTemplate>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/AvisPages/Dashboard.aspx">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/AvisPages/AddRental.aspx">Rental</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/AvisPages/UpdateBookings.aspx">Bookings</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/AvisPages/ViewVehicleInspectionReports.aspx">Inspection Reports</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/AvisPages/AddVehicleReturn.aspx">Vehicle Return</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/AvisPages/ViewPayments.aspx">Payments</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/AvisPages/ViewClaims.aspx">Claims</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/AvisPages/ViewBranches.aspx">Branches</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/ManagerPages/ViewUpdateEmployees.aspx">Employees</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/AvisPages/Reports.aspx">Reports</a></li>
+            </ContentTemplate>
+        </asp:RoleGroup>
 
-                        <!--BOOKINGS DROPDOWN-->
-                       <li class="nav-item dropdown">
-   <a class="nav-link dropdown-toggle"  href="#"  id="bookingsBtn">Bookings<span class="caret"></span> </a> 
-     <ul class="dropdown-menu"  id="bookingsMenu">  
-       <li><a class="dropdown-item" href="/AvisPages/UpdateBookings">Update Bookings</a></li>
-      </ul>
-</li>
+        <asp:RoleGroup Roles="OfficeAdmin">
+            <ContentTemplate>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/AvisPages/Dashboard.aspx">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/AvisPages/AddRental.aspx">Rental</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/AvisPages/UpdateBookings.aspx">Bookings</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/AvisPages/ViewVehicleInspectionReports.aspx">Inspection Reports</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/AvisPages/AddVehicleReturn.aspx">Vehicle Return</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/AvisPages/ViewPayments.aspx">Payments</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/AvisPages/ViewClaims.aspx">Claims</a></li>
+            </ContentTemplate>
+        </asp:RoleGroup>
 
-                              <!--RENTAL DROPDOWN-->
-                    <li class="nav-item dropdown">
-<a class="nav-link dropdown-toggle"  href="#"  id="rentalBtn">Rental<span class="caret"></span> </a> 
-  <ul class="dropdown-menu"  id="rentalMenu">  
-   <li><a class="dropdown-item" href="/AvisPages/AddRental">Add Rental Agreement</a></li>
-    <li><a class="dropdown-item" href="/AvisPages/UpdateRentals">Update Existing Rentals</a></li>
-    </ul>
-  </li>
+        <asp:RoleGroup Roles="Customer">
+            <ContentTemplate>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/CustomerPages/Vehicles.aspx">Vehicles</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/CustomerPages/MakeBooking.aspx">Make Booking</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/CustomerPages/MakePayment.aspx">Make Payment</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/CustomerPages/Branches.aspx">Branches</a></li>
+            </ContentTemplate>
+        </asp:RoleGroup>
 
-                                       <!--INSPECTION REPORTSs DROPDOWN-->
-                    <li class="nav-item dropdown">
-<a class="nav-link dropdown-toggle" href="#"  id="inspectionReportsBtn">Inspection Reports<span class="caret"></span> </a> 
-  <ul class="dropdown-menu"  id="inspectionReportsMenu">  
-   <li><a class="dropdown-item" href="/AvisPages/AddInspectionReport">Add Inspection Report</a></li>
-   <li><a class="dropdown-item" href="/AvisPages/ViewVehicleInspectionReports">View Inspection Reports</a></li> 
-    </ul>
-  </li>
-
-                                       <!--VEHICLE RETURN DROPDOWN-->
-                    <li class="nav-item dropdown">
-<a class="nav-link dropdown-toggle" href="#"  id="vehicleReturnBtn">Vehicle Return<span class="caret"></span> </a> 
-  <ul class="dropdown-menu"  id="vehicleReturnMenu">  
-   <li><a class="dropdown-item" href="/AvisPages/AddVehicleReturn">Add Vehicle_Return</a></li>
-    <li><a class="dropdown-item" href="/AvisPages/UpdateVehicleReturn">Update Vehicle_Return</a></li>
-    </ul>
-  </li>
-
-                                                               <!--PAYMENT DROPDOWN-->
-                    <li class="nav-item dropdown">
-<a class="nav-link dropdown-toggle"  href="#" id="paymentBtn" >Payments<span class="caret"></span> </a> 
-  <ul class="dropdown-menu" id="paymentMenu">  
-    <li><a class="dropdown-item" href="/AvisPages/AddPayment">Add Payments</a></li>
-    <li><a class="dropdown-item" href="/AvisPages/ViewPayments">View Payments</a></li>
-    </ul>
- </li>
-
-                                                               <!-- CLAIMS DROPDOWN-->
-                    <li class="nav-item dropdown">
-<a class="nav-link dropdown-toggle" href="#"  id="ClaimsBtn">Claims<span class="caret"></span> </a> 
-  <ul class="dropdown-menu"  id="ClaimsMenu">  
-   <li><a class="dropdown-item" href="/AvisPages/AddClaim">Add a Claim</a></li>
-    <li><a class="dropdown-item" href="/AvisPages/ViewClaims">View Claims</a></li>
-    </ul>
-  </li>
-
-                                            <!-- BRANCH DROPDOWN-->
-                    <li class="nav-item dropdown">
-<a class="nav-link dropdown-toggle"  href="#" id="branchBtn" >Branches<span class="caret"></span> </a> 
-  <ul class="dropdown-menu" id="branchMenu">  
-    <li><a class="dropdown-item" href="/AvisPages/ViewBranches">View Branches</a></li>
-    </ul>
-  </li>
-                           <li id="navReports" runat="server" visible="true">
-        <a runat="server" href="~/AvisPages/Reports.aspx">Reports</a>
-    </li>
-</ul>
-
-               </LoggedInTemplate>
-                             </asp:LoginView>
+    </RoleGroups>
+</asp:LoginView>
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>

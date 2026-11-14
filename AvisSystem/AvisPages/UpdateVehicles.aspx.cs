@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace AvisSystem.AvisPages
 {
-    public partial class UpdateVehicles : System.Web.UI.Page
+    public partial class UpdateVehicles : AvisSystem.Models.SecurePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

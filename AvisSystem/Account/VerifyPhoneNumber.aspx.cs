@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace AvisSystem.Account
 {
-    public partial class VerifyPhoneNumber : System.Web.UI.Page
+    public partial class VerifyPhoneNumber : AvisSystem.Models.SecurePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
