@@ -248,6 +248,7 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Account\Web.config" />
     <Content Include="AvisPages\Web.config" />
+    <Content Include="CustomerPages\VehicleImage.ashx" />
     <None Include="Properties\PublishProfiles\IST-Pmb-Group-3 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
@@ -546,6 +547,9 @@
     </Compile>
     <Compile Include="CustomerPages\MyBookings.aspx.designer.cs">
       <DependentUpon>MyBookings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerPages\VehicleImage.ashx.cs">
+      <DependentUpon>VehicleImage.ashx</DependentUpon>
     </Compile>
     <Compile Include="CustomerPages\Vehicles.aspx.cs">
       <DependentUpon>Vehicles.aspx</DependentUpon>

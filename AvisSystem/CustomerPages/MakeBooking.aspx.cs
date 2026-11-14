@@ -111,6 +111,28 @@ namespace AvisSystem.CustomerPages
 
                 isValid = false;
             }
+            // ==========================================
+            // DATE LOGIC
+            // ==========================================
+
+            DateTime pickDT, retDT;
+            if (isValid
+                && DateTime.TryParse(txtPickupDate.Text + " " + ddlPickupTime.SelectedValue, out pickDT)
+                && DateTime.TryParse(txtReturnDate.Text + " " + ddlReturnTime.SelectedValue, out retDT))
+            {
+                if (pickDT < DateTime.Now)
+                {
+                    ShowError(txtPickupDate, lblPickupDateError,
+                        "The pickup date and time cannot be in the past.");
+                    isValid = false;
+                }
+                else if (retDT <= pickDT)
+                {
+                    ShowError(txtReturnDate, lblReturnDateError,
+                        "The return must be after the pickup.");
+                    isValid = false;
+                }
+            }
 
             // ==========================================
             // STOP IF VALIDATION FAILED
@@ -159,7 +181,7 @@ namespace AvisSystem.CustomerPages
             // GO TO VEHICLE SELECTION PAGE
             // ==========================================
 
-            Response.Redirect("~/CustomerPages/MyBookings.aspx");
+            Response.Redirect("~/CustomerPages/Vehicles.aspx");
         }
 
         // ==============================================
