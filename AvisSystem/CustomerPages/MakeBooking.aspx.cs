@@ -159,7 +159,7 @@ namespace AvisSystem.CustomerPages
             // GO TO VEHICLE SELECTION PAGE
             // ==========================================
 
-            Response.Redirect("~/CustomerPages/Vehicles.aspx");
+            Response.Redirect("~/CustomerPages/MyBookings.aspx");
         }
 
         // ==============================================

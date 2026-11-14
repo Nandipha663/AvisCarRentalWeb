@@ -207,16 +207,9 @@
     <Content Include="Content\images\VolkswagenPoloVivo.png" />
     <Content Include="Content\Site.css" />
     <Content Include="CustomerPages\Branches.aspx" />
-    <Content Include="CustomerPages\CompactVehicles.aspx" />
-    <Content Include="CustomerPages\HatchbackVehicles.aspx" />
-    <Content Include="CustomerPages\LuxuryVehicles.aspx" />
     <Content Include="CustomerPages\MakeBooking.aspx" />
     <Content Include="CustomerPages\MakePayment.aspx" />
-    <Content Include="CustomerPages\PremiumVehicles.aspx" />
-    <Content Include="CustomerPages\SedanVehicles.aspx" />
-    <Content Include="CustomerPages\StandardVehicles.aspx" />
-    <Content Include="CustomerPages\SUVVehicles.aspx" />
-    <Content Include="CustomerPages\VanVehicles.aspx" />
+    <Content Include="CustomerPages\MyBookings.aspx" />
     <Content Include="CustomerPages\Vehicles.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
@@ -533,27 +526,6 @@
     <Compile Include="CustomerPages\Branches.aspx.designer.cs">
       <DependentUpon>Branches.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CustomerPages\CompactVehicles.aspx.cs">
-      <DependentUpon>CompactVehicles.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerPages\CompactVehicles.aspx.designer.cs">
-      <DependentUpon>CompactVehicles.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerPages\HatchbackVehicles.aspx.cs">
-      <DependentUpon>HatchbackVehicles.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerPages\HatchbackVehicles.aspx.designer.cs">
-      <DependentUpon>HatchbackVehicles.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerPages\LuxuryVehicles.aspx.cs">
-      <DependentUpon>LuxuryVehicles.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerPages\LuxuryVehicles.aspx.designer.cs">
-      <DependentUpon>LuxuryVehicles.aspx</DependentUpon>
-    </Compile>
     <Compile Include="CustomerPages\MakeBooking.aspx.cs">
       <DependentUpon>MakeBooking.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -568,40 +540,12 @@
     <Compile Include="CustomerPages\MakePayment.aspx.designer.cs">
       <DependentUpon>MakePayment.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CustomerPages\PremiumVehicles.aspx.cs">
-      <DependentUpon>PremiumVehicles.aspx</DependentUpon>
+    <Compile Include="CustomerPages\MyBookings.aspx.cs">
+      <DependentUpon>MyBookings.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CustomerPages\PremiumVehicles.aspx.designer.cs">
-      <DependentUpon>PremiumVehicles.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerPages\SedanVehicles.aspx.cs">
-      <DependentUpon>SedanVehicles.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerPages\SedanVehicles.aspx.designer.cs">
-      <DependentUpon>SedanVehicles.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerPages\StandardVehicles.aspx.cs">
-      <DependentUpon>StandardVehicles.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerPages\StandardVehicles.aspx.designer.cs">
-      <DependentUpon>StandardVehicles.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerPages\SUVVehicles.aspx.cs">
-      <DependentUpon>SUVVehicles.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerPages\SUVVehicles.aspx.designer.cs">
-      <DependentUpon>SUVVehicles.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerPages\VanVehicles.aspx.cs">
-      <DependentUpon>VanVehicles.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerPages\VanVehicles.aspx.designer.cs">
-      <DependentUpon>VanVehicles.aspx</DependentUpon>
+    <Compile Include="CustomerPages\MyBookings.aspx.designer.cs">
+      <DependentUpon>MyBookings.aspx</DependentUpon>
     </Compile>
     <Compile Include="CustomerPages\Vehicles.aspx.cs">
       <DependentUpon>Vehicles.aspx</DependentUpon>
