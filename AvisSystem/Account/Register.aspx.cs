@@ -34,6 +34,16 @@ namespace AvisSystem.Account
 
             TermsError.Visible = false;
 
+            // Validate contact number length
+            string contactNumber = ContactNumber.Text.Trim();
+            int digitCount = contactNumber.Count(char.IsDigit);
+
+            if (digitCount > 10)
+            {
+                ShowError("Contact number cannot be more than 10 digits.");
+                return;
+            }
+
             // Get Identity managers
             var manager = Context.GetOwinContext()
                 .GetUserManager<ApplicationUserManager>();
@@ -126,9 +136,6 @@ namespace AvisSystem.Account
 
                 // Do not supply Status.
                 // SQL Server assigns Active through its default constraint.
-
-                // Do not insert CustomerPassword.
-                // ASP.NET Identity manages password hashes.
 
                 int insertedRows = SqlDataSource1.Insert();
 
