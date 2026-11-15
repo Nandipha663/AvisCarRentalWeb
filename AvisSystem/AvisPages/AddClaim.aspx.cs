@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 
 namespace AvisSystem.AvisPages
 {
-    public partial class AddClaim : System.Web.UI.Page
+    public partial class AddClaim : AvisSystem.Models.SecurePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

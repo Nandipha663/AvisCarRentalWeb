@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace AvisSystem.Account
 {
-    public partial class ManageLogins : System.Web.UI.Page
+    public partial class ManageLogins : AvisSystem.Models.SecurePage
     {
         protected string SuccessMessage
         {

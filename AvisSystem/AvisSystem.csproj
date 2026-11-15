@@ -161,6 +161,7 @@
     <Content Include="Account\ResetPasswordConfirmation.aspx" />
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
+    <Content Include="AvisPages\AccessDenied.aspx" />
     <Content Include="AvisPages\AddClaim.aspx" />
     <Content Include="AvisPages\AddInspectionReport.aspx" />
     <Content Include="AvisPages\AddPayment.aspx" />
@@ -206,16 +207,9 @@
     <Content Include="Content\images\VolkswagenPoloVivo.png" />
     <Content Include="Content\Site.css" />
     <Content Include="CustomerPages\Branches.aspx" />
-    <Content Include="CustomerPages\CompactVehicles.aspx" />
-    <Content Include="CustomerPages\HatchbackVehicles.aspx" />
-    <Content Include="CustomerPages\LuxuryVehicles.aspx" />
     <Content Include="CustomerPages\MakeBooking.aspx" />
     <Content Include="CustomerPages\MakePayment.aspx" />
-    <Content Include="CustomerPages\PremiumVehicles.aspx" />
-    <Content Include="CustomerPages\SedanVehicles.aspx" />
-    <Content Include="CustomerPages\StandardVehicles.aspx" />
-    <Content Include="CustomerPages\SUVVehicles.aspx" />
-    <Content Include="CustomerPages\VanVehicles.aspx" />
+    <Content Include="CustomerPages\MyBookings.aspx" />
     <Content Include="CustomerPages\Vehicles.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
@@ -254,6 +248,7 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Account\Web.config" />
     <Content Include="AvisPages\Web.config" />
+    <Content Include="CustomerPages\VehicleImage.ashx" />
     <None Include="Properties\PublishProfiles\IST-Pmb-Group-3 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
@@ -406,6 +401,13 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="AvisPages\AccessDenied.aspx.cs">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AvisPages\AccessDenied.aspx.designer.cs">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AvisPages\AddClaim.aspx.cs">
       <DependentUpon>AddClaim.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -525,27 +527,6 @@
     <Compile Include="CustomerPages\Branches.aspx.designer.cs">
       <DependentUpon>Branches.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CustomerPages\CompactVehicles.aspx.cs">
-      <DependentUpon>CompactVehicles.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerPages\CompactVehicles.aspx.designer.cs">
-      <DependentUpon>CompactVehicles.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerPages\HatchbackVehicles.aspx.cs">
-      <DependentUpon>HatchbackVehicles.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerPages\HatchbackVehicles.aspx.designer.cs">
-      <DependentUpon>HatchbackVehicles.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerPages\LuxuryVehicles.aspx.cs">
-      <DependentUpon>LuxuryVehicles.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerPages\LuxuryVehicles.aspx.designer.cs">
-      <DependentUpon>LuxuryVehicles.aspx</DependentUpon>
-    </Compile>
     <Compile Include="CustomerPages\MakeBooking.aspx.cs">
       <DependentUpon>MakeBooking.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -560,40 +541,15 @@
     <Compile Include="CustomerPages\MakePayment.aspx.designer.cs">
       <DependentUpon>MakePayment.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CustomerPages\PremiumVehicles.aspx.cs">
-      <DependentUpon>PremiumVehicles.aspx</DependentUpon>
+    <Compile Include="CustomerPages\MyBookings.aspx.cs">
+      <DependentUpon>MyBookings.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CustomerPages\PremiumVehicles.aspx.designer.cs">
-      <DependentUpon>PremiumVehicles.aspx</DependentUpon>
+    <Compile Include="CustomerPages\MyBookings.aspx.designer.cs">
+      <DependentUpon>MyBookings.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CustomerPages\SedanVehicles.aspx.cs">
-      <DependentUpon>SedanVehicles.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerPages\SedanVehicles.aspx.designer.cs">
-      <DependentUpon>SedanVehicles.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerPages\StandardVehicles.aspx.cs">
-      <DependentUpon>StandardVehicles.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerPages\StandardVehicles.aspx.designer.cs">
-      <DependentUpon>StandardVehicles.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerPages\SUVVehicles.aspx.cs">
-      <DependentUpon>SUVVehicles.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerPages\SUVVehicles.aspx.designer.cs">
-      <DependentUpon>SUVVehicles.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerPages\VanVehicles.aspx.cs">
-      <DependentUpon>VanVehicles.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CustomerPages\VanVehicles.aspx.designer.cs">
-      <DependentUpon>VanVehicles.aspx</DependentUpon>
+    <Compile Include="CustomerPages\VehicleImage.ashx.cs">
+      <DependentUpon>VehicleImage.ashx</DependentUpon>
     </Compile>
     <Compile Include="CustomerPages\Vehicles.aspx.cs">
       <DependentUpon>Vehicles.aspx</DependentUpon>
@@ -633,7 +589,11 @@
     <Compile Include="ManagerPages\ViewUpdateEmployees.aspx.designer.cs">
       <DependentUpon>ViewUpdateEmployees.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\AvisRoles.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\SecurePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="PrivacyPolicy.aspx.cs">
       <DependentUpon>PrivacyPolicy.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

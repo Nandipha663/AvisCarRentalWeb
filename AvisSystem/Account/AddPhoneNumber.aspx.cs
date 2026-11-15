@@ -11,7 +11,7 @@ using AvisSystem.Models;
 
 namespace AvisSystem.Account
 {
-    public partial class AddPhoneNumber : System.Web.UI.Page
+    public partial class AddPhoneNumber : AvisSystem.Models.SecurePage
     {
         protected void PhoneNumber_Click(object sender, EventArgs e)
         {

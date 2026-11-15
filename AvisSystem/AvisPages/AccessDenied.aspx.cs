@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace AvisSystem.CustomerPages
+namespace AvisSystem.AvisPages
 {
-    public partial class SedanVehicles : System.Web.UI.Page
+    public partial class AccessDenied : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

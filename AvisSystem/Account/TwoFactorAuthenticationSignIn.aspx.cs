@@ -11,7 +11,7 @@ using AvisSystem.Models;
 
 namespace AvisSystem.Account
 {
-    public partial class TwoFactorAuthenticationSignIn : System.Web.UI.Page
+    public partial class TwoFactorAuthenticationSignIn : AvisSystem.Models.SecurePage
     {
         private ApplicationSignInManager signinManager;
         private ApplicationUserManager manager;

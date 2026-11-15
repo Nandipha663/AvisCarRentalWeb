@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace AvisSystem.ManagerPages
 {
-    public partial class ViewUpdateEmployees : System.Web.UI.Page
+    public partial class ViewUpdateEmployees : AvisSystem.Models.SecurePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

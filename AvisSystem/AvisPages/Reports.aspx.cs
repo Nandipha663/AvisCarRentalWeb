@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using AvisSystem.Models;
 
 namespace AvisSystem.AvisPages
 {
-    public partial class Reports : System.Web.UI.Page
+    public partial class Reports : ManagerPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

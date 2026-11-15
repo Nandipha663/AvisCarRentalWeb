@@ -12,7 +12,7 @@ using AvisSystem.Models;
 
 namespace AvisSystem.Account
 {
-    public partial class Manage : System.Web.UI.Page
+    public partial class Manage : AvisSystem.Models.SecurePage
     {
         protected string SuccessMessage
         {
