@@ -2,6 +2,44 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
 <style>
+
+
+     /* SEARCH AREA */
+ .search-row {
+     display: flex;
+     align-items: center;
+     gap: 15px;
+     margin-bottom: 20px;
+ }
+
+ .search-box {
+     position: relative;
+     flex: 0 0 80%;
+ }
+
+ .search-box input {
+     width: 100%;
+     height: 48px;
+     padding: 0 20px 0 48px;
+     border: 1px solid #ddd;
+     border-radius: 8px;
+     font-size: 14px;
+     background: white;
+     outline: none;
+ }
+
+ .search-box input:focus {
+     border-color: #c8102e;
+ }
+
+ .search-box i {
+     position: absolute;
+     left: 18px;
+     top: 16px;
+     color: #888;
+ }
+
+
     .rental-page {
         background: #f7f7f7;
         padding: 30px;
@@ -175,7 +213,22 @@
 
     <h2 class="section-title">Select Booking</h2>
     <!-- Confirmed SqlDSBookings -->
-    <asp:SqlDataSource ID="SqlDSBookings" runat="server" ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT BookingID, CustomerID, VehicleVinNo, [Booking Date], [PickUp Date], ExpectedReturnDate, [Invoice Amount], Status, EmployeeID, FullName, Position, PickUpBranchName, DropOffBranchName, BranchName, CustomerFullName, LastUpdated, RefundStatus, Vehicle_make, Vehicle_model FROM BOOKING WHERE (Status = 'Confirmed')"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="SqlDSBookings" runat="server" ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT BookingID, CustomerID, VehicleVinNo, [Booking Date], [PickUp Date], ExpectedReturnDate, Status, [Invoice Amount], EmployeeID, FullName, Position, PickUpBranchName, DropOffBranchName, BranchName, CustomerFullName, LastUpdated, RefundStatus, Vehicle_make, Vehicle_model FROM BOOKING WHERE (Status = 'Confirmed') AND (@CustomerName = '') OR (Status = 'Confirmed') AND (CustomerFullName LIKE @CustomerName + '%')">
+        <SelectParameters>
+            <asp:ControlParameter ControlID="TxtSearch" PropertyName="Text" Name="CustomerName" ConvertEmptyStringToNull="False"></asp:ControlParameter>
+        </SelectParameters>
+    </asp:SqlDataSource>
+    <!-- SEARCH -->
+<div class="search-row">
+
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <asp:TextBox ID="TxtSearch" runat="server" placeholder="Search rentals by customer's name"></asp:TextBox>
+        
+    </div>
+
+    
+</div>
 
     <!--Booking GridView -->
 <div class="booking-content">
@@ -183,16 +236,27 @@
     <div class="table-wrapper">
     <asp:GridView ID="GVBookings" runat="server" CssClass="booking-table" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="BookingID" DataSourceID="SqlDSBookings" OnSelectedIndexChanged="GVBookings_SelectedIndexChanged">
         <Columns>
-            <asp:CommandField ShowSelectButton="True" />
-            <asp:BoundField DataField="BookingID" HeaderText="BookingID" InsertVisible="False" ReadOnly="True" SortExpression="BookingID" />
-            <asp:BoundField DataField="CustomerID" HeaderText="CustomerID" SortExpression="CustomerID" />
-            <asp:BoundField DataField="VehicleVinNo" HeaderText="VehicleVinNo" SortExpression="VehicleVinNo" />
-            <asp:BoundField DataField="PickUp Date" HeaderText="PickUp Date" SortExpression="PickUp Date" />
-            <asp:BoundField DataField="ExpectedReturnDate" HeaderText="ExpectedReturnDate" SortExpression="ExpectedReturnDate" />
+            <asp:CommandField ShowSelectButton="True"></asp:CommandField>
+            <asp:BoundField DataField="BookingID" HeaderText="BookingID" ReadOnly="True" InsertVisible="False" SortExpression="BookingID"></asp:BoundField>
+            <asp:BoundField DataField="CustomerID" HeaderText="CustomerID" SortExpression="CustomerID"></asp:BoundField>
+            <asp:BoundField DataField="VehicleVinNo" HeaderText="VehicleVinNo" SortExpression="VehicleVinNo"></asp:BoundField>
+            <asp:BoundField DataField="Booking Date" HeaderText="Booking Date" SortExpression="Booking Date"></asp:BoundField>
+            <asp:BoundField DataField="PickUp Date" HeaderText="PickUp Date" SortExpression="PickUp Date"></asp:BoundField>
+            <asp:BoundField DataField="ExpectedReturnDate" HeaderText="ExpectedReturnDate" SortExpression="ExpectedReturnDate"></asp:BoundField>
+            <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status"></asp:BoundField>
+            <asp:BoundField DataField="Invoice Amount" HeaderText="Invoice Amount" SortExpression="Invoice Amount"></asp:BoundField>
+            <asp:BoundField DataField="EmployeeID" HeaderText="EmployeeID" SortExpression="EmployeeID"></asp:BoundField>
+            <asp:BoundField DataField="FullName" HeaderText="FullName" SortExpression="FullName"></asp:BoundField>
+
+            <asp:BoundField DataField="Position" HeaderText="Position" SortExpression="Position" />
+            <asp:BoundField DataField="PickUpBranchName" HeaderText="PickUpBranchName" SortExpression="PickUpBranchName" />
+            <asp:BoundField DataField="DropOffBranchName" HeaderText="DropOffBranchName" SortExpression="DropOffBranchName" />
+            <asp:BoundField DataField="BranchName" HeaderText="BranchName" SortExpression="BranchName" />
             <asp:BoundField DataField="CustomerFullName" HeaderText="CustomerFullName" SortExpression="CustomerFullName" />
+            <asp:BoundField DataField="LastUpdated" HeaderText="LastUpdated" SortExpression="LastUpdated" />
+            <asp:BoundField DataField="RefundStatus" HeaderText="RefundStatus" SortExpression="RefundStatus" />
             <asp:BoundField DataField="Vehicle_make" HeaderText="Vehicle_make" SortExpression="Vehicle_make" />
             <asp:BoundField DataField="Vehicle_model" HeaderText="Vehicle_model" SortExpression="Vehicle_model" />
-            <asp:BoundField DataField="Status" HeaderText="Status" />
         </Columns>
     </asp:GridView>
         </div>
@@ -324,7 +388,7 @@
             </Fields>
         </asp:DetailsView>
 
-        <asp:Label ID="LblStatus" runat="server" Text="Active"></asp:Label>
+        <asp:Label ID="LblStatus" runat="server" Text="Active" Visible="False"></asp:Label>
         <asp:Button ID="BtnClear" runat="server" Text="🧹Clear" CssClass="action-btn clear-btn" OnClick="btnClear_Click" />
         <!-- Add Rental SqlDS -->
         <asp:Button ID="BtnAddRental" runat="server" Text="✔Add Rental"  CssClass="action-btn add-btn" OnClick="btnAddRental_Click"  />
@@ -436,6 +500,20 @@
             <asp:Parameter Name="BookingID" Type="Int32" />
         </UpdateParameters>
     </asp:SqlDataSource>
+
+    <asp:SqlDataSource ID="SqlDSVehicleStatus" runat="server"
+    ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True"
+    ProviderName="System.Data.SqlClient"
+    UpdateCommand="UPDATE [VEHICLE]
+                   SET Status = 'Rented Out'
+                   WHERE VehicleVinNo = @VehicleVinNo
+                   AND Status = 'Reserved'">
+
+    <UpdateParameters>
+        <asp:Parameter Name="VehicleVinNo" Type="String" />
+    </UpdateParameters>
+
+</asp:SqlDataSource>
 
     <asp:Label ID="lblMessage"
         runat="server"
