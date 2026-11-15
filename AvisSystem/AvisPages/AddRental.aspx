@@ -388,7 +388,7 @@
             </Fields>
         </asp:DetailsView>
 
-        <asp:Label ID="LblStatus" runat="server" Text="Active"></asp:Label>
+        <asp:Label ID="LblStatus" runat="server" Text="Active" Visible="False"></asp:Label>
         <asp:Button ID="BtnClear" runat="server" Text="🧹Clear" CssClass="action-btn clear-btn" OnClick="btnClear_Click" />
         <!-- Add Rental SqlDS -->
         <asp:Button ID="BtnAddRental" runat="server" Text="✔Add Rental"  CssClass="action-btn add-btn" OnClick="btnAddRental_Click"  />
@@ -500,6 +500,20 @@
             <asp:Parameter Name="BookingID" Type="Int32" />
         </UpdateParameters>
     </asp:SqlDataSource>
+
+    <asp:SqlDataSource ID="SqlDSVehicleStatus" runat="server"
+    ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True"
+    ProviderName="System.Data.SqlClient"
+    UpdateCommand="UPDATE [VEHICLE]
+                   SET Status = 'Rented Out'
+                   WHERE VehicleVinNo = @VehicleVinNo
+                   AND Status = 'Reserved'">
+
+    <UpdateParameters>
+        <asp:Parameter Name="VehicleVinNo" Type="String" />
+    </UpdateParameters>
+
+</asp:SqlDataSource>
 
     <asp:Label ID="lblMessage"
         runat="server"
