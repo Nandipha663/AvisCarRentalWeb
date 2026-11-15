@@ -83,8 +83,7 @@ namespace AvisSystem.AvisPages
                 txtVehicleMakeModel.Text = "";
                 txtPickUpDate.Text = "";
                 txtExpectedReturnDate.Text = "";
-                txtEmployeeID.Text = "";
-                txtEmployeeName.Text = "";
+                
 
                 txtStartDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
 

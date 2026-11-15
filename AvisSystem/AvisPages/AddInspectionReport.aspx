@@ -3,6 +3,42 @@
    
     <style>
 
+            /* SEARCH AREA */
+.search-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    position: relative;
+    flex: 0 0 80%;
+}
+
+.search-box input {
+    width: 100%;
+    height: 48px;
+    padding: 0 20px 0 48px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    background: white;
+    outline: none;
+}
+
+.search-box input:focus {
+    border-color: #c8102e;
+}
+
+.search-box i {
+    position: absolute;
+    left: 18px;
+    top: 16px;
+    color: #888;
+}
+
+
         /* ================================
            PAGE
         ================================= */
@@ -390,72 +426,67 @@
 }
 
 
-/* ================================
-   ACTIVE RENTALS TABLE
-================================ */
+        /* =========================================
+           MAIN CONTENT :  GRIDVIEW + SUMMARY
+        ========================================= */
 
-.rentals-section {
-    margin-top: 35px;
-}
-
-.rentals-section-title {
-    font-size: 20px;
-    font-weight: 700;
-    color: #222;
-    margin-bottom: 5px;
-}
-
-.rentals-section-subtitle {
-    color: #777;
-    font-size: 13px;
-    margin-bottom: 18px;
-}
-
-.rentals-table-card {
-    background: white;
-    border: 1px solid #e5e5e5;
-    border-radius: 10px;
-    overflow-x: auto;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-}
-
-.rentals-table {
+        .booking-content {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
     width: 100%;
-    border-collapse: collapse;
-    min-width: 900px;
 }
 
-.rentals-table th {
-    background: #fafafa;
-    color: #555;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 14px;
-    text-align: left;
-    border-bottom: 1px solid #e5e5e5;
-    white-space: nowrap;
-}
 
-.rentals-table td {
-    padding: 14px;
-    font-size: 13px;
-    color: #444;
-    border-bottom: 1px solid #eeeeee;
-    white-space: nowrap;
-}
+        /* =========================================
+           TABLE CARD
+        ========================================= */
 
-.rental-row {
-    cursor: pointer;
-    transition: background 0.2s ease;
-}
+        .table-card { min-width: 0; 
+                      background: #ffffff; 
+                      border: 1px solid #e1e1e1; 
+                      border-radius: 10px; 
+                      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06); 
+                      overflow: hidden; 
 
-.rental-row:hover td {
-    background: #fff5f6;
-}
+        } 
+        .table-wrapper { width: 100%; 
+                         overflow-x: auto; 
 
-.rental-row.selected td {
-    background: #fff1f3;
-}
+        }
+
+        .booking-table { width: 100%; 
+                         min-width: 1250px; 
+                         border-collapse: collapse; 
+                         font-family: Arial, sans-serif; 
+                         font-size: 13px; 
+
+        } 
+        /* Red headers with white text */ 
+        .booking-table th { background-color: #c8102e; 
+                            color: #ffffff; 
+                            font-size: 12px; 
+                            font-weight: 700; 
+                            text-align: left; 
+                            padding: 15px 13px; 
+                            border: none; 
+                            white-space: nowrap; 
+
+        } 
+        /* Booking details */ 
+          .booking-table td { padding: 13px; 
+                              border-bottom: 1px solid #eeeeee; 
+                              color: #333333; 
+                              white-space: nowrap; 
+
+          } 
+          /* Alternating light-pink rows */ 
+          .booking-table tr:nth-child(even) td { background-color: #fff5f6; } 
+          
+          /* Light-pink hover effect */ 
+          .booking-table tr:hover td { background-color: #ffe5e9; }
+
+
 
 .rental-id-cell {
     color: #c8102e;
@@ -473,6 +504,70 @@
 }
 
     </style>
+
+            <!-- =================================
+             ACTIVE RENTALS
+        ================================== -->
+        <div class="rentals-section">
+
+    <div class="rentals-section-title">
+        Select Rental to Add Inspection For
+    </div>
+
+    <div class="rentals-section-subtitle">
+        Select a rental from the grid below to create a vehicle inspection report.
+    </div>
+
+
+                <!-- SEARCH -->
+<div class="search-row">
+
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <asp:TextBox ID="TxtSearch" runat="server" placeholder="Search rentals by customer's name"></asp:TextBox>
+        
+    </div>  
+</div>
+
+    <div class="rentals-table-card">
+
+         <div class="booking-content"> 
+     <!-- RENTAL GRIDVIEW --> 
+     <div class="table-card"> 
+         <div class="table-wrapper">
+             <asp:GridView ID="GVRentals" runat="server" CssClass="booking-table" AutoGenerateColumns="False" DataKeyNames="RentalID,VehicleVinNo" DataSourceID="SqlDSRentals" AllowPaging="True" OnSelectedIndexChanged="GVRentals_SelectedIndexChanged">
+                 <Columns>
+                     <asp:CommandField ShowSelectButton="True" />
+                     <asp:BoundField DataField="RentalID" HeaderText="RentalID" SortExpression="RentalID" InsertVisible="False" ReadOnly="True"></asp:BoundField>
+                     <asp:BoundField DataField="BookingID" HeaderText="BookingID" SortExpression="BookingID"></asp:BoundField>
+                     <asp:BoundField DataField="CustomerID" HeaderText="CustomerID" SortExpression="CustomerID"></asp:BoundField>
+                        <asp:BoundField DataField="VehicleVinNo" HeaderText="VehicleVinNo" SortExpression="VehicleVinNo"></asp:BoundField>
+                        <asp:BoundField DataField="EmployeeID" HeaderText="EmployeeID" SortExpression="EmployeeID"></asp:BoundField>
+                        <asp:BoundField DataField="EmployeeName" HeaderText="EmployeeName" SortExpression="EmployeeName"></asp:BoundField>
+                        <asp:BoundField DataField="PickupDate" HeaderText="PickupDate" SortExpression="PickupDate"></asp:BoundField>
+                        <asp:BoundField DataField="StartDate" HeaderText="StartDate" SortExpression="StartDate"></asp:BoundField>
+                        <asp:BoundField DataField="ExpectedReturnDate" HeaderText="ExpectedReturnDate" SortExpression="ExpectedReturnDate"></asp:BoundField>
+                        <asp:BoundField DataField="RentalStatus" HeaderText="RentalStatus" SortExpression="RentalStatus"></asp:BoundField>
+                        <asp:BoundField DataField="DepositAmount" HeaderText="DepositAmount" SortExpression="DepositAmount"></asp:BoundField>
+                        <asp:BoundField DataField="VehicleMakeModel" HeaderText="VehicleMakeModel" SortExpression="VehicleMakeModel"></asp:BoundField>
+                    </Columns>
+                </asp:GridView>
+<asp:SqlDataSource ID="SqlDSRentals" runat="server"  ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT RentalID, BookingID, CustomerID, VehicleVinNo, EmployeeID, EmployeeName, PickupDate, StartDate, ExpectedReturnDate, RentalStatus, DepositAmount, VehicleMakeModel FROM RENTAL WHERE (RentalStatus = 'Active') AND (CustomerName LIKE @CustName + '%' OR CustomerName = '')">
+                 <SelectParameters>
+                     <asp:ControlParameter ControlID="TxtSearch" PropertyName="Text" Name="CustName" ConvertEmptyStringToNull="False"></asp:ControlParameter>
+                 </SelectParameters>
+             </asp:SqlDataSource>
+
+             <asp:SqlDataSource ID="SqlDSGetVVN" runat="server" ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT VehicleVinNo, OdometerReading FROM VEHICLE WHERE (VehicleVinNo = @VehicleVinNo)">
+                 <SelectParameters>
+                     <asp:Parameter Name="VehicleVinNo"> </asp:Parameter>
+                 </SelectParameters>
+             </asp:SqlDataSource>
+</div> </div> </div>
+  </div>
+
+</div>
+
 
 
     <div class="inspection-page">
@@ -510,12 +605,7 @@
             <label class="form-label">
                 RentalID
             </label>
-
-            <input type="text"
-                   id="txtRentalID"
-                   class="modern-input readonly-input"
-                   value="R001"
-                   readonly />
+            <asp:TextBox ID="TxtRentalID" runat="server" ReadOnly="True"></asp:TextBox>
 
         </div>
 
@@ -527,13 +617,7 @@
             <label class="form-label">
                 Vehicle
             </label>
-
-            <input type="text"
-                   id="txtVehicle"
-                   class="modern-input readonly-input"
-                   value="Toyota Corolla"
-                   readonly />
-
+            <asp:TextBox ID="TxtVehicle" runat="server" ReadOnly="True"></asp:TextBox>
         </div>
 
 
@@ -545,62 +629,76 @@
                 BranchName
             </label>
 
-            <input type="text"
-                   id="txtBranchName"
-                   class="modern-input readonly-input"
-                   value="King Shaka Airport"
-                   readonly />
+            <asp:DropDownList ID="DDLBranchNames" runat="server" CssClass="modern-select" DataSourceID="SqlDataSource1" DataTextField="branchName" DataValueField="BranchID" AutoPostBack="True">
+            </asp:DropDownList>
+            <asp:SqlDataSource runat="server" ID="SqlDataSource1" ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT * FROM [BRANCH]"></asp:SqlDataSource>
+        </div>
+
+        <!--Odometer Reading -->
+        <div class="form-group">
+            <label class="form-label">
+                Odometer Reading
+            </label>
+
+            <asp:TextBox ID="TxtOdometerR" runat="server" ReadOnly="True"></asp:TextBox>
 
         </div>
+
+
+        <asp:SqlDataSource ID="SqlDSEmployee" runat="server" ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT * FROM [EMPLOYEE] WHERE ([EmailAddress] = @EmailAddress)">
+            <SelectParameters>
+                <asp:Parameter Name="EmailAddress" Type="String"></asp:Parameter>
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <asp:DetailsView ID="DVEmployees" runat="server" Height="50px" Width="125px" AutoGenerateRows="False" DataKeyNames="EmployeeID" DataSourceID="SqlDSEmployee" Visible="False">
+            <Fields>
+                <asp:BoundField DataField="EmployeeID" HeaderText="EmployeeID" ReadOnly="True" InsertVisible="False" SortExpression="EmployeeID"></asp:BoundField>
+                <asp:BoundField DataField="Fullname" HeaderText="Fullname" SortExpression="Fullname"></asp:BoundField>
+                <asp:BoundField DataField="EmailAddress" HeaderText="EmailAddress" SortExpression="EmailAddress"></asp:BoundField>
+                <asp:BoundField DataField="Position" HeaderText="Position" SortExpression="Position"></asp:BoundField>
+                <asp:BoundField DataField="ContactNumber" HeaderText="ContactNumber" SortExpression="ContactNumber"></asp:BoundField>
+                <asp:BoundField DataField="EmploymentStatus" HeaderText="EmploymentStatus" SortExpression="EmploymentStatus"></asp:BoundField>
+                <asp:BoundField DataField="Username" HeaderText="Username" SortExpression="Username"></asp:BoundField>
+                <asp:BoundField DataField="Password" HeaderText="Password" SortExpression="Password"></asp:BoundField>
+                <asp:BoundField DataField="BranchName" HeaderText="BranchName" SortExpression="BranchName"></asp:BoundField>
+            </Fields>
+        </asp:DetailsView>
+         <!--EmployeeID -->
+ <div class="form-group">
+     <label class="form-label">
+         Employee ID
+     </label>
+
+     <asp:TextBox ID="TxtEmpID" runat="server" ReadOnly="True"></asp:TextBox>
+
+ </div>
+
+         <!--Employee Name -->
+ <div class="form-group">
+     <label class="form-label">
+         Employee name
+     </label>
+
+     <asp:TextBox ID="TxtEmpName" runat="server" ReadOnly="True"></asp:TextBox>
+
+ </div>
 
     </div>
 
 </div>
 
-            <!-- ODOMETER + INSPECTION TYPE -->
-
-            <div class="form-row">
-
-                <div class="form-group">
-
-                    <label class="form-label">
-                        Odometer Reading <span class="required">*</span>
-                    </label>
-
-                    <div class="input-wrapper">
-
-                        <i class="fas fa-tachometer-alt"></i>
-
-                        <input type="number"
-                               class="modern-input"
-                               placeholder="e.g. 45 820 km" />
-
-                    </div>
-
-                </div>
-
-
+           <!--Inspection Type -->
                 <div class="form-group">
 
                     <label class="form-label">
                         Inspection Type <span class="required">*</span>
                     </label>
 
-                    <select class="modern-select">
+                    <asp:DropDownList ID="DDLInspectionType" runat="server" CssClass="modern-select" AutoPostBack="True" OnSelectedIndexChanged="DDLInspectionType_SelectedIndexChanged">
 
-                        <option value="">
-                            Select inspection type
-                        </option>
-
-                        <option value="Pickup">
-                            Pickup
-                        </option>
-
-                        <option value="Return">
-                            Return
-                        </option>
-
-                    </select>
+                        <asp:ListItem>Pick Up</asp:ListItem>
+                        <asp:ListItem>Return</asp:ListItem>
+                    </asp:DropDownList>
 
                 </div>
 
@@ -614,182 +712,90 @@
 
             <div class="full-width">
 
-                <label class="form-label">
-                    Fuel Level <span class="required">*</span>
-                </label>
+    <label class="form-label">
+        Fuel Level <span class="required">*</span>
+    </label>
 
-                <div class="selection-group">
+    <asp:RadioButtonList ID="RBLFuelLevel"
+        runat="server"
+        RepeatDirection="Horizontal"
+        RepeatLayout="Flow"
+        CssClass="selection-group">
 
+        <asp:ListItem Value="Empty">Empty</asp:ListItem>
+        <asp:ListItem Value="1/4">1/4</asp:ListItem>
+        <asp:ListItem Value="Half">Half</asp:ListItem>
+        <asp:ListItem Value="3/4">3/4</asp:ListItem>
+        <asp:ListItem Value="Full">Full</asp:ListItem>
+        <asp:ListItem Value="Unknown">Unknown</asp:ListItem>
 
-                    <div class="round-option">
+    </asp:RadioButtonList>
 
-                        <input type="radio"
-                               id="fuelEmpty"
-                               name="fuelLevel" />
-
-                        <label for="fuelEmpty">
-
-                            <span class="round-circle"></span>
-
-                            Empty
-
-                        </label>
-
-                    </div>
-
-
-                    <div class="round-option">
-
-                        <input type="radio"
-                               id="fuelQuarter"
-                               name="fuelLevel" />
-
-                        <label for="fuelQuarter">
-
-                            <span class="round-circle"></span>
-
-                            1/4
-
-                        </label>
-
-                    </div>
-
-
-                    <div class="round-option">
-
-                        <input type="radio"
-                               id="fuelHalf"
-                               name="fuelLevel" />
-
-                        <label for="fuelHalf">
-
-                            <span class="round-circle"></span>
-
-                            Half
-
-                        </label>
-
-                    </div>
-
-
-                    <div class="round-option">
-
-                        <input type="radio"
-                               id="fuelThreeQuarter"
-                               name="fuelLevel" />
-
-                        <label for="fuelThreeQuarter">
-
-                            <span class="round-circle"></span>
-
-                            3/4
-
-                        </label>
-
-                    </div>
-
-
-                    <div class="round-option">
-
-                        <input type="radio"
-                               id="fuelFull"
-                               name="fuelLevel"
-                               checked />
-
-                        <label for="fuelFull">
-
-                            <span class="round-circle"></span>
-
-                            Full
-
-                        </label>
-
-                    </div>
-
-
-                    <div class="round-option">
-
-                        <input type="radio"
-                               id="fuelUnknown"
-                               name="fuelLevel" />
-
-                        <label for="fuelUnknown">
-
-                            <span class="round-circle"></span>
-
-                            Unknown
-
-                        </label>
-
-                    </div>
-
-                </div>
-
-            </div>
+</div>
 
 
             <!-- DAMAGE FOUND -->
+<div class="full-width">
 
-            <div class="full-width">
+    <label class="form-label">
+        Damage Found <span class="required">*</span>
+    </label>
 
-                <label class="form-label">
-                    Damage Found <span class="required">*</span>
-                </label>
+    <asp:RadioButtonList ID="RBLDamageFound"
+        runat="server"
+        RepeatDirection="Horizontal"
+        RepeatLayout="Flow"
+        CssClass="damage-options"
+        AutoPostBack="True"
+        OnSelectedIndexChanged="RBLDamageFound_SelectedIndexChanged">
 
-                <div class="damage-options">
+        <asp:ListItem Value="Yes">Yes</asp:ListItem>
+        <asp:ListItem Value="No">No</asp:ListItem>
 
+    </asp:RadioButtonList>
 
-                    <div class="round-option">
-
-                        <input type="radio"
-                               id="damageYes"
-                               name="damageFound" />
-
-                        <label for="damageYes">
-
-                            <span class="round-circle"></span>
-
-                            Yes
-
-                        </label>
-
-                    </div>
+</div>
 
 
-                    <div class="round-option">
+<!-- DAMAGE TYPE -->
+<div class="full-width" id="DamageTypeSection" runat="server" visible="false">
 
-                        <input type="radio"
-                               id="damageNo"
-                               name="damageFound"
-                               checked />
+    <label class="form-label">
+        Damage Type <span class="required">*</span>
+    </label>
 
-                        <label for="damageNo">
+    <asp:DropDownList ID="DDLDamageType"
+        runat="server"
+        CssClass="modern-select"
+        AutoPostBack="True"
+       OnSelectedIndexChanged="DDLDamageType_SelectedIndexChanged">
 
-                            <span class="round-circle"></span>
+        <asp:ListItem Value="">-- Select Damage --</asp:ListItem>
+        <asp:ListItem Value="500">Scratch - R500</asp:ListItem>
+        <asp:ListItem Value="1000">Large Scratch - R1000</asp:ListItem>
+        <asp:ListItem Value="1500">Dent - R1500</asp:ListItem>
+        <asp:ListItem Value="2500">Broken Mirror - R2500</asp:ListItem>
+        <asp:ListItem Value="3000">Broken Headlight - R3000</asp:ListItem>
 
-                            No
+    </asp:DropDownList>
 
-                        </label>
-
-                    </div>
-
-                </div>
-
-            </div>
+</div>
 
 
-            <!-- DAMAGE DESCRIPTION -->
+<!-- DAMAGE CHARGES -->
+<div class="full-width" id="DamageChargeSection" runat="server" visible="false">
 
-            <div class="full-width">
+    <label class="form-label">
+        Damage Charges
+    </label>
 
-                <label class="form-label">
-                    Damage Description
-                </label>
+    <asp:TextBox ID="TxtDamageCharges"
+        runat="server"
+        CssClass="modern-input readonly-input"
+        ReadOnly="True">
+    </asp:TextBox>
 
-                <textarea class="modern-textarea"
-                          placeholder="Describe any damage found on the vehicle..."></textarea>
-
-            </div>
+</div>
 
 
             <!-- INSPECTION NOTES -->
@@ -800,9 +806,8 @@
                     Inspection Notes
                 </label>
 
-                <textarea class="modern-textarea"
-                          placeholder="Add any additional inspection notes..."></textarea>
-
+                <asp:TextBox ID="TxtInspectionN" runat="server" class="modern-textarea"></asp:TextBox>
+                
             </div>
 
 
@@ -816,9 +821,8 @@
 
                 <div class="date-input">
 
-                    <input type="date"
-                           class="modern-input"
-                           value="2026-09-02" />
+                    <asp:TextBox ID="TxtDateTime" runat="server"  CssClass="modern-input readonly-input"
+    ReadOnly="True" ></asp:TextBox>  
 
                 </div>
 
@@ -832,297 +836,83 @@
 
             <div class="button-area">
 
-                <button type="button"
-                        class="action-btn clear-btn">
-
-                    <i class="fas fa-eraser"></i>
-
-                    Clear
-
-                </button>
+                <asp:Button ID="BtnClear" runat="server" class="action-btn clear-btn" Text="Clear" OnClick="BtnClear_Click" />
 
 
-                <button type="button"
-                        class="action-btn cancel-btn">
+                <asp:SqlDataSource ID="SqlDSAddInspection" runat="server" ConflictDetection="CompareAllValues" ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True" DeleteCommand="DELETE FROM [VEHICLE INSPECTION] WHERE [InspectionCode] = @original_InspectionCode AND [EmployeeID] = @original_EmployeeID AND [RentalID] = @original_RentalID AND [OdometerReading] = @original_OdometerReading AND [InspectionType] = @original_InspectionType AND [InspectionDateTime] = @original_InspectionDateTime AND [FuelLevel] = @original_FuelLevel AND [DamageFound] = @original_DamageFound AND (([Damage Type] = @original_Damage_Type) OR ([Damage Type] IS NULL AND @original_Damage_Type IS NULL)) AND [InspectionNotes] = @original_InspectionNotes AND (([BranchName] = @original_BranchName) OR ([BranchName] IS NULL AND @original_BranchName IS NULL)) AND (([EmployeeName] = @original_EmployeeName) OR ([EmployeeName] IS NULL AND @original_EmployeeName IS NULL)) AND (([VehicleMakeModel] = @original_VehicleMakeModel) OR ([VehicleMakeModel] IS NULL AND @original_VehicleMakeModel IS NULL)) AND (([DamageCharges] = @original_DamageCharges) OR ([DamageCharges] IS NULL AND @original_DamageCharges IS NULL))" InsertCommand="INSERT INTO [VEHICLE INSPECTION] ([EmployeeID], [RentalID], [OdometerReading], [InspectionType], [InspectionDateTime], [FuelLevel], [DamageFound], [Damage Type], [InspectionNotes], [BranchName], [EmployeeName], [VehicleMakeModel], [DamageCharges]) VALUES (@EmployeeID, @RentalID, @OdometerReading, @InspectionType, @InspectionDateTime, @FuelLevel, @DamageFound, @Damage_Type, @InspectionNotes, @BranchName, @EmployeeName, @VehicleMakeModel, @DamageCharges)" OldValuesParameterFormatString="original_{0}" ProviderName="System.Data.SqlClient" SelectCommand="SELECT * FROM [VEHICLE INSPECTION]" UpdateCommand="UPDATE [VEHICLE INSPECTION] SET [EmployeeID] = @EmployeeID, [RentalID] = @RentalID, [OdometerReading] = @OdometerReading, [InspectionType] = @InspectionType, [InspectionDateTime] = @InspectionDateTime, [FuelLevel] = @FuelLevel, [DamageFound] = @DamageFound, [Damage Type] = @Damage_Type, [InspectionNotes] = @InspectionNotes, [BranchName] = @BranchName, [EmployeeName] = @EmployeeName, [VehicleMakeModel] = @VehicleMakeModel, [DamageCharges] = @DamageCharges WHERE [InspectionCode] = @original_InspectionCode AND [EmployeeID] = @original_EmployeeID AND [RentalID] = @original_RentalID AND [OdometerReading] = @original_OdometerReading AND [InspectionType] = @original_InspectionType AND [InspectionDateTime] = @original_InspectionDateTime AND [FuelLevel] = @original_FuelLevel AND [DamageFound] = @original_DamageFound AND (([Damage Type] = @original_Damage_Type) OR ([Damage Type] IS NULL AND @original_Damage_Type IS NULL)) AND [InspectionNotes] = @original_InspectionNotes AND (([BranchName] = @original_BranchName) OR ([BranchName] IS NULL AND @original_BranchName IS NULL)) AND (([EmployeeName] = @original_EmployeeName) OR ([EmployeeName] IS NULL AND @original_EmployeeName IS NULL)) AND (([VehicleMakeModel] = @original_VehicleMakeModel) OR ([VehicleMakeModel] IS NULL AND @original_VehicleMakeModel IS NULL)) AND (([DamageCharges] = @original_DamageCharges) OR ([DamageCharges] IS NULL AND @original_DamageCharges IS NULL))">
+                    <DeleteParameters>
+                        <asp:Parameter Name="original_InspectionCode" Type="Int32"></asp:Parameter>
+                        <asp:Parameter Name="original_EmployeeID" Type="Int32"></asp:Parameter>
+                        <asp:Parameter Name="original_RentalID" Type="Int32"></asp:Parameter>
+                        <asp:Parameter Name="original_OdometerReading" Type="Decimal"></asp:Parameter>
+                        <asp:Parameter Name="original_InspectionType" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="original_InspectionDateTime" Type="DateTime"></asp:Parameter>
+                        <asp:Parameter Name="original_FuelLevel" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="original_DamageFound" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="original_Damage_Type" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="original_InspectionNotes" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="original_BranchName" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="original_EmployeeName" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="original_VehicleMakeModel" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="original_DamageCharges" Type="Decimal" />
+                    </DeleteParameters>
+                    <InsertParameters>
+                        <asp:ControlParameter ControlID="TxtEmpID" Name="EmployeeID" PropertyName="Text" Type="Int32" />
+                        <asp:ControlParameter ControlID="TxtRentalID" Name="RentalID" PropertyName="Text" Type="Int32" />
+                        <asp:ControlParameter ControlID="TxtOdometerR" Name="OdometerReading" PropertyName="Text" Type="Decimal" />
+                        <asp:ControlParameter ControlID="DDLInspectionType" Name="InspectionType" PropertyName="SelectedValue" Type="String" />
+                        <asp:ControlParameter ControlID="TxtDateTime" Name="InspectionDateTime" PropertyName="Text" Type="DateTime" />
+                        <asp:ControlParameter ControlID="RBLFuelLevel" Name="FuelLevel" PropertyName="SelectedValue" Type="String" />
+                        <asp:ControlParameter ControlID="RBLDamageFound" Name="DamageFound" PropertyName="SelectedValue" Type="String" />
+                        <asp:ControlParameter ControlID="DDLDamageType" Name="Damage_Type" PropertyName="SelectedValue" Type="String" />
+                        <asp:ControlParameter ControlID="TxtInspectionN" Name="InspectionNotes" PropertyName="Text" Type="String" />
+                        <asp:ControlParameter ControlID="DDLBranchNames" Name="BranchName" PropertyName="SelectedValue" Type="String" />
+                        <asp:ControlParameter ControlID="TxtEmpName" Name="EmployeeName" PropertyName="Text" Type="String" />
+                        <asp:ControlParameter ControlID="TxtVehicle" Name="VehicleMakeModel" PropertyName="Text" Type="String" />
+                        <asp:ControlParameter ControlID="TxtDamageCharges" Name="DamageCharges" PropertyName="Text" Type="Decimal" />
+                    </InsertParameters>
+                    <UpdateParameters>
+                        <asp:Parameter Name="EmployeeID" Type="Int32"></asp:Parameter>
+                        <asp:Parameter Name="RentalID" Type="Int32"></asp:Parameter>
+                        <asp:Parameter Name="OdometerReading" Type="Decimal"></asp:Parameter>
+                        <asp:Parameter Name="InspectionType" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="InspectionDateTime" Type="DateTime"></asp:Parameter>
+                        <asp:Parameter Name="FuelLevel" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="DamageFound" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="Damage_Type" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="InspectionNotes" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="BranchName" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="EmployeeName" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="VehicleMakeModel" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="DamageCharges" Type="Decimal"></asp:Parameter>
+                        <asp:Parameter Name="original_InspectionCode" Type="Int32"></asp:Parameter>
+                        <asp:Parameter Name="original_EmployeeID" Type="Int32"></asp:Parameter>
+                        <asp:Parameter Name="original_RentalID" Type="Int32"></asp:Parameter>
+                        <asp:Parameter Name="original_OdometerReading" Type="Decimal"></asp:Parameter>
+                        <asp:Parameter Name="original_InspectionType" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="original_InspectionDateTime" Type="DateTime"></asp:Parameter>
+                        <asp:Parameter Name="original_FuelLevel" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="original_DamageFound" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="original_Damage_Type" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="original_InspectionNotes" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="original_BranchName" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="original_EmployeeName" Type="String"></asp:Parameter>
+                        <asp:Parameter Name="original_VehicleMakeModel" Type="String" />
+                        <asp:Parameter Name="original_DamageCharges" Type="Decimal" />
+                    </UpdateParameters>
+                </asp:SqlDataSource>
+                <asp:Button ID="BtnAddInspection" runat="server" class="action-btn add-btn" Text="Add Inspection" OnClick="BtnAddInspection_Click" />
 
-                    <i class="fas fa-times"></i>
-
-                    Cancel
-
-                </button>
-
-
-                <button type="button"
-                        class="action-btn add-btn">
-
-                    <i class="fas fa-check"></i>
-
-                    Add Inspection
-
-                </button>
+                <asp:Label ID="LblMessage" runat="server" Text="Feedback" Visible="False"></asp:Label>
 
             </div>
 
              </div>
 
 
-        <!-- =================================
-             ACTIVE RENTALS
-        ================================== -->
+       
+        
 
-        <div class="rentals-section">
-
-            <div class="rentals-section-title">
-                Active Rentals
-            </div>
-
-            <div class="rentals-section-subtitle">
-                Select a rental to create a vehicle inspection report.
-            </div>
-
-
-            <div class="rentals-table-card">
-
-                <table class="rentals-table">
-
-                    <thead>
-
-                        <tr>
-
-                            <th>RentalID</th>
-                            <th>BookingID</th>
-                            <th>CustomerName</th>
-                            <th>Vehicle</th>
-                            <th>PickUpDate</th>
-                            <th>ExpectedReturnDate</th>
-                            <th>BranchName</th>
-                            <th>Rental Status</th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-                        <!-- RENTAL 1 -->
-
-                        <tr class="rental-row"
-                            onclick="selectRental('R001','Toyota Corolla','King Shaka Airport')">
-
-                            <td class="rental-id-cell">
-                                R001
-                            </td>
-
-                            <td>
-                                BK001
-                            </td>
-
-                            <td>
-                                John Smith
-                            </td>
-
-                            <td>
-                                Toyota Corolla
-                            </td>
-
-                            <td>
-                                02/09/2026
-                            </td>
-
-                            <td>
-                                06/09/2026
-                            </td>
-
-                            <td>
-                                King Shaka Airport
-                            </td>
-
-                            <td>
-                                <span class="active-status">
-                                    Active
-                                </span>
-                            </td>
-
-                        </tr>
-
-
-                        <!-- RENTAL 2 -->
-
-                        <tr class="rental-row"
-                            onclick="selectRental('R002','BMW 3 Series','Durban Downtown')">
-
-                            <td class="rental-id-cell">
-                                R002
-                            </td>
-
-                            <td>
-                                BK003
-                            </td>
-
-                            <td>
-                                David Johnson
-                            </td>
-
-                            <td>
-                                BMW 3 Series
-                            </td>
-
-                            <td>
-                                02/09/2026
-                            </td>
-
-                            <td>
-                                05/09/2026
-                            </td>
-
-                            <td>
-                                Durban Downtown
-                            </td>
-
-                            <td>
-                                <span class="active-status">
-                                    Active
-                                </span>
-                            </td>
-
-                        </tr>
-
-
-                        <!-- RENTAL 3 -->
-
-                        <tr class="rental-row"
-                            onclick="selectRental('R003','Volkswagen Polo','Umhlanga Branch')">
-
-                            <td class="rental-id-cell">
-                                R003
-                            </td>
-
-                            <td>
-                                BK008
-                            </td>
-
-                            <td>
-                                Sarah Williams
-                            </td>
-
-                            <td>
-                                Volkswagen Polo
-                            </td>
-
-                            <td>
-                                01/09/2026
-                            </td>
-
-                            <td>
-                                04/09/2026
-                            </td>
-
-                            <td>
-                                Umhlanga Branch
-                            </td>
-
-                            <td>
-                                <span class="active-status">
-                                    Active
-                                </span>
-                            </td>
-
-                        </tr>
-
-
-                        <!-- RENTAL 4 -->
-
-                        <tr class="rental-row"
-                            onclick="selectRental('R004','Mercedes-Benz A-Class','King Shaka Airport')">
-
-                            <td class="rental-id-cell">
-                                R004
-                            </td>
-
-                            <td>
-                                BK009
-                            </td>
-
-                            <td>
-                                Emily Brown
-                            </td>
-
-                            <td>
-                                Mercedes-Benz A-Class
-                            </td>
-
-                            <td>
-                                01/09/2026
-                            </td>
-
-                            <td>
-                                07/09/2026
-                            </td>
-
-                            <td>
-                                King Shaka Airport
-                            </td>
-
-                            <td>
-                                <span class="active-status">
-                                    Active
-                                </span>
-                            </td>
-
-                        </tr>
-
-
-                        <!-- RENTAL 5 -->
-
-                        <tr class="rental-row"
-                            onclick="selectRental('R005','Hyundai i20','Cape Town Airport')">
-
-                            <td class="rental-id-cell">
-                                R005
-                            </td>
-
-                            <td>
-                                BK010
-                            </td>
-
-                            <td>
-                                Michael Adams
-                            </td>
-
-                            <td>
-                                Hyundai i20
-                            </td>
-
-                            <td>
-                                31/08/2026
-                            </td>
-
-                            <td>
-                                03/09/2026
-                            </td>
-
-                            <td>
-                                Cape Town Airport
-                            </td>
-
-                            <td>
-                                <span class="active-status">
-                                    Active
-                                </span>
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-
-    </div>
 
     <script>
 
@@ -1148,4 +938,5 @@
     }
 
 </script>
+   
 </asp:Content>
