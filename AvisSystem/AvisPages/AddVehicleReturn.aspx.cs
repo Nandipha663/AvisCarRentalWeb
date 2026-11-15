@@ -10,11 +10,14 @@ namespace AvisSystem.AvisPages
 {
     public partial class AddVehicleReturn : AvisSystem.Models.SecurePage
     {
+       
+        const int GraceMinutes = 30;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                txtReturnDate.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+                txtReturnDate.Text = CurrentTime().ToString("yyyy-MM-dd HH:mm");
             }
         }
 
@@ -44,9 +47,13 @@ namespace AvisSystem.AvisPages
             txtVehicleMakeModel.Text = Server.HtmlDecode(row.Cells[5].Text);
             txtEmployeeName.Text = Server.HtmlDecode(row.Cells[6].Text);
             txtExpectedReturnDate.Text = row.Cells[7].Text;
+            txtDailyRate.Text = row.Cells[8].Text;
 
-            txtReturnDate.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+            CalculateCharges();
             lblMessage.Text = "";
+
+            ClientScript.RegisterStartupScript(this.GetType(), "ScrollToRental",
+                "document.getElementById('selectedRental').scrollIntoView({ behavior: 'smooth' });", true);
         }
 
         protected void btnAddReturn_Click(object sender, EventArgs e)
@@ -57,24 +64,21 @@ namespace AvisSystem.AvisPages
                 return;
             }
 
-            decimal charges;
-            if (!decimal.TryParse(txtCharges.Text, out charges) || charges < 0)
-            {
-                lblMessage.Text = "Please enter a valid charge amount.";
-                return;
-            }
-
             if (txtInspectionReport.Text.Trim() == "")
             {
                 txtInspectionReport.Text = "No damage";
             }
 
+            CalculateCharges();
+            string charge = txtCharges.Text;
+
             try
             {
                 SqlDSAddReturn.Insert();
-                SqlDSCompleteRental.Update();
 
-                lblMessage.Text = "Vehicle return added. Rental " + txtRentalID.Text + " is now completed.";
+                lblMessage.Text = "Vehicle return added. Rental " + txtRentalID.Text + " is now completed. "
+                    + txtVehicleMakeModel.Text + " is now available at " + ddlBranch.SelectedValue
+                    + ". Additional charges: R" + charge;
                 ClearFields();
                 GVRentals.DataBind();
             }
@@ -90,6 +94,37 @@ namespace AvisSystem.AvisPages
             lblMessage.Text = "";
         }
 
+        private void CalculateCharges()
+        {
+            DateTime expected;
+            decimal dailyRate;
+
+            if (!DateTime.TryParseExact(txtExpectedReturnDate.Text, "yyyy-MM-dd HH:mm",
+                CultureInfo.InvariantCulture, DateTimeStyles.None, out expected)
+                || !decimal.TryParse(txtDailyRate.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out dailyRate))
+            {
+                return;
+            }
+
+            DateTime returned = CurrentTime();
+            TimeSpan late = returned - expected;
+            int days = 0;
+
+            if (late.TotalMinutes > GraceMinutes)
+            {
+                days = (int)Math.Ceiling(late.TotalHours / 24);
+            }
+
+            txtReturnDate.Text = returned.ToString("yyyy-MM-dd HH:mm");
+            txtDaysCharged.Text = days.ToString();
+            txtCharges.Text = (days * dailyRate).ToString("0.00");
+        }
+
+        private DateTime CurrentTime()
+        {
+            return TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, "South Africa Standard Time");
+        }
+
         private void ClearFields()
         {
             txtRentalID.Text = "";
@@ -100,7 +135,9 @@ namespace AvisSystem.AvisPages
             txtEmployeeName.Text = "";
             txtExpectedReturnDate.Text = "";
             txtInspectionReport.Text = "";
-            txtCharges.Text = "0";
+            txtDaysCharged.Text = "0";
+            txtCharges.Text = "0.00";
+            txtDailyRate.Text = "";
             GVRentals.SelectedIndex = -1;
         }
     }
