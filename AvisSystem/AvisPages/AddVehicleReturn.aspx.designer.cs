@@ -123,15 +123,6 @@ namespace AvisSystem.AvisPages
         protected global::System.Web.UI.WebControls.TextBox txtExpectedReturnDate;
 
         /// <summary>
-        /// txtDailyRate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDailyRate;
-
-        /// <summary>
         /// txtReturnDate control.
         /// </summary>
         /// <remarks>
@@ -148,15 +139,6 @@ namespace AvisSystem.AvisPages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlBranch;
-
-        /// <summary>
-        /// txtDaysCharged control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDaysCharged;
 
         /// <summary>
         /// txtCharges control.

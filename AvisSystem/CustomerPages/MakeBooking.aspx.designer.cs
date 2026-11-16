@@ -15,31 +15,49 @@ namespace AvisSystem.CustomerPages
     {
 
         /// <summary>
-        /// lblMsg control.
+        /// ddlPickupLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMsg;
+        protected global::System.Web.UI.WebControls.DropDownList ddlPickupLocation;
 
         /// <summary>
-        /// ddlPickupBranch control.
+        /// lblPickupLocationError control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlPickupBranch;
+        protected global::System.Web.UI.WebControls.Label lblPickupLocationError;
 
         /// <summary>
-        /// ddlReturnBranch control.
+        /// chkDifferentLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlReturnBranch;
+        protected global::System.Web.UI.WebControls.CheckBox chkDifferentLocation;
+
+        /// <summary>
+        /// ddlReturnLocation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlReturnLocation;
+
+        /// <summary>
+        /// lblReturnLocationError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblReturnLocationError;
 
         /// <summary>
         /// txtPickupDate control.
@@ -51,13 +69,31 @@ namespace AvisSystem.CustomerPages
         protected global::System.Web.UI.WebControls.TextBox txtPickupDate;
 
         /// <summary>
-        /// txtPickupTime control.
+        /// lblPickupDateError control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPickupTime;
+        protected global::System.Web.UI.WebControls.Label lblPickupDateError;
+
+        /// <summary>
+        /// ddlPickupTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlPickupTime;
+
+        /// <summary>
+        /// lblPickupTimeError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPickupTimeError;
 
         /// <summary>
         /// txtReturnDate control.
@@ -69,21 +105,39 @@ namespace AvisSystem.CustomerPages
         protected global::System.Web.UI.WebControls.TextBox txtReturnDate;
 
         /// <summary>
-        /// txtReturnTime control.
+        /// lblReturnDateError control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtReturnTime;
+        protected global::System.Web.UI.WebControls.Label lblReturnDateError;
 
         /// <summary>
-        /// btnSearch control.
+        /// ddlReturnTime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSearch;
+        protected global::System.Web.UI.WebControls.DropDownList ddlReturnTime;
+
+        /// <summary>
+        /// lblReturnTimeError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblReturnTimeError;
+
+        /// <summary>
+        /// btnSearchVehicles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSearchVehicles;
     }
 }

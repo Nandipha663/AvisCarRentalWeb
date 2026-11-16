@@ -771,11 +771,11 @@
        OnSelectedIndexChanged="DDLDamageType_SelectedIndexChanged">
 
         <asp:ListItem Value="">-- Select Damage --</asp:ListItem>
-        <asp:ListItem Value="500">Scratch - R500</asp:ListItem>
-        <asp:ListItem Value="1000">Large Scratch - R1000</asp:ListItem>
-        <asp:ListItem Value="1500">Dent - R1500</asp:ListItem>
-        <asp:ListItem Value="2500">Broken Mirror - R2500</asp:ListItem>
-        <asp:ListItem Value="3000">Broken Headlight - R3000</asp:ListItem>
+        <asp:ListItem Value="500">Scratch</asp:ListItem>
+        <asp:ListItem Value="1000">Large Scratch</asp:ListItem>
+        <asp:ListItem Value="1500">Dent</asp:ListItem>
+        <asp:ListItem Value="2500">Broken Mirror</asp:ListItem>
+        <asp:ListItem Value="3000">Broken Headlight</asp:ListItem>
 
     </asp:DropDownList>
 

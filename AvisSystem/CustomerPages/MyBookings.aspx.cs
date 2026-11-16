@@ -12,9 +12,7 @@ namespace AvisSystem.CustomerPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            try { BookingService.CancelExpiredBookings(); } catch { }   // must run BEFORE LoadBookings()
-            LoadBookings();
-
+            if (!IsPostBack) LoadBookings();
         }
 
         private void LoadBookings()

@@ -26,8 +26,5 @@
             </Columns>
             <HeaderStyle BackColor="#C8102E" ForeColor="White" Font-Bold="True" />
         </asp:GridView>
-       <script>
-    setTimeout(function () { location.reload(); }, 15000); // refresh every 15 seconds
-       </script>
     </div>
 </asp:Content>
