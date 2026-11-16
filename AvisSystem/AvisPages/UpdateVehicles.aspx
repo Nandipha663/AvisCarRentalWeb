@@ -155,6 +155,16 @@
             color: #888;
         }
 
+        .filter-dropdown {
+    width: 100%;
+    height: 42px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    padding: 0 12px;
+    font-size: 13px;
+    background: white;
+    box-sizing: border-box;
+}
 
         /* =========================================
            MAIN CONTENT
@@ -497,20 +507,12 @@
             <div class="search-box">
 
                 <i class="fas fa-search"></i>
-
-                <input type="text"
-                       placeholder="Search vehicles by their make" />
+                <asp:TextBox ID="TxtSearch" runat="server" placeholder="Search vehicles by their make" AutoPostBack="True"
+    OnTextChanged="TxtSearch_TextChanged"></asp:TextBox>
 
             </div>
 
-            <button type="button"
-                    class="clear-filters">
-
-                Clear Filters
-
-            </button>
-
-        </div>
+            </div>
 
 
         <!-- FILTERS -->
@@ -525,154 +527,89 @@
 
             </div>
 
-
             <div class="filters">
 
-
-                <!-- MODEL -->
-
+                <!--Status-->
                 <div class="filter-group">
+    <label>Status</label>
+         <asp:DropDownList ID="DDLStatus" runat="server" CssClass="filter-dropdown" AutoPostBack="True">
+             <asp:ListItem Text="All Statuses" Value="" />
+        <asp:ListItem Text="Available" Value="Available" />
+        <asp:ListItem Text="Reserved" Value="Reserved" />
+        <asp:ListItem Text="Rented Out" Value="Rented Out" />
+        <asp:ListItem Text="Maintenance" Value="Maintenance" />
+        <asp:ListItem Text="Out of Service" Value="Out of Service" />
 
-                    <label>
-                        Model
-                    </label>
-
-                    <select>
-
-                        <option>
-                            All Models
-                        </option>
-
-                        <option>
-                            Corolla
-                        </option>
-
-                        <option>
-                            3 Series
-                        </option>
-
-                        <option>
-                            Polo
-                        </option>
-
-                        <option>
-                            A-Class
-                        </option>
-
-                        <option>
-                            i20
-                        </option>
-
-                    </select>
-
+         </asp:DropDownList>
                 </div>
+    <!-- BRANCH NAME -->
 
 
-                <!-- CATEGORY -->
+    <div class="filter-group">
+        <label>Branch Name</label>
 
-                <div class="filter-group">
-
-                    <label>
-                        Category
-                    </label>
-
-                    <select>
-
-                        <option>
-                            All Categories
-                        </option>
-
-                        <option>
-                            Economy
-                        </option>
-
-                        <option>
-                            Compact
-                        </option>
-
-                        <option>
-                            Sedan
-                        </option>
-
-                        <option>
-                            SUV
-                        </option>
-
-                        <option>
-                            Luxury
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- STATUS -->
-
-                <div class="filter-group">
-
-                    <label>
-                        Status
-                    </label>
-
-                    <select>
-
-                        <option>
-                            All Statuses
-                        </option>
-
-                        <option>
-                            Available
-                        </option>
-
-                        <option>
-                            Rented
-                        </option>
-
-                        <option>
-                            In Maintenance
-                        </option>
-
-                        <option>
-                            Out Of Service
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- DAILY RATE -->
-
-                <div class="filter-group">
-
-                    <label>
-                        Daily Rate
-                    </label>
-
-                    <div class="rate-range">
-
-                        <input type="number"
-                               class="rate-input"
-                               placeholder="Min" />
-
-                        <span class="rate-dash">
-                            –
-                        </span>
-
-                        <input type="number"
-                               class="rate-input"
-                               placeholder="Max" />
-
-                    </div>
-
-                </div>
-
+        <asp:DropDownList ID="DDLBranchName"
+                    runat="server"
+                    CssClass="filter-dropdown" DataSourceID="SqlDSBranchNames" DataTextField="branchName" DataValueField="branchName" AutoPostBack="True"  AppendDataBoundItems="True" OnSelectedIndexChanged="DDLBranchName_SelectedIndexChanged">
+                    <asp:ListItem Text="All Branches" Value="" />
+                </asp:DropDownList>
+                <asp:SqlDataSource runat="server" ID="SqlDSBranchNames" ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT * FROM [BRANCH]"></asp:SqlDataSource>
             </div>
 
-        </div>
+
+    <!-- CATEGORY -->
+    <div class="filter-group">
+        <label>Category</label>
+
+        <asp:DropDownList ID="DDLCategory"
+            runat="server"
+    CssClass="filter-dropdown"
+    AutoPostBack="True">
+
+    <asp:ListItem Text="All Categories" Value="" />
+    <asp:ListItem Text="SUV" Value="SUV" />
+    <asp:ListItem Text="Standard" Value="Standard" />
+    <asp:ListItem Text="Luxury" Value="Luxury" />
+    <asp:ListItem Text="Premium" Value="Premium" />
+    <asp:ListItem Text="Hatchback" Value="Hatchback" />
+    <asp:ListItem Text="Van" Value="Van" />
+    <asp:ListItem Text="Sedan" Value="Sedan" />
+    <asp:ListItem Text="Compact" Value="Compact" />
+        </asp:DropDownList>
+    </div>
 
 
+    <!-- DAILY RATE -->
+    <div class="filter-group">
+        <label>Daily Rate</label>
+
+        <asp:DropDownList ID="DDLDailyRate"
+            runat="server"
+            CssClass="filter-dropdown" AutoPostBack="True">
+
+            <asp:ListItem Text="All Rates" Value="" />
+            <asp:ListItem Text="Below R500" Value="Below500" />
+            <asp:ListItem Text="R500 - R1000" Value="500-1000" />
+            <asp:ListItem Text="R1001 - R1500" Value="1001-1500" />
+            <asp:ListItem Text="Above R1500" Value="Above1500" />
+
+        </asp:DropDownList>
+    </div>
+
+</div>
+            <asp:Button ID="BtnFilter"
+    runat="server"
+    Text="Apply Filters"
+    CssClass="action-btn add-vehicle-btn"
+    OnClick="BtnFilter_Click" />
+
+            <asp:Button ID="BtnClearFilters"
+    runat="server"
+    Text="Clear Filters"
+    CssClass="clear-filters"
+    OnClick="BtnClearFilters_Click" />
+
+            </div>
         <!-- TABLE + SUMMARY -->
 
         <div class="content-layout">
@@ -682,376 +619,107 @@
 
             <div class="table-card">
 
-                <table class="vehicle-table">
+                
+
+                    <asp:SqlDataSource ID="SqlDSVehicles"
+    runat="server"
+    ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True"
+    ProviderName="System.Data.SqlClient"
+                        CancelSelectOnNullParameter="False"
+    SelectCommand="
+    SELECT VehicleVinNo, RegistrationNo, Make, Model, Category,
+           Status, Image, BranchName, DailyRate, VehicleDescription,
+           LastUpdated, OdometerReading
+    FROM VEHICLE
+    WHERE
+        (@Status = '' OR Status = @Status)
+        AND (@BranchName = '' OR BranchName = @BranchName)
+        AND (@Category = '' OR Category = @Category)
+        AND (
+            @DailyRate = ''
+            OR (@DailyRate = 'Below500' AND DailyRate &lt; 500)
+            OR (@DailyRate = '500-1000' AND DailyRate BETWEEN 500 AND 1000)
+            OR (@DailyRate = '1001-1500' AND DailyRate BETWEEN 1001 AND 1500)
+            OR (@DailyRate = 'Above1500' AND DailyRate &gt; 1500)
+        )
+        AND (@Make = '' OR Make LIKE @Make + '%')">
+
+    <SelectParameters>
+
+    <asp:ControlParameter Name="Status"
+        ControlID="DDLStatus"
+        PropertyName="SelectedValue"
+        Type="String"
+        ConvertEmptyStringToNull="False"
+        DefaultValue="" />
+
+    <asp:ControlParameter Name="BranchName"
+        ControlID="DDLBranchName"
+        PropertyName="SelectedValue"
+        Type="String"
+        ConvertEmptyStringToNull="False"
+        DefaultValue="" />
+
+    <asp:ControlParameter Name="Category"
+        ControlID="DDLCategory"
+        PropertyName="SelectedValue"
+        Type="String"
+        ConvertEmptyStringToNull="False"
+        DefaultValue="" />
+
+    <asp:ControlParameter Name="DailyRate"
+        ControlID="DDLDailyRate"
+        PropertyName="SelectedValue"
+        Type="String"
+        ConvertEmptyStringToNull="False"
+        DefaultValue="" />
+
+    <asp:ControlParameter Name="Make"
+        ControlID="TxtSearch"
+        PropertyName="Text"
+        Type="String"
+        ConvertEmptyStringToNull="False"
+        DefaultValue="" />
+
+</SelectParameters>
+</asp:SqlDataSource>
+                    <asp:GridView  ID="GVVehicles"
+    runat="server"
+    CssClass="vehicle-table"
+    AutoGenerateColumns="False"
+    DataKeyNames="VehicleVinNo"
+    DataSourceID="SqlDSVehicles"
+    AllowPaging="True"
+    EmptyDataText="No vehicles found."
+    OnSelectedIndexChanged="GVVehicles_SelectedIndexChanged"><Columns>
+                            <asp:CommandField ShowSelectButton="True" />
+                            <asp:BoundField DataField="VehicleVinNo" HeaderText="VehicleVinNo" ReadOnly="True" SortExpression="VehicleVinNo"></asp:BoundField>
+                            <asp:BoundField DataField="RegistrationNo" HeaderText="RegistrationNo" SortExpression="RegistrationNo"></asp:BoundField>
+                            <asp:BoundField DataField="Make" HeaderText="Make" SortExpression="Make"></asp:BoundField>
+                            <asp:BoundField DataField="Model" HeaderText="Model" SortExpression="Model"></asp:BoundField>
+                            <asp:BoundField DataField="Category" HeaderText="Category" SortExpression="Category"></asp:BoundField>
+                            <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status"></asp:BoundField>
+                            <asp:BoundField DataField="BranchName" HeaderText="BranchName" SortExpression="BranchName"></asp:BoundField>
+                            <asp:BoundField DataField="DailyRate" HeaderText="DailyRate" SortExpression="DailyRate"></asp:BoundField>
+                            <asp:BoundField DataField="VehicleDescription" HeaderText="VehicleDescription" SortExpression="VehicleDescription"></asp:BoundField>
+                            <asp:BoundField DataField="LastUpdated" HeaderText="LastUpdated" SortExpression="LastUpdated"></asp:BoundField>
+                            <asp:BoundField DataField="OdometerReading" HeaderText="OdometerReading" SortExpression="OdometerReading"></asp:BoundField>
+
+                             
+                             <asp:TemplateField HeaderText="Vehicle Image">
+    <ItemTemplate>
+        <asp:Image ID="ImgVehicle" runat="server"
+            Width="120px"
+            Height="80px"
+            ImageUrl='<%# "GetVehicleImage.ashx?vin=" + Eval("VehicleVinNo") %>' />
+    </ItemTemplate>
+</asp:TemplateField>
+
+                        </Columns>
+                    </asp:GridView>
+
+                   </div>
 
-                    <thead>
-
-                        <tr>
-
-                            <th>VehicleInNo</th>
-                            <th>RegistrationNo</th>
-                            <th>Make</th>
-                            <th>Model</th>
-                            <th>Category</th>
-                            <th>Status</th>
-                            <th>BranchName</th>
-                            <th>DailyRate</th>
-                            <th>VehicleDescription</th>
-                            <th>OdemeterReading</th>
-                            <th>Image</th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-
-                        <!-- VEHICLE 1 -->
-
-                        <tr class="vehicle-row selected"
-                            onclick="selectVehicle(
-                                'V001',
-                                'ND 123 456',
-                                'Toyota',
-                                'Corolla',
-                                'Sedan',
-                                'Available',
-                                'King Shaka Airport',
-                                '850',
-                                'Reliable automatic sedan suitable for everyday travel.',
-                                '45 820',
-                                '/Content/images/toyota-corolla.jpg'
-                            )">
-
-                            <td class="vehicle-id">
-                                V001
-                            </td>
-
-                            <td>
-                                ND 123 456
-                            </td>
-
-                            <td>
-                                Toyota
-                            </td>
-
-                            <td>
-                                Corolla
-                            </td>
-
-                            <td>
-                                Sedan
-                            </td>
-
-                            <td>
-
-                                <span class="status status-available">
-                                    Available
-                                </span>
-
-                            </td>
-
-                            <td>
-                                King Shaka Airport
-                            </td>
-
-                            <td>
-                                R850.00
-                            </td>
-
-                            <td>
-                                Reliable automatic sedan
-                            </td>
-
-                            <td>
-                                45 820 km
-                            </td>
-
-                            <td>
-                                Toyota Corolla
-                            </td>
-
-                        </tr>
-
-
-                        <!-- VEHICLE 2 -->
-
-                        <tr class="vehicle-row"
-                            onclick="selectVehicle(
-                                'V002',
-                                'ND 456 789',
-                                'BMW',
-                                '3 Series',
-                                'Luxury',
-                                'Rented',
-                                'Durban Downtown',
-                                '1 450',
-                                'Premium automatic vehicle.',
-                                '32 610',
-                                '/Content/images/bmw-3-series.jpg'
-                            )">
-
-                            <td class="vehicle-id">
-                                V002
-                            </td>
-
-                            <td>
-                                ND 456 789
-                            </td>
-
-                            <td>
-                                BMW
-                            </td>
-
-                            <td>
-                                3 Series
-                            </td>
-
-                            <td>
-                                Luxury
-                            </td>
-
-                            <td>
-
-                                <span class="status status-rented">
-                                    Rented
-                                </span>
-
-                            </td>
-
-                            <td>
-                                Durban Downtown
-                            </td>
-
-                            <td>
-                                R1 450.00
-                            </td>
-
-                            <td>
-                                Premium automatic vehicle
-                            </td>
-
-                            <td>
-                                32 610 km
-                            </td>
-
-                            <td>
-                                BMW 3 Series
-                            </td>
-
-                        </tr>
-
-
-                        <!-- VEHICLE 3 -->
-
-                        <tr class="vehicle-row"
-                            onclick="selectVehicle(
-                                'V003',
-                                'ND 789 123',
-                                'Volkswagen',
-                                'Polo',
-                                'Economy',
-                                'In Maintenance',
-                                'Umhlanga Branch',
-                                '650',
-                                'Compact fuel-efficient hatchback.',
-                                '58 430',
-                                '/Content/images/vw-polo.jpg'
-                            )">
-
-                            <td class="vehicle-id">
-                                V003
-                            </td>
-
-                            <td>
-                                ND 789 123
-                            </td>
-
-                            <td>
-                                Volkswagen
-                            </td>
-
-                            <td>
-                                Polo
-                            </td>
-
-                            <td>
-                                Economy
-                            </td>
-
-                            <td>
-
-                                <span class="status status-maintenance">
-                                    In Maintenance
-                                </span>
-
-                            </td>
-
-                            <td>
-                                Umhlanga Branch
-                            </td>
-
-                            <td>
-                                R650.00
-                            </td>
-
-                            <td>
-                                Compact fuel-efficient hatchback
-                            </td>
-
-                            <td>
-                                58 430 km
-                            </td>
-
-                            <td>
-                                Volkswagen Polo
-                            </td>
-
-                        </tr>
-
-
-                        <!-- VEHICLE 4 -->
-
-                        <tr class="vehicle-row"
-                            onclick="selectVehicle(
-                                'V004',
-                                'CA 321 654',
-                                'Mercedes-Benz',
-                                'A-Class',
-                                'Luxury',
-                                'Available',
-                                'Cape Town Airport',
-                                '1 650',
-                                'Luxury compact automatic vehicle.',
-                                '27 540',
-                                '/Content/images/mercedes-a-class.jpg'
-                            )">
-
-                            <td class="vehicle-id">
-                                V004
-                            </td>
-
-                            <td>
-                                CA 321 654
-                            </td>
-
-                            <td>
-                                Mercedes-Benz
-                            </td>
-
-                            <td>
-                                A-Class
-                            </td>
-
-                            <td>
-                                Luxury
-                            </td>
-
-                            <td>
-
-                                <span class="status status-available">
-                                    Available
-                                </span>
-
-                            </td>
-
-                            <td>
-                                Cape Town Airport
-                            </td>
-
-                            <td>
-                                R1 650.00
-                            </td>
-
-                            <td>
-                                Luxury compact automatic vehicle
-                            </td>
-
-                            <td>
-                                27 540 km
-                            </td>
-
-                            <td>
-                                Mercedes-Benz A-Class
-                            </td>
-
-                        </tr>
-
-
-                        <!-- VEHICLE 5 -->
-
-                        <tr class="vehicle-row"
-                            onclick="selectVehicle(
-                                'V005',
-                                'GP 654 987',
-                                'Hyundai',
-                                'i20',
-                                'Compact',
-                                'Out Of Service',
-                                'OR Tambo Airport',
-                                '720',
-                                'Compact hatchback for city travel.',
-                                '61 220',
-                                '/Content/images/hyundai-i20.jpg'
-                            )">
-
-                            <td class="vehicle-id">
-                                V005
-                            </td>
-
-                            <td>
-                                GP 654 987
-                            </td>
-
-                            <td>
-                                Hyundai
-                            </td>
-
-                            <td>
-                                i20
-                            </td>
-
-                            <td>
-                                Compact
-                            </td>
-
-                            <td>
-
-                                <span class="status status-out">
-                                    Out Of Service
-                                </span>
-
-                            </td>
-
-                            <td>
-                                OR Tambo Airport
-                            </td>
-
-                            <td>
-                                R720.00
-                            </td>
-
-                            <td>
-                                Compact hatchback for city travel
-                            </td>
-
-                            <td>
-                                61 220 km
-                            </td>
-
-                            <td>
-                                Hyundai i20
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
 
 
             <!-- =========================================
@@ -1071,9 +739,7 @@
 
                     <span id="summaryStatus"
                           class="status status-available">
-
-                        Available
-
+                        <asp:Label ID="LblStatus" runat="server" Text="Status"></asp:Label>
                     </span>
 
                 </div>
@@ -1082,11 +748,7 @@
                 <!-- VEHICLE IMAGE -->
 
                 <div class="vehicle-image-container">
-
-                    <img id="summaryImage"
-                         src="/Content/images/BMWXM.png"
-                         alt="Vehicle Image" />
-
+                    <asp:Image ID="VehImage" runat="server" />
                 </div>
 
 
@@ -1100,9 +762,7 @@
 
                     <div class="summary-value"
                          id="summaryVin">
-
-                        V001
-
+                        <asp:Label ID="LblVVN" runat="server" Text="VVN"></asp:Label>
                     </div>
 
                 </div>
@@ -1118,9 +778,7 @@
 
                     <div class="summary-value"
                          id="summaryCategory">
-
-                        Sedan
-
+                        <asp:Label ID="LblCategory" runat="server" Text="Category"></asp:Label>
                     </div>
 
                 </div>
@@ -1136,9 +794,7 @@
 
                     <div class="summary-value"
                          id="summaryMake">
-
-                        Toyota
-
+                        <asp:Label ID="LblMake" runat="server" Text="Make"></asp:Label>
                     </div>
 
                 </div>
@@ -1154,9 +810,7 @@
 
                     <div class="summary-value"
                          id="summaryModel">
-
-                        Corolla
-
+                        <asp:Label ID="LblModel" runat="server" Text="Model"></asp:Label>
                     </div>
 
                 </div>
@@ -1172,85 +826,22 @@
 
                     <div class="daily-rate"
                          id="summaryRate">
-
-                        R850.00
-
+                        <asp:Label ID="LblDailyRate" runat="server" Text="Daily Rate"></asp:Label>
                     </div>
 
                 </div>
 
-
-                <!-- CHANGE STATUS -->
-
-                <div class="change-status">
-
-                    <label>
-                        Change Status
-                    </label>
-
-                    <select id="changeStatus"
-                            class="status-select">
-
-                        <option>
-                            Available
-                        </option>
-
-                        <option>
-                            Rented
-                        </option>
-
-                        <option>
-                            In Maintenance
-                        </option>
-
-                        <option>
-                            Out Of Service
-                        </option>
-
-                    </select>
-
-                </div>
-
+                <!-- =========================================
+     BOTTOM BUTTONS
+========================================== -->
+    <div class="bottom-buttons">
+    <asp:Button ID="BtnClear" runat="server" Text="Clear" class="clear-btn" Height="47px" OnClick="BtnClear_Click" Width="316px" />
+        </div>
+        </div>
             </div>
 
-        </div>
 
-
-        <!-- =========================================
-             BOTTOM BUTTONS
-        ========================================== -->
-
-        <div class="bottom-buttons">
-
-            <button type="button"
-                    class="action-btn cancel-btn">
-
-                <i class="fas fa-times"></i>
-
-                Cancel
-
-            </button>
-
-
-            <a href="../ManagerPages/AddVehicle.aspx" class="action-btn add-vehicle-btn">
-                <i class="fas fa-plus"></i>
-                    Add New Vehicle
-           </a>
-
-            <%--<button type="button"
-                    class="action-btn add-vehicle-btn">
-
-                <i class="fas fa-plus"></i>
-
-                Add New Vehicle
-
-            </button>--%>
-
-        </div>
-
-    </div>
-
-
+        
     <!-- =========================================
          JAVASCRIPT
     ========================================== -->

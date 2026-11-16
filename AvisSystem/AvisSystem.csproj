@@ -249,6 +249,7 @@
     <Content Include="Account\Web.config" />
     <Content Include="AvisPages\Web.config" />
     <Content Include="CustomerPages\VehicleImage.ashx" />
+    <Content Include="AvisPages\GetVehicleImage.ashx" />
     <None Include="Properties\PublishProfiles\IST-Pmb-Group-3 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
@@ -449,6 +450,9 @@
     </Compile>
     <Compile Include="AvisPages\Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AvisPages\GetVehicleImage.ashx.cs">
+      <DependentUpon>GetVehicleImage.ashx</DependentUpon>
     </Compile>
     <Compile Include="AvisPages\Reports.aspx.cs">
       <DependentUpon>Reports.aspx</DependentUpon>
