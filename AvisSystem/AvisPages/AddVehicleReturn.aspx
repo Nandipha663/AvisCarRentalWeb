@@ -175,10 +175,10 @@
 
         <asp:SqlDataSource ID="SqlDSRentals" runat="server"
             ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>"
-           SelectCommand="SELECT r.RentalID, r.BookingID, r.CustomerName, r.VehicleVinNo, r.VehicleMakeModel, r.EmployeeName, r.ExpectedReturnDate, v.DailyRate
-               FROM RENTAL r INNER JOIN VEHICLE v ON r.VehicleVinNo = v.VehicleVinNo
-               WHERE r.RentalStatus = 'Active' AND r.CustomerName LIKE '%' + @Search + '%'
-               ORDER BY r.ExpectedReturnDate">
+            SelectCommand="SELECT RentalID, BookingID, CustomerName, VehicleVinNo, VehicleMakeModel, EmployeeName, ExpectedReturnDate
+                           FROM RENTAL
+                           WHERE RentalStatus = 'Active' AND CustomerName LIKE '%' + @Search + '%'
+                           ORDER BY ExpectedReturnDate">
             <SelectParameters>
                 <asp:ControlParameter ControlID="txtSearch" Name="Search" PropertyName="Text"
                     Type="String" DefaultValue="" ConvertEmptyStringToNull="False" />
@@ -211,9 +211,7 @@
                             <asp:BoundField DataField="VehicleVinNo" HeaderText="VehicleVinNo" />
                             <asp:BoundField DataField="VehicleMakeModel" HeaderText="VehicleMakeModel" />
                             <asp:BoundField DataField="EmployeeName" HeaderText="EmployeeName" />
-                            <asp:BoundField DataField="ExpectedReturnDate" HeaderText="ExpectedReturnDate" DataFormatString="{0:yyyy-MM-dd HH:mm}" />
-                            <asp:BoundField DataField="DailyRate" HeaderText="DailyRate" DataFormatString="{0:0.00}" />
-
+                            <asp:BoundField DataField="ExpectedReturnDate" HeaderText="ExpectedReturnDate" DataFormatString="{0:yyyy-MM-dd}" />
                         </Columns>
                     </asp:GridView>
                 </div>
@@ -222,7 +220,7 @@
 
     </div>
 
-    <div class="selected-rental-card" id="selectedRental">
+    <div class="selected-rental-card">
 
         <h3 class="section-title">Selected Rental Details</h3>
 
@@ -262,10 +260,6 @@
                 <label>Expected Return Date</label>
                 <asp:TextBox ID="txtExpectedReturnDate" runat="server" CssClass="modern-input readonly-input" ReadOnly="True" />
             </div>
-            <div class="form-group">
-                 <label>Daily Rate (R)</label>
-                 <asp:TextBox ID="txtDailyRate" runat="server" CssClass="modern-input readonly-input" ReadOnly="True" />
-             </div>
 
         </div>
 
@@ -282,18 +276,16 @@
                 <asp:TextBox ID="txtReturnDate" runat="server" CssClass="modern-input readonly-input" ReadOnly="True" />
             </div>
 
-            <asp:DropDownList ID="ddlBranch" runat="server" CssClass="modern-input"
-    DataSourceID="SqlDSBranch" DataTextField="BranchName" DataValueField="BranchName" />
+            <div class="form-group">
+                <label>Return Branch</label>
+                <asp:DropDownList ID="ddlBranch" runat="server" CssClass="modern-input"
+                    DataSourceID="SqlDSBranch" DataTextField="DropOffBranchName" DataValueField="DropOffBranchName" />
+            </div>
 
             <div class="form-group">
-                <label>Days Charged</label>
-                <asp:TextBox ID="txtDaysCharged" runat="server" CssClass="modern-input readonly-input" ReadOnly="True" Text="0" />
-             </div>
-
-            <div class="form-group">
-        <label>Additional Charges (R)</label>
-        <asp:TextBox ID="txtCharges" runat="server" CssClass="modern-input readonly-input" ReadOnly="True" Text="0.00" />
-              </div>
+                <label>Additional Charges (R)</label>
+                <asp:TextBox ID="txtCharges" runat="server" CssClass="modern-input" Text="0" />
+            </div>
 
             <div class="form-group">
                 <label>Inspection Report</label>
@@ -312,39 +304,32 @@
 
     </div>
 
-   <asp:SqlDataSource ID="SqlDSBranch" runat="server"
-    ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>"
-    SelectCommand="SELECT DISTINCT BranchName FROM VEHICLE ORDER BY BranchName" />
+    <asp:SqlDataSource ID="SqlDSBranch" runat="server"
+        ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>"
+        SelectCommand="SELECT DISTINCT DropOffBranchName FROM BOOKING ORDER BY DropOffBranchName" />
 
-   <asp:SqlDataSource ID="SqlDSAddReturn" runat="server"
-    ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>"
-    InsertCommand="SET XACT_ABORT ON;
-                   BEGIN TRAN;
+    <asp:SqlDataSource ID="SqlDSAddReturn" runat="server"
+        ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>"
+        InsertCommand="INSERT INTO [VEHICLE RETURN] (BookingID, ReturnDate, [Inspection Report], Charges, VehicleVinNo, BranchName, VehicleDescription)
+                       VALUES (@BookingID, @ReturnDate, @InspectionReport, @Charges, @VehicleVinNo, @BranchName, @VehicleDescription)">
+        <InsertParameters>
+            <asp:ControlParameter ControlID="txtBookingID" Name="BookingID" PropertyName="Text" Type="Int32" />
+            <asp:ControlParameter ControlID="txtReturnDate" Name="ReturnDate" PropertyName="Text" Type="DateTime" />
+            <asp:ControlParameter ControlID="txtInspectionReport" Name="InspectionReport" PropertyName="Text" Type="String" />
+            <asp:ControlParameter ControlID="txtCharges" Name="Charges" PropertyName="Text" Type="Decimal" />
+            <asp:ControlParameter ControlID="txtVehicleVinNo" Name="VehicleVinNo" PropertyName="Text" Type="String" />
+            <asp:ControlParameter ControlID="ddlBranch" Name="BranchName" PropertyName="SelectedValue" Type="String" />
+            <asp:ControlParameter ControlID="txtVehicleMakeModel" Name="VehicleDescription" PropertyName="Text" Type="String" />
+        </InsertParameters>
+    </asp:SqlDataSource>
 
-                   UPDATE VEHICLE
-                   SET Status = 'Available', BranchName = @BranchName, LastUpdated = GETDATE()
-                   WHERE VehicleVinNo = @VehicleVinNo;
-                   IF @@ROWCOUNT = 0 THROW 50001, 'Vehicle not found.', 1;
-
-                   INSERT INTO [VEHICLE RETURN] (BookingID, ReturnDate, [Inspection Report], Charges, VehicleVinNo, BranchName, VehicleDescription)
-                   VALUES (@BookingID, @ReturnDate, @InspectionReport, @Charges, @VehicleVinNo, @BranchName, @VehicleDescription);
-
-                   UPDATE RENTAL SET RentalStatus = 'Completed' WHERE RentalID = @RentalID;
-
-                   COMMIT;">
-    <InsertParameters>
-        <asp:ControlParameter ControlID="txtRentalID" Name="RentalID" PropertyName="Text" Type="Int32" />
-        <asp:ControlParameter ControlID="txtBookingID" Name="BookingID" PropertyName="Text" Type="Int32" />
-        <asp:ControlParameter ControlID="txtReturnDate" Name="ReturnDate" PropertyName="Text" Type="DateTime" />
-        <asp:ControlParameter ControlID="txtInspectionReport" Name="InspectionReport" PropertyName="Text" Type="String" />
-        <asp:ControlParameter ControlID="txtCharges" Name="Charges" PropertyName="Text" Type="Decimal" />
-        <asp:ControlParameter ControlID="txtVehicleVinNo" Name="VehicleVinNo" PropertyName="Text" Type="String" />
-        <asp:ControlParameter ControlID="ddlBranch" Name="BranchName" PropertyName="SelectedValue" Type="String" />
-        <asp:ControlParameter ControlID="txtVehicleMakeModel" Name="VehicleDescription" PropertyName="Text" Type="String" />
-    </InsertParameters>
-</asp:SqlDataSource>
-
-   
+    <asp:SqlDataSource ID="SqlDSCompleteRental" runat="server"
+        ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>"
+        UpdateCommand="UPDATE RENTAL SET RentalStatus = 'Completed' WHERE RentalID = @RentalID">
+        <UpdateParameters>
+            <asp:ControlParameter ControlID="txtRentalID" Name="RentalID" PropertyName="Text" Type="Int32" />
+        </UpdateParameters>
+    </asp:SqlDataSource>
 
     <asp:Label ID="lblMessage" runat="server" CssClass="message" />
 

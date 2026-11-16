@@ -101,11 +101,11 @@
 
         <asp:RoleGroup Roles="Customer">
             <ContentTemplate>
-             <li class="nav-item"><a class="nav-link" runat="server" href="~/CustomerPages/Vehicles.aspx">Vehicles</a></li>
-<li class="nav-item"><a class="nav-link" runat="server" href="~/CustomerPages/MakeBooking.aspx">Make Booking</a></li>
-<li class="nav-item"><a class="nav-link" runat="server" href="~/CustomerPages/MakePayment.aspx">Make Payment</a></li>
-<li class="nav-item"><a class="nav-link" runat="server" href="~/CustomerPages/Branches.aspx">Branches</a></li>
-<li class="nav-item"><a class="nav-link" runat="server" href="~/CustomerPages/MyBookings.aspx">My Bookings</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/CustomerPages/Vehicles.aspx">Vehicles</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/CustomerPages/MakeBooking.aspx">Make Booking</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/CustomerPages/MakePayment.aspx">Make Payment</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/CustomerPages/Branches.aspx">Branches</a></li>
+                <li class="nav-item"><a class="nav-link" runat="server" href="~/CustomerPages/MyBookings.aspx">My Bookings</a></li>
             </ContentTemplate>
         </asp:RoleGroup>
 
