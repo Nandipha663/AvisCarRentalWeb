@@ -1,251 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
+﻿using AvisSystem.Models;
+using System;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Web.UI.WebControls;
+using static System.Collections.Specialized.BitVector32;
 
 namespace AvisSystem.CustomerPages
 {
-    public partial class MakeBooking : AvisSystem.Models.CustomerPage
+    public partial class MakeBooking : CustomerPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (IsPostBack) return;
+            LoadBranches(ddlPickupBranch);
+            LoadBranches(ddlReturnBranch);
+            string today = DateTime.Today.ToString("yyyy-MM-dd");
+            txtPickupDate.Attributes["min"] = today;
+            txtReturnDate.Attributes["min"] = today;
         }
 
-        protected void btnSearchVehicles_Click(object sender, EventArgs e)
+        private void LoadBranches(DropDownList ddl)
         {
-            bool isValid = true;
-
-            // Remove previous error styling and messages
-            ClearValidationStyles();
-
-            // ==========================================
-            // PICKUP LOCATION
-            // ==========================================
-
-            if (string.IsNullOrEmpty(ddlPickupLocation.SelectedValue))
-            {
-                ShowError(
-                    ddlPickupLocation,
-                    lblPickupLocationError,
-                    "Please choose a pickup location."
-                );
-
-                isValid = false;
-            }
-
-            // ==========================================
-            // PICKUP DATE
-            // ==========================================
-
-            if (string.IsNullOrEmpty(txtPickupDate.Text))
-            {
-                ShowError(
-                    txtPickupDate,
-                    lblPickupDateError,
-                    "Please choose a pickup date."
-                );
-
-                isValid = false;
-            }
-
-            // ==========================================
-            // PICKUP TIME
-            // ==========================================
-
-            if (string.IsNullOrEmpty(ddlPickupTime.SelectedValue))
-            {
-                ShowError(
-                    ddlPickupTime,
-                    lblPickupTimeError,
-                    "Please choose a pickup time."
-                );
-
-                isValid = false;
-            }
-
-            // ==========================================
-            // RETURN DATE
-            // ==========================================
-
-            if (string.IsNullOrEmpty(txtReturnDate.Text))
-            {
-                ShowError(
-                    txtReturnDate,
-                    lblReturnDateError,
-                    "Please choose a return date."
-                );
-
-                isValid = false;
-            }
-
-            // ==========================================
-            // RETURN TIME
-            // ==========================================
-
-            if (string.IsNullOrEmpty(ddlReturnTime.SelectedValue))
-            {
-                ShowError(
-                    ddlReturnTime,
-                    lblReturnTimeError,
-                    "Please choose a return time."
-                );
-
-                isValid = false;
-            }
-
-            // ==========================================
-            // RETURN LOCATION
-            // ==========================================
-
-            if (chkDifferentLocation.Checked &&
-                string.IsNullOrEmpty(ddlReturnLocation.SelectedValue))
-            {
-                ShowError(
-                    ddlReturnLocation,
-                    lblReturnLocationError,
-                    "Please choose a return location."
-                );
-
-                isValid = false;
-            }
-            // ==========================================
-            // DATE LOGIC
-            // ==========================================
-
-            DateTime pickDT, retDT;
-            if (isValid
-                && DateTime.TryParse(txtPickupDate.Text + " " + ddlPickupTime.SelectedValue, out pickDT)
-                && DateTime.TryParse(txtReturnDate.Text + " " + ddlReturnTime.SelectedValue, out retDT))
-            {
-                if (pickDT < DateTime.Now)
-                {
-                    ShowError(txtPickupDate, lblPickupDateError,
-                        "The pickup date and time cannot be in the past.");
-                    isValid = false;
-                }
-                else if (retDT <= pickDT)
-                {
-                    ShowError(txtReturnDate, lblReturnDateError,
-                        "The return must be after the pickup.");
-                    isValid = false;
-                }
-            }
-
-            // ==========================================
-            // STOP IF VALIDATION FAILED
-            // ==========================================
-
-            if (!isValid)
-            {
-                return;
-            }
-
-            // ==========================================
-            // SAVE BOOKING INFORMATION
-            // ==========================================
-
-            Session["PickupLocation"] =
-                ddlPickupLocation.SelectedValue;
-
-            Session["PickupDate"] =
-                txtPickupDate.Text;
-
-            Session["PickupTime"] =
-                ddlPickupTime.SelectedValue;
-
-            Session["ReturnDate"] =
-                txtReturnDate.Text;
-
-            Session["ReturnTime"] =
-                ddlReturnTime.SelectedValue;
-
-            // ==========================================
-            // RETURN LOCATION
-            // ==========================================
-
-            if (chkDifferentLocation.Checked)
-            {
-                Session["ReturnLocation"] =
-                    ddlReturnLocation.SelectedValue;
-            }
-            else
-            {
-                Session["ReturnLocation"] =
-                    ddlPickupLocation.SelectedValue;
-            }
-
-            // ==========================================
-            // GO TO VEHICLE SELECTION PAGE
-            // ==========================================
-
-            Response.Redirect("~/CustomerPages/Vehicles.aspx");
+            var cs = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            var t = new DataTable();
+            using (var con = new SqlConnection(cs))
+            using (var da = new SqlDataAdapter("SELECT branchName FROM BRANCH ORDER BY branchName", con))
+                da.Fill(t);
+            ddl.DataSource = t;
+            ddl.DataTextField = "branchName";
+            ddl.DataValueField = "branchName";
+            ddl.DataBind();
         }
 
-        // ==============================================
-        // SHOW VALIDATION ERROR
-        // ==============================================
-
-        private void ShowError(
-            WebControl control,
-            Label errorLabel,
-            string message)
+        protected void btnSearch_Click(object sender, EventArgs e)
         {
-            // Add red error styling
-            control.CssClass += " input-error";
+            DateTime pick, ret;
+            if (!DateTime.TryParse(txtPickupDate.Text + " " + txtPickupTime.Text, out pick) ||
+                !DateTime.TryParse(txtReturnDate.Text + " " + txtReturnTime.Text, out ret))
+            { lblMsg.Text = "Enter valid pick-up and return dates and times."; return; }
 
-            // Display error message
-            errorLabel.Text = message;
+            if (pick < DateTime.Now) { lblMsg.Text = "Pick-up cannot be in the past."; return; }
+            if (ret <= pick) { lblMsg.Text = "Return must be after pick-up."; return; }
 
-            errorLabel.Visible = true;
-        }
+            // clear any earlier choice so a new search starts clean
+            Session.Remove("SelectedVin");
+            Session.Remove("TotalAmount");
 
-        // ==============================================
-        // CLEAR PREVIOUS VALIDATION ERRORS
-        // ==============================================
+            Session["PickupLocation"] = ddlPickupBranch.SelectedValue;
+            Session["ReturnLocation"] = ddlReturnBranch.SelectedValue;
+            Session["PickupDate"] = pick.ToString("yyyy-MM-dd");
+            Session["PickupTime"] = pick.ToString("HH:mm");
+            Session["ReturnDate"] = ret.ToString("yyyy-MM-dd");
+            Session["ReturnTime"] = ret.ToString("HH:mm");
 
-        private void ClearValidationStyles()
-        {
-            // Reset CSS classes
-
-            ddlPickupLocation.CssClass =
-                "booking-dropdown";
-
-            txtPickupDate.CssClass =
-                "booking-input";
-
-            ddlPickupTime.CssClass =
-                "booking-input";
-
-            txtReturnDate.CssClass =
-                "booking-input";
-
-            ddlReturnTime.CssClass =
-                "booking-input";
-
-            ddlReturnLocation.CssClass =
-                "booking-dropdown";
-
-            // Clear error messages
-
-            lblPickupLocationError.Text = "";
-            lblPickupDateError.Text = "";
-            lblPickupTimeError.Text = "";
-            lblReturnDateError.Text = "";
-            lblReturnTimeError.Text = "";
-            lblReturnLocationError.Text = "";
-
-            // Hide error labels
-
-            lblPickupLocationError.Visible = false;
-            lblPickupDateError.Visible = false;
-            lblPickupTimeError.Visible = false;
-            lblReturnDateError.Visible = false;
-            lblReturnTimeError.Visible = false;
-            lblReturnLocationError.Visible = false;
+            Response.Redirect("Vehicles.aspx");
         }
     }
-
 }
