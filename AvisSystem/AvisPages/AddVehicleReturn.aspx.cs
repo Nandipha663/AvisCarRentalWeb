@@ -71,21 +71,39 @@ namespace AvisSystem.AvisPages
 
             CalculateCharges();
             string charge = txtCharges.Text;
+            string message = "Vehicle return added. Booking " + txtBookingID.Text + " and rental " + txtRentalID.Text
+                + " are now completed. " + txtVehicleMakeModel.Text + " is now available at " + ddlBranch.SelectedValue + ".";
 
             try
             {
                 SqlDSAddReturn.Insert();
-
-                lblMessage.Text = "Vehicle return added. Rental " + txtRentalID.Text + " is now completed. "
-                    + txtVehicleMakeModel.Text + " is now available at " + ddlBranch.SelectedValue
-                    + ". Additional charges: R" + charge;
-                ClearFields();
-                GVRentals.DataBind();
             }
             catch (Exception ex)
             {
                 lblMessage.Text = "The return could not be saved: " + ex.Message;
+                return;
             }
+
+            decimal amount;
+            decimal.TryParse(charge, out amount);
+
+            if (amount > 0)
+            {
+                try
+                {
+                    SqlDSAddPayment.InsertParameters["PaymentDescription"].DefaultValue = "Additional charges for return of rental " + txtRentalID.Text;
+                    SqlDSAddPayment.Insert();
+                    message += " Payment of R" + charge + " recorded (" + ddlPaymentType.SelectedValue + ").";
+                }
+                catch (Exception ex)
+                {
+                    message += " The payment of R" + charge + " could not be recorded: " + ex.Message;
+                }
+            }
+
+            lblMessage.Text = message;
+            ClearFields();
+            GVRentals.DataBind();
         }
 
         protected void btnClear_Click(object sender, EventArgs e)

@@ -168,6 +168,15 @@ namespace AvisSystem.AvisPages
         protected global::System.Web.UI.WebControls.TextBox txtCharges;
 
         /// <summary>
+        /// ddlPaymentType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlPaymentType;
+
+        /// <summary>
         /// txtInspectionReport control.
         /// </summary>
         /// <remarks>
@@ -211,6 +220,15 @@ namespace AvisSystem.AvisPages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDSAddReturn;
+
+        /// <summary>
+        /// SqlDSAddPayment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDSAddPayment;
 
         /// <summary>
         /// lblMessage control.

@@ -294,6 +294,14 @@
         <label>Additional Charges (R)</label>
         <asp:TextBox ID="txtCharges" runat="server" CssClass="modern-input readonly-input" ReadOnly="True" Text="0.00" />
               </div>
+            <div class="form-group">
+    <label>Payment Method</label>
+    <asp:DropDownList ID="ddlPaymentType" runat="server" CssClass="modern-input">
+        <asp:ListItem>Cash</asp:ListItem>
+        <asp:ListItem>Debit Card</asp:ListItem>
+        <asp:ListItem>EFT</asp:ListItem>
+    </asp:DropDownList>
+</div>
 
             <div class="form-group">
                 <label>Inspection Report</label>
@@ -318,20 +326,22 @@
 
    <asp:SqlDataSource ID="SqlDSAddReturn" runat="server"
     ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>"
-    InsertCommand="SET XACT_ABORT ON;
-                   BEGIN TRAN;
+ InsertCommand="SET XACT_ABORT ON;
+               BEGIN TRAN;
 
-                   UPDATE VEHICLE
-                   SET Status = 'Available', BranchName = @BranchName, LastUpdated = GETDATE()
-                   WHERE VehicleVinNo = @VehicleVinNo;
-                   IF @@ROWCOUNT = 0 THROW 50001, 'Vehicle not found.', 1;
+               UPDATE VEHICLE
+               SET Status = 'Available', BranchName = @BranchName, LastUpdated = GETDATE()
+               WHERE VehicleVinNo = @VehicleVinNo;
+               IF @@ROWCOUNT = 0 THROW 50001, 'Vehicle not found.', 1;
 
-                   INSERT INTO [VEHICLE RETURN] (BookingID, ReturnDate, [Inspection Report], Charges, VehicleVinNo, BranchName, VehicleDescription)
-                   VALUES (@BookingID, @ReturnDate, @InspectionReport, @Charges, @VehicleVinNo, @BranchName, @VehicleDescription);
+               INSERT INTO [VEHICLE RETURN] (BookingID, ReturnDate, [Inspection Report], Charges, VehicleVinNo, BranchName, VehicleDescription)
+               VALUES (@BookingID, @ReturnDate, @InspectionReport, @Charges, @VehicleVinNo, @BranchName, @VehicleDescription);
 
-                   UPDATE RENTAL SET RentalStatus = 'Completed' WHERE RentalID = @RentalID;
+               UPDATE RENTAL SET RentalStatus = 'Completed' WHERE RentalID = @RentalID;
 
-                   COMMIT;">
+               UPDATE BOOKING SET Status = 'Completed', LastUpdated = GETDATE() WHERE BookingID = @BookingID;
+
+               COMMIT;">
     <InsertParameters>
         <asp:ControlParameter ControlID="txtRentalID" Name="RentalID" PropertyName="Text" Type="Int32" />
         <asp:ControlParameter ControlID="txtBookingID" Name="BookingID" PropertyName="Text" Type="Int32" />
@@ -344,7 +354,21 @@
     </InsertParameters>
 </asp:SqlDataSource>
 
-   
+   <asp:SqlDataSource ID="SqlDSAddPayment" runat="server"
+    ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>"
+    InsertCommand="INSERT INTO PAYMENT (InvoiceID, BookingID, PaymentType, PaymentDate, PaymentAmount, PaymentStatus, PaymentDescription, CustomerName)
+                   SELECT 'INV' + CAST(ISNULL(MAX(TRY_CAST(SUBSTRING(InvoiceID, 4, 20) AS INT)), 1000) + 1 AS VARCHAR(20)),
+                          @BookingID, @PaymentType, @PaymentDate, @PaymentAmount, 'Completed', @PaymentDescription, @CustomerName
+                   FROM PAYMENT WITH (UPDLOCK, HOLDLOCK)">
+    <InsertParameters>
+        <asp:ControlParameter ControlID="txtBookingID" Name="BookingID" PropertyName="Text" Type="Int32" />
+        <asp:ControlParameter ControlID="ddlPaymentType" Name="PaymentType" PropertyName="SelectedValue" Type="String" />
+        <asp:ControlParameter ControlID="txtReturnDate" Name="PaymentDate" PropertyName="Text" Type="DateTime" />
+        <asp:ControlParameter ControlID="txtCharges" Name="PaymentAmount" PropertyName="Text" Type="Decimal" />
+        <asp:ControlParameter ControlID="txtCustomerName" Name="CustomerName" PropertyName="Text" Type="String" />
+        <asp:Parameter Name="PaymentDescription" Type="String" />
+    </InsertParameters>
+</asp:SqlDataSource>
 
     <asp:Label ID="lblMessage" runat="server" CssClass="message" />
 
