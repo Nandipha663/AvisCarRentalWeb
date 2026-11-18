@@ -15,58 +15,22 @@ namespace AvisSystem.AvisPages
     {
 
         /// <summary>
-        /// txtSearch control.
+        /// SqlDSReturns control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSearch;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDSReturns;
 
         /// <summary>
-        /// txtFromDate control.
+        /// SqlDSOneReturn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFromDate;
-
-        /// <summary>
-        /// txtToDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtToDate;
-
-        /// <summary>
-        /// btnFilter control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnFilter;
-
-        /// <summary>
-        /// btnClearFilters control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnClearFilters;
-
-        /// <summary>
-        /// SqlDSReturn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDSReturn;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDSOneReturn;
 
         /// <summary>
         /// SqlDSBranch control.
@@ -78,22 +42,49 @@ namespace AvisSystem.AvisPages
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDSBranch;
 
         /// <summary>
-        /// SqlDSUpdateReturn control.
+        /// SqlDSReturnUpdate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDSUpdateReturn;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDSReturnUpdate;
 
         /// <summary>
-        /// GVReturn control.
+        /// txtSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GVReturn;
+        protected global::System.Web.UI.WebControls.TextBox txtSearch;
+
+        /// <summary>
+        /// btnSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSearch;
+
+        /// <summary>
+        /// btnClearSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnClearSearch;
+
+        /// <summary>
+        /// GVReturns control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GVReturns;
 
         /// <summary>
         /// hfReturnID control.
@@ -105,58 +96,49 @@ namespace AvisSystem.AvisPages
         protected global::System.Web.UI.WebControls.HiddenField hfReturnID;
 
         /// <summary>
-        /// lblReturnID control.
+        /// txtReturnNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblReturnID;
+        protected global::System.Web.UI.WebControls.TextBox txtReturnNo;
 
         /// <summary>
-        /// lblBookingID control.
+        /// txtBookingRef control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblBookingID;
+        protected global::System.Web.UI.WebControls.TextBox txtBookingRef;
 
         /// <summary>
-        /// lblVehicleVinNo control.
+        /// txtVin control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblVehicleVinNo;
+        protected global::System.Web.UI.WebControls.TextBox txtVin;
 
         /// <summary>
-        /// lblVehicle control.
+        /// txtVehicle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblVehicle;
+        protected global::System.Web.UI.WebControls.TextBox txtVehicle;
 
         /// <summary>
-        /// lblReturnDate control.
+        /// txtReport control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblReturnDate;
-
-        /// <summary>
-        /// txtInspection control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtInspection;
+        protected global::System.Web.UI.WebControls.TextBox txtReport;
 
         /// <summary>
         /// txtCharges control.
@@ -177,15 +159,6 @@ namespace AvisSystem.AvisPages
         protected global::System.Web.UI.WebControls.DropDownList ddlBranch;
 
         /// <summary>
-        /// btnClear control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnClear;
-
-        /// <summary>
         /// btnUpdate control.
         /// </summary>
         /// <remarks>
@@ -193,6 +166,15 @@ namespace AvisSystem.AvisPages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnUpdate;
+
+        /// <summary>
+        /// btnClear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnClear;
 
         /// <summary>
         /// lblMessage control.

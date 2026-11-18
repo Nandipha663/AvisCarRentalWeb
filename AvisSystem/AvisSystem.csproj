@@ -585,6 +585,7 @@
       <DependentUpon>ViewUpdateEmployees.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\AvisRoles.cs" />
+    <Compile Include="Models\BookingService.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\SecurePage.cs">
       <SubType>ASPXCodeBehind</SubType>

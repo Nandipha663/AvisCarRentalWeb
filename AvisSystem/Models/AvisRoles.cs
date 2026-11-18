@@ -30,7 +30,7 @@ namespace AvisSystem.Models   // <-- use YOUR project namespace
             if (roles.Contains(Manager) || roles.Contains(OfficeAdmin))
                 return "~/AvisPages/Dashboard.aspx";
             if (roles.Contains(Customer))
-                return "~/CustomerPages/Vehicles.aspx";
+                return "~/CustomerPages/MakeBooking.aspx";
             return "~/Default.aspx";
         }
 

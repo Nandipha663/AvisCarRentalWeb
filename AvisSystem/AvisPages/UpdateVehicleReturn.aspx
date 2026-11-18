@@ -366,188 +366,129 @@ color: #c8102e;
              border-radius: 7px;
              box-sizing: border-box;
             }
+
         }
 
     </style>
    <main class="booking-page">
+  <div class="booking-header">
+    <h1>Update Vehicle Return</h1>
+    <p>Search saved returns and correct their details.</p>
+  </div>
 
-    <!-- PAGE HEADER -->
-    <div class="booking-header">
-        <h1>Vehicle Returns</h1>
-        <p>Search, filter and update vehicle returns.</p>
+  <!-- Grid: history of all returns, searchable -->
+  <asp:SqlDataSource ID="SqlDSReturns" runat="server"
+      ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>"
+      SelectCommand="SELECT ReturnID, BookingID, VehicleVinNo, VehicleDescription, ReturnDate,
+                            [Inspection Report], Charges, BranchName
+                     FROM [VEHICLE RETURN]
+                     WHERE VehicleVinNo LIKE '%' + @Search + '%'
+                        OR VehicleDescription LIKE '%' + @Search + '%'
+                        OR CAST(BookingID AS VARCHAR(20)) LIKE '%' + @Search + '%'
+                     ORDER BY ReturnID DESC">
+    <SelectParameters>
+      <asp:ControlParameter ControlID="txtSearch" Name="Search" PropertyName="Text"
+          Type="String" DefaultValue="" ConvertEmptyStringToNull="False" />
+    </SelectParameters>
+  </asp:SqlDataSource>
+
+  <!-- One return, loaded into the form when a row is selected -->
+  <asp:SqlDataSource ID="SqlDSOneReturn" runat="server"
+      ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>"
+      SelectCommand="SELECT ReturnID, BookingID, VehicleVinNo, VehicleDescription,
+                            [Inspection Report], Charges, BranchName
+                     FROM [VEHICLE RETURN] WHERE ReturnID = @ReturnID">
+    <SelectParameters>
+      <asp:ControlParameter ControlID="hfReturnID" Name="ReturnID" PropertyName="Value" Type="Int32" />
+    </SelectParameters>
+  </asp:SqlDataSource>
+
+  <!-- Branch dropdown list -->
+  <asp:SqlDataSource ID="SqlDSBranch" runat="server"
+      ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>"
+      SelectCommand="SELECT BranchName FROM (
+                         SELECT BranchName FROM [VEHICLE RETURN]
+                         UNION SELECT DropOffBranchName FROM BOOKING
+                         UNION SELECT PickUpBranchName FROM BOOKING) x
+                     WHERE BranchName IS NOT NULL ORDER BY BranchName" />
+
+  <!-- Update -->
+  <asp:SqlDataSource ID="SqlDSReturnUpdate" runat="server"
+      ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>"
+      UpdateCommand="UPDATE [VEHICLE RETURN]
+                     SET [Inspection Report] = @Report, Charges = @Charges,
+                         BranchName = @Branch, LastUpdated = GETDATE()
+                     WHERE ReturnID = @ReturnID">
+    <UpdateParameters>
+      <asp:Parameter Name="Report" Type="String" />
+      <asp:Parameter Name="Charges" Type="Decimal" />
+      <asp:Parameter Name="Branch" Type="String" />
+      <asp:Parameter Name="ReturnID" Type="Int32" />
+    </UpdateParameters>
+  </asp:SqlDataSource>
+
+  <div class="search-row">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <asp:TextBox ID="txtSearch" runat="server" placeholder="Search by VIN, vehicle or booking ref"></asp:TextBox>
     </div>
+    <asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="btnSearch_Click"
+        CausesValidation="false"
+        style="background-color:#c8102e; color:white; border:none; border-radius:8px; padding:0 20px; height:43px; cursor:pointer;" />
+    <asp:Button ID="btnClearSearch" runat="server" Text="Clear" CssClass="clear-filters"
+        OnClick="btnClearSearch_Click" CausesValidation="false" />
+  </div>
 
-    <!-- SEARCH -->
-    <div class="search-row">
-        <div class="search-box">
-            <i class="fas fa-search"></i>
-            <asp:TextBox ID="txtSearch" runat="server" AutoPostBack="True" placeholder="Search returns by VIN, vehicle or booking ID"></asp:TextBox>
-        </div>
-    </div>
+  <div class="booking-content">
+    <div class="table-card"><div class="table-wrapper">
+      <asp:GridView ID="GVReturns" runat="server" CssClass="booking-table"
+          DataSourceID="SqlDSReturns" AutoGenerateColumns="False" DataKeyNames="ReturnID"
+          AllowPaging="True" PageSize="8" ShowHeaderWhenEmpty="True" EmptyDataText="No returns found."
+          OnSelectedIndexChanged="GVReturns_SelectedIndexChanged">
+        <Columns>
+          <asp:CommandField ShowSelectButton="True" />
+          <asp:BoundField DataField="ReturnID" HeaderText="Return #" />
+          <asp:BoundField DataField="BookingID" HeaderText="Booking Ref" />
+          <asp:BoundField DataField="VehicleVinNo" HeaderText="VIN / Plate" />
+          <asp:BoundField DataField="VehicleDescription" HeaderText="Vehicle" />
+          <asp:BoundField DataField="ReturnDate" HeaderText="Returned" DataFormatString="{0:yyyy-MM-dd}" />
+          <asp:BoundField DataField="Inspection Report" HeaderText="Inspection Report" />
+          <asp:BoundField DataField="Charges" HeaderText="Charges" DataFormatString="{0:C}" />
+          <asp:BoundField DataField="BranchName" HeaderText="Branch" />
+        </Columns>
+      </asp:GridView>
+    </div></div>
 
-    <!-- FILTERS -->
-    <div class="filter-card">
-        <div class="filter-title">
-            <i class="fas fa-filter"></i>
-            <h2>Filters</h2>
-        </div>
+    <aside class="summary-card">
+      <div class="summary-heading"><h2>Edit Return</h2></div>
+      <asp:HiddenField ID="hfReturnID" runat="server" Value="0" />
 
-        <div class="filters">
+      <label>Return #</label><asp:TextBox ID="txtReturnNo" runat="server" ReadOnly="true" /><br />
+      <label>Booking reference</label><asp:TextBox ID="txtBookingRef" runat="server" ReadOnly="true" /><br />
+      <label>Licence plate / VIN</label><asp:TextBox ID="txtVin" runat="server" ReadOnly="true" /><br />
+      <label>Vehicle</label><asp:TextBox ID="txtVehicle" runat="server" ReadOnly="true" /><br />
 
-            <!-- FROM DATE -->
-            <div class="filter-group">
-                <label>From Date</label>
-                <asp:TextBox TextMode="Date" ID="txtFromDate" runat="server"></asp:TextBox>
-            </div>
+      <label>Inspection report</label>
+      <asp:TextBox ID="txtReport" runat="server" TextMode="MultiLine" Rows="4" MaxLength="200" /><br />
 
-            <!-- TO DATE -->
-            <div class="filter-group">
-                <label>To Date</label>
-                <asp:TextBox TextMode="Date" ID="txtToDate" runat="server"></asp:TextBox>
-            </div>
+      <label>Additional charges (R)</label>
+      <asp:TextBox ID="txtCharges" runat="server" />
+      <asp:RangeValidator runat="server" ControlToValidate="txtCharges" Type="Double"
+          MinimumValue="0" MaximumValue="1000000" ErrorMessage="Enter a valid amount."
+          ForeColor="#c8102e" Display="Dynamic" ValidationGroup="Upd" /><br />
 
-            <!-- BUTTONS -->
-            <div class="filter-button-group">
+      <label>Return branch</label>
+      <asp:DropDownList ID="ddlBranch" runat="server" DataSourceID="SqlDSBranch"
+          DataTextField="BranchName" DataValueField="BranchName" />
 
-                <asp:Button ID="btnFilter"
-                    runat="server"
-                    Text="Filter"
-                    style="border-style: none; background-color:#c8102e; color:white; border-radius:8px; padding:0 20px; cursor:pointer;"
-                    OnClick="btnFilter_Click" Width="170px" Height="43px" />
-
-                <asp:Button ID="btnClearFilters"
-                    runat="server"
-                    Text="Clear Filters"
-                    CssClass="clear-filters"
-                    OnClick="btnClearFilters_Click" />
-
-            </div>
-
-        </div>
-    </div>
-
-    <!-- DATA SOURCES -->
-    <asp:SqlDataSource ID="SqlDSReturn" runat="server" CancelSelectOnNullParameter="False"
-        ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>"
-        SelectCommand="SELECT ReturnID, BookingID, VehicleVinNo, VehicleDescription, ReturnDate, [Inspection Report], Charges, BranchName
-                       FROM [VEHICLE RETURN]
-                       WHERE (VehicleVinNo LIKE '%' + @Search + '%'
-                              OR VehicleDescription LIKE '%' + @Search + '%'
-                              OR CAST(BookingID AS VARCHAR(20)) LIKE '%' + @Search + '%')
-                         AND (@FromDate IS NULL OR ReturnDate >= @FromDate)
-                         AND (@ToDate IS NULL OR ReturnDate < DATEADD(DAY, 1, @ToDate))
-                       ORDER BY ReturnID DESC">
-        <SelectParameters>
-            <asp:ControlParameter ControlID="txtSearch" Name="Search" PropertyName="Text" Type="String"
-                DefaultValue="" ConvertEmptyStringToNull="False" />
-            <asp:ControlParameter ControlID="txtFromDate" Name="FromDate" PropertyName="Text" Type="DateTime"
-                ConvertEmptyStringToNull="True" />
-            <asp:ControlParameter ControlID="txtToDate" Name="ToDate" PropertyName="Text" Type="DateTime"
-                ConvertEmptyStringToNull="True" />
-        </SelectParameters>
-    </asp:SqlDataSource>
-
-    <asp:SqlDataSource ID="SqlDSBranch" runat="server"
-        ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>"
-        SelectCommand="SELECT DISTINCT DropOffBranchName FROM BOOKING ORDER BY DropOffBranchName" />
-
-    <asp:SqlDataSource ID="SqlDSUpdateReturn" runat="server"
-        ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>"
-        UpdateCommand="UPDATE [VEHICLE RETURN]
-                       SET [Inspection Report] = @InspectionReport, Charges = @Charges, BranchName = @BranchName, LastUpdated = GETDATE()
-                       WHERE ReturnID = @ReturnID">
-        <UpdateParameters>
-            <asp:ControlParameter ControlID="txtInspection" Name="InspectionReport" PropertyName="Text" Type="String" />
-            <asp:ControlParameter ControlID="txtCharges" Name="Charges" PropertyName="Text" Type="Decimal" />
-            <asp:ControlParameter ControlID="ddlBranch" Name="BranchName" PropertyName="SelectedValue" Type="String" />
-            <asp:ControlParameter ControlID="hfReturnID" Name="ReturnID" PropertyName="Value" Type="Int32" />
-        </UpdateParameters>
-    </asp:SqlDataSource>
-
-    <!-- TABLE + SUMMARY -->
-    <div class="booking-content">
-
-        <!-- RETURNS TABLE -->
-        <div class="table-card">
-            <div class="table-wrapper">
-                <asp:GridView ID="GVReturn" runat="server" CssClass="booking-table"
-                    DataSourceID="SqlDSReturn" AutoGenerateColumns="False" DataKeyNames="ReturnID"
-                    AllowPaging="True" PageSize="8" ShowHeaderWhenEmpty="True"
-                    EmptyDataText="No returns found." OnSelectedIndexChanged="GVReturn_SelectedIndexChanged">
-                    <Columns>
-                        <asp:CommandField ShowSelectButton="True" />
-                        <asp:BoundField DataField="ReturnID" HeaderText="ReturnID" ReadOnly="True" SortExpression="ReturnID" />
-                        <asp:BoundField DataField="BookingID" HeaderText="BookingID" SortExpression="BookingID" />
-                        <asp:BoundField DataField="VehicleVinNo" HeaderText="VehicleVinNo" SortExpression="VehicleVinNo" />
-                        <asp:BoundField DataField="VehicleDescription" HeaderText="VehicleDescription" SortExpression="VehicleDescription" />
-                        <asp:BoundField DataField="ReturnDate" HeaderText="ReturnDate" DataFormatString="{0:yyyy-MM-dd}" SortExpression="ReturnDate" />
-                        <asp:BoundField DataField="Inspection Report" HeaderText="Inspection Report" SortExpression="Inspection Report" />
-                        <asp:BoundField DataField="Charges" HeaderText="Charges" DataFormatString="{0:0.00}" SortExpression="Charges" />
-                        <asp:BoundField DataField="BranchName" HeaderText="BranchName" SortExpression="BranchName" />
-                    </Columns>
-                </asp:GridView>
-            </div>
-        </div>
-
-        <!-- RETURN SUMMARY -->
-        <aside class="summary-card">
-
-            <asp:HiddenField ID="hfReturnID" runat="server" Value="0" />
-
-            <div class="summary-header">
-                <div class="rental-id">
-                    <asp:Label ID="lblReturnID" runat="server" Text="Return #"></asp:Label>
-                </div>
-                <span class="status status-completed">Returned</span>
-            </div>
-
-            <div class="summary-label">Booking ID</div>
-            <div class="summary-value">
-                <asp:Label ID="lblBookingID" runat="server" Text="-"></asp:Label>
-            </div>
-
-            <div class="summary-label">Vehicle VIN</div>
-            <div class="summary-value">
-                <asp:Label ID="lblVehicleVinNo" runat="server" Text="-"></asp:Label>
-            </div>
-
-            <div class="summary-label">Vehicle</div>
-            <div class="summary-value">
-                <asp:Label ID="lblVehicle" runat="server" Text="-"></asp:Label>
-            </div>
-
-            <div class="summary-label">Return Date</div>
-            <div class="summary-value">
-                <asp:Label ID="lblReturnDate" runat="server" Text="-"></asp:Label>
-            </div>
-
-            <div class="summary-label">Inspection Report</div>
-            <div class="summary-value">
-                <asp:TextBox ID="txtInspection" runat="server" MaxLength="200"></asp:TextBox>
-            </div>
-
-            <div class="summary-label">Additional Charges (R)</div>
-            <div class="summary-value">
-                <asp:TextBox ID="txtCharges" runat="server"></asp:TextBox>
-            </div>
-
-            <div class="summary-label">Return Branch</div>
-            <div class="summary-value">
-                <asp:DropDownList ID="ddlBranch" runat="server" DataSourceID="SqlDSBranch"
-                    DataTextField="DropOffBranchName" DataValueField="DropOffBranchName">
-                </asp:DropDownList>
-            </div>
-
-            <div class="summary-buttons">
-                <asp:Button ID="btnClear" runat="server" Text="Clear" CssClass="cancel-btn" OnClick="btnClear_Click" />
-                <asp:Button ID="btnUpdate" runat="server" Text="Update" CssClass="delete-btn" OnClick="btnUpdate_Click" />
-            </div>
-
-            <asp:Label ID="lblMessage" runat="server"></asp:Label>
-
-        </aside>
-
-    </div>
-
+      <div class="summary-actions">
+        <asp:Button ID="btnUpdate" runat="server" Text="Update Return" CssClass="delete-btn"
+            ValidationGroup="Upd" OnClick="btnUpdate_Click" />
+        <asp:Button ID="btnClear" runat="server" Text="Clear" CssClass="cancel-btn"
+            CausesValidation="false" OnClick="btnClear_Click" />
+      </div>
+      <asp:Label ID="lblMessage" runat="server" />
+    </aside>
+  </div>
 </main>
 </asp:Content>

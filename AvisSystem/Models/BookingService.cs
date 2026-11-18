@@ -246,5 +246,30 @@ namespace AvisSystem.Models
                 cmd.ExecuteNonQuery();
             }
         }
+        // Paste inside the BookingService class (it uses the existing Cs connection string
+        // and CancelExpiredBookings, so expired bookings never show in the list).
+        // Needs: using System.Data; using System.Data.SqlClient;
+
+        public static DataTable GetPendingBookings()
+        {
+            CancelExpiredBookings();
+
+            using (var con = new SqlConnection(Cs))
+            using (var da = new SqlDataAdapter(@"
+        SELECT BookingID,
+               CustomerID,
+               CustomerFullName,
+               VehicleVinNo,
+               [Invoice Amount] AS Amount,
+               'Booking ' + CAST(BookingID AS varchar(10)) + ' - ' + CustomerFullName AS Label
+        FROM BOOKING
+        WHERE Status = 'Pending'
+        ORDER BY BookingID DESC", con))
+            {
+                var dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+        }
     }
 }

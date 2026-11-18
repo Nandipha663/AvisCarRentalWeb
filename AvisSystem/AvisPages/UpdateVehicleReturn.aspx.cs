@@ -7,100 +7,93 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Globalization;
 
+
 namespace AvisSystem.AvisPages
 {
     public partial class UpdateVehicleReturn : AvisSystem.Models.SecurePage
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected void btnSearch_Click(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                txtFromDate.Text = "";
-                txtToDate.Text = "";
-
-                GVReturn.DataBind();
-            }
+            GVReturns.PageIndex = 0;
+            GVReturns.SelectedIndex = -1;
+            GVReturns.DataBind();
+            lblMessage.ForeColor = System.Drawing.Color.Black;
+            lblMessage.Text = GVReturns.Rows.Count == 0 ? "No returns found." : "";
         }
 
-        protected void btnFilter_Click(object sender, EventArgs e)
-        {
-            GVReturn.PageIndex = 0;
-            GVReturn.SelectedIndex = -1;
-            GVReturn.DataBind();
-        }
-
-        protected void btnClearFilters_Click(object sender, EventArgs e)
+        protected void btnClearSearch_Click(object sender, EventArgs e)
         {
             txtSearch.Text = "";
-            txtFromDate.Text = "";
-            txtToDate.Text = "";
-
-            GVReturn.PageIndex = 0;
-            GVReturn.SelectedIndex = -1;
-            GVReturn.DataBind();
+            GVReturns.PageIndex = 0;
+            GVReturns.SelectedIndex = -1;
+            GVReturns.DataBind();
+            lblMessage.Text = "";
         }
 
-        protected void GVReturn_SelectedIndexChanged(object sender, EventArgs e)
+        protected void GVReturns_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GridViewRow row = GVReturn.SelectedRow;
+            hfReturnID.Value = GVReturns.SelectedDataKey.Value.ToString();
+            DataView dv = (DataView)SqlDSOneReturn.Select(DataSourceSelectArguments.Empty);
+            if (dv == null || dv.Count == 0) { Show("Could not load that return.", false); return; }
 
-            hfReturnID.Value = row.Cells[1].Text;
-            lblReturnID.Text = "Return #" + row.Cells[1].Text;
-            lblBookingID.Text = row.Cells[2].Text;
-            lblVehicleVinNo.Text = Server.HtmlDecode(row.Cells[3].Text);
-            lblVehicle.Text = Server.HtmlDecode(row.Cells[4].Text);
-            lblReturnDate.Text = row.Cells[5].Text;
-            txtInspection.Text = Server.HtmlDecode(row.Cells[6].Text).Trim();
-            txtCharges.Text = row.Cells[7].Text;
+            DataRowView r = dv[0];
+            txtReturnNo.Text = r["ReturnID"].ToString();
+            txtBookingRef.Text = r["BookingID"].ToString();
+            txtVin.Text = r["VehicleVinNo"].ToString();
+            txtVehicle.Text = r["VehicleDescription"].ToString();
+            txtReport.Text = r["Inspection Report"].ToString();
+            txtCharges.Text = r["Charges"] == DBNull.Value
+                ? "0" : Convert.ToDecimal(r["Charges"]).ToString("0.00", CultureInfo.CurrentCulture);
 
-            ListItem branch = ddlBranch.Items.FindByValue(Server.HtmlDecode(row.Cells[8].Text));
-            if (branch != null)
-            {
-                ddlBranch.SelectedValue = branch.Value;
-            }
-
+            ddlBranch.ClearSelection();
+            ListItem b = ddlBranch.Items.FindByValue(r["BranchName"].ToString());
+            if (b != null) b.Selected = true;
             lblMessage.Text = "";
         }
 
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (hfReturnID.Value == "0")
-            {
-                lblMessage.Text = "Please select a return first.";
-                return;
-            }
+            if (hfReturnID.Value == "0" || hfReturnID.Value == "")
+            { Show("Select a return from the list first.", false); return; }
 
-            decimal charges;
-            if (!decimal.TryParse(txtCharges.Text, out charges) || charges < 0)
-            {
-                lblMessage.Text = "Please enter a valid charge amount.";
-                return;
-            }
+            string chargeText = string.IsNullOrWhiteSpace(txtCharges.Text) ? "0" : txtCharges.Text.Trim();
+            if (!decimal.TryParse(chargeText, NumberStyles.Number, CultureInfo.CurrentCulture, out decimal charges) || charges < 0)
+            { Show("Enter a valid charge amount.", false); return; }
+
+            SqlDSReturnUpdate.UpdateParameters["Report"].DefaultValue = txtReport.Text.Trim();
+            SqlDSReturnUpdate.UpdateParameters["Charges"].DefaultValue = charges.ToString(CultureInfo.CurrentCulture);
+            SqlDSReturnUpdate.UpdateParameters["Branch"].DefaultValue = ddlBranch.SelectedValue;
+            SqlDSReturnUpdate.UpdateParameters["ReturnID"].DefaultValue = hfReturnID.Value;
 
             try
             {
-                SqlDSUpdateReturn.Update();
-                lblMessage.Text = "Return updated successfully.";
-                GVReturn.DataBind();
+                int rows = SqlDSReturnUpdate.Update();
+                if (rows > 0)
+                {
+                    Show("Return #" + hfReturnID.Value + " updated successfully.", true);
+                    GVReturns.DataBind();
+                }
+                else Show("Nothing was updated. The record may have been removed.", false);
             }
             catch (Exception ex)
             {
-                lblMessage.Text = "The return could not be updated: " + ex.Message;
+                Show("Update failed: " + ex.Message, false);
             }
         }
 
         protected void btnClear_Click(object sender, EventArgs e)
         {
             hfReturnID.Value = "0";
-            lblReturnID.Text = "Return #";
-            lblBookingID.Text = "-";
-            lblVehicleVinNo.Text = "-";
-            lblVehicle.Text = "-";
-            lblReturnDate.Text = "-";
-            txtInspection.Text = "";
-            txtCharges.Text = "";
+            txtReturnNo.Text = txtBookingRef.Text = txtVin.Text = txtVehicle.Text = "";
+            txtReport.Text = txtCharges.Text = "";
+            GVReturns.SelectedIndex = -1;
             lblMessage.Text = "";
-            GVReturn.SelectedIndex = -1;
+        }
+
+        private void Show(string msg, bool ok)
+        {
+            lblMessage.Text = msg;
+            lblMessage.ForeColor = ok ? System.Drawing.Color.Green : System.Drawing.Color.FromArgb(200, 16, 46);
         }
     }
 }

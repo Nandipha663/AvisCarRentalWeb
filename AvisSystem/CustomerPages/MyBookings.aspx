@@ -26,5 +26,8 @@
             </Columns>
             <HeaderStyle BackColor="#C8102E" ForeColor="White" Font-Bold="True" />
         </asp:GridView>
+         <script>
+          setTimeout(function () { window.location.href = window.location.pathname; }, 15000);
+        </script>
     </div>
 </asp:Content>
