@@ -694,11 +694,16 @@
                         Inspection Type <span class="required">*</span>
                     </label>
 
-                    <asp:DropDownList ID="DDLInspectionType" runat="server" CssClass="modern-select" AutoPostBack="True" OnSelectedIndexChanged="DDLInspectionType_SelectedIndexChanged">
+                    <asp:DropDownList ID="DDLInspectionType"
+    runat="server"
+    CssClass="modern-select"
+    AutoPostBack="True"
+    OnSelectedIndexChanged="DDLInspectionType_SelectedIndexChanged">
 
-                        <asp:ListItem>Pick Up</asp:ListItem>
-                        <asp:ListItem>Return</asp:ListItem>
-                    </asp:DropDownList>
+    <asp:ListItem>Pick Up</asp:ListItem>
+    <asp:ListItem>Return</asp:ListItem>
+
+</asp:DropDownList>
 
                 </div>
 
@@ -765,19 +770,19 @@
     </label>
 
     <asp:DropDownList ID="DDLDamageType"
-        runat="server"
-        CssClass="modern-select"
-        AutoPostBack="True"
-       OnSelectedIndexChanged="DDLDamageType_SelectedIndexChanged">
+    runat="server"
+    CssClass="modern-select"
+    AutoPostBack="True"
+    OnSelectedIndexChanged="DDLDamageType_SelectedIndexChanged">
 
-        <asp:ListItem Value="">-- Select Damage --</asp:ListItem>
-        <asp:ListItem Value="500">Scratch</asp:ListItem>
-        <asp:ListItem Value="1000">Large Scratch</asp:ListItem>
-        <asp:ListItem Value="1500">Dent</asp:ListItem>
-        <asp:ListItem Value="2500">Broken Mirror</asp:ListItem>
-        <asp:ListItem Value="3000">Broken Headlight</asp:ListItem>
+    <asp:ListItem Value="">-- Select Damage --</asp:ListItem>
+    <asp:ListItem Value="500">Scratch</asp:ListItem>
+    <asp:ListItem Value="1000">Large Scratch</asp:ListItem>
+    <asp:ListItem Value="1500">Dent</asp:ListItem>
+    <asp:ListItem Value="2500">Broken Mirror</asp:ListItem>
+    <asp:ListItem Value="3000">Broken Headlight</asp:ListItem>
 
-    </asp:DropDownList>
+</asp:DropDownList>
 
 </div>
 
@@ -789,11 +794,17 @@
         Damage Charges
     </label>
 
-    <asp:TextBox ID="TxtDamageCharges"
-        runat="server"
-        CssClass="modern-input readonly-input"
-        ReadOnly="True">
-    </asp:TextBox>
+    <div style="display:flex; align-items:center;">
+
+        <span style="margin-right:8px;">R</span>
+
+        <asp:TextBox ID="TxtDamageCharges"
+            runat="server"
+            CssClass="modern-input readonly-input"
+            ReadOnly="True">
+        </asp:TextBox>
+
+    </div>
 
 </div>
 
@@ -938,5 +949,6 @@
     }
 
 </script>
+   
    
 </asp:Content>

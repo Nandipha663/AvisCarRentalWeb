@@ -15,7 +15,10 @@ namespace AvisSystem.AvisPages
             if (!IsPostBack)
             {
                 TxtDateTime.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                SqlDSEmployee.SelectParameters["EmailAddress"].DefaultValue = User.Identity.Name.ToString();
+
+                SqlDSEmployee.SelectParameters["EmailAddress"].DefaultValue =
+                    User.Identity.Name.ToString();
+
                 DVEmployees.DataBind();
 
                 if (DVEmployees.Rows.Count > 0)
@@ -23,6 +26,39 @@ namespace AvisSystem.AvisPages
                     TxtEmpID.Text = DVEmployees.Rows[0].Cells[1].Text;
                     TxtEmpName.Text = DVEmployees.Rows[1].Cells[1].Text;
                 }
+            }
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+
+            UpdateDamageDisplay();
+        }
+
+        private void UpdateDamageDisplay()
+        {
+            bool damageFound = RBLDamageFound.SelectedValue == "Yes";
+
+            // Show Damage Type when damage is found
+            DamageTypeSection.Visible = damageFound;
+
+            // Charges are only applicable to Return inspections
+            bool isReturn = DDLInspectionType.SelectedValue == "Return";
+
+            decimal damageCharge;
+
+            if (damageFound &&
+                isReturn &&
+                decimal.TryParse(DDLDamageType.SelectedValue, out damageCharge))
+            {
+                TxtDamageCharges.Text = damageCharge.ToString("0.00");
+                DamageChargeSection.Visible = true;
+            }
+            else
+            {
+                TxtDamageCharges.Text = "";
+                DamageChargeSection.Visible = false;
             }
         }
 
@@ -128,59 +164,22 @@ namespace AvisSystem.AvisPages
 
         protected void RBLDamageFound_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (RBLDamageFound.SelectedValue == "Yes")
+            if (RBLDamageFound.SelectedValue == "No")
             {
-                DamageTypeSection.Visible = true;
-            }
-            else
-            {
-                DamageTypeSection.Visible = false;
-                DamageChargeSection.Visible = false;
-
                 DDLDamageType.SelectedIndex = 0;
-                TxtDamageCharges.Text = "";
             }
+
+            UpdateDamageDisplay();
         }
 
         protected void DDLInspectionType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (DDLInspectionType.SelectedValue == "Return" &&
-        RBLDamageFound.SelectedValue == "Yes")
-            {
-                DamageTypeSection.Visible = true;
-                DamageChargeSection.Visible = true;
-            }
-            else if (RBLDamageFound.SelectedValue == "Yes")
-            {
-                DamageTypeSection.Visible = true;
-                DamageChargeSection.Visible = false;
-                TxtDamageCharges.Text = "";
-            }
-            else
-            {
-                DamageTypeSection.Visible = false;
-                DamageChargeSection.Visible = false;
-                TxtDamageCharges.Text = "";
-            }
+            UpdateDamageDisplay();
         }
 
         protected void DDLDamageType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (DDLInspectionType.SelectedValue == "Return" &&
-        RBLDamageFound.SelectedValue == "Yes" &&
-        DDLDamageType.SelectedValue != "")
-            {
-                decimal damageCharge = Convert.ToDecimal(DDLDamageType.SelectedValue);
-
-                TxtDamageCharges.Text = "R " + damageCharge.ToString("N2");
-
-                DamageChargeSection.Visible = true;
-            }
-            else
-            {
-                TxtDamageCharges.Text = "";
-                DamageChargeSection.Visible = false;
-            }
+            UpdateDamageDisplay();
         }
     }
 }
