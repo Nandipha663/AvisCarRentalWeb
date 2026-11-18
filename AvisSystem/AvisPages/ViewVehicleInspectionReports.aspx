@@ -31,7 +31,7 @@
     <div class="inspection-page">
         <div style="max-width: 1400px; margin: 0 auto 20px auto;">
             <h2 style="font-weight: 700; margin: 0 0 5px 0;">Vehicle Inspection Reports</h2>
-            <p style="color: #777; margin: 0;">Search, filter, edit, or delete inspection records.<asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>" DeleteCommand="DELETE FROM [VEHICLE INSPECTION] WHERE (InspectionCode = @InspectionCode)" SelectCommand="SELECT InspectionCode, RentalID, EmployeeName, InspectionType, OdometerReading, FuelLevel, DamageFound, DamageDescription, BranchName, InspectionDateTime FROM [VEHICLE INSPECTION] WHERE (@FromDate IS NULL OR InspectionDateTime &gt;= @FromDate) AND (@ToDate IS NULL OR InspectionDateTime &lt; DATEADD(day, 1, @ToDate)) AND (@EmpName = '' OR EmployeeName LIKE '%' + @EmpName + '%') AND (@Type = 'All' OR InspectionType = @Type) AND (@Branch = 'All' OR BranchName = @Branch) ORDER BY InspectionDateTime" UpdateCommand="UPDATE [VEHICLE INSPECTION] SET OdometerReading = @OdometerReading, InspectionType = @InspectionType, FuelLevel = @FuelLevel, DamageFound = @DamageFound, DamageDescription = @DamageDescription WHERE (InspectionCode = @InspectionCode)">
+            <p style="color: #777; margin: 0;">Search, filter, edit, or delete inspection records.<asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>" DeleteCommand="DELETE FROM [VEHICLE INSPECTION] WHERE (InspectionCode = @InspectionCode)" SelectCommand="SELECT InspectionCode, RentalID, EmployeeName, InspectionType, OdometerReading, FuelLevel, DamageFound, BranchName, InspectionDateTime, [Damage Type] FROM [VEHICLE INSPECTION] WHERE (@FromDate IS NULL OR InspectionDateTime &gt;= @FromDate) AND (@ToDate IS NULL OR InspectionDateTime &lt; DATEADD(day, 1, @ToDate)) AND (@EmpName = '' OR EmployeeName LIKE '%' + @EmpName + '%') AND (@Type = 'All' OR InspectionType = @Type) AND (@Branch = 'All' OR BranchName = @Branch) ORDER BY InspectionDateTime" UpdateCommand="UPDATE [VEHICLE INSPECTION] SET OdometerReading = @OdometerReading, InspectionType = @InspectionType, FuelLevel = @FuelLevel, DamageFound = @DamageFound, DamageDescription = @DamageDescription WHERE (InspectionCode = @InspectionCode)">
                 <DeleteParameters>
                     <asp:Parameter Name="InspectionCode" />
                 </DeleteParameters>
@@ -47,7 +47,7 @@
                     <asp:Parameter Name="InspectionType" />
                     <asp:Parameter Name="FuelLevel" />
                     <asp:Parameter Name="DamageFound" />
-                    <asp:Parameter Name="DamageDescription" />
+                    <asp:Parameter Name="Damage Type" />
                     <asp:Parameter Name="InspectionCode" />
                 </UpdateParameters>
                 </asp:SqlDataSource>
@@ -119,9 +119,9 @@
                                    <asp:BoundField DataField="OdometerReading" HeaderText="OdometerReading" SortExpression="OdometerReading" />
                                    <asp:BoundField DataField="FuelLevel" HeaderText="FuelLevel" SortExpression="FuelLevel" />
                                    <asp:BoundField DataField="DamageFound" HeaderText="DamageFound" SortExpression="DamageFound" />
-                                   <asp:BoundField DataField="DamageDescription" HeaderText="DamageDescription" SortExpression="DamageDescription" />
                                    <asp:BoundField DataField="BranchName" HeaderText="BranchName" SortExpression="BranchName" />
                                    <asp:BoundField DataField="InspectionDateTime" HeaderText="InspectionDateTime" SortExpression="InspectionDateTime" />
+                                   <asp:BoundField DataField="Damage Type" HeaderText="Damage Type" SortExpression="Damage Type" />
                                </Columns>
                     </asp:GridView>
                        </div>

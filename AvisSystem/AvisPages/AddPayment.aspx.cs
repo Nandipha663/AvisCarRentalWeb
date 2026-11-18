@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
 using System.Globalization;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 using AvisSystem.Models;
 
 namespace AvisSystem.AvisPages
@@ -59,27 +62,69 @@ namespace AvisSystem.AvisPages
 
         protected void ddlBooking_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (ddlPaymentFor.SelectedValue != "Booking")
+            {
+                var items = (DataTable)ViewState["Items"];
+                DataRow[] rows = items.Select("ItemID = '" + ddlBooking.SelectedValue + "'");
+                if (rows.Length == 0) { ClearDetails(); return; }
+
+                lblCustomer.Text = rows[0]["CustomerName"].ToString();
+                lblVin.Text = rows[0]["Vehicle"].ToString();
+                lblAmount.Text = string.Format("R {0:N2}", rows[0]["Amount"]);
+                pnlDetails.Visible = true;
+                return;
+            }
             pnlMessage.Visible = false;
             ShowDetails();
         }
-
         protected void btnPay_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(ddlBooking.SelectedValue, out int bookingId))
+            bool isBooking = ddlPaymentFor.SelectedValue == "Booking";
+
+            if (string.IsNullOrEmpty(ddlBooking.SelectedValue))
             {
-                ShowMessage("Choose a booking to pay.", false);
+                ShowMessage(isBooking ? "Choose a booking to pay." : "Choose an item to pay.", false);
                 return;
             }
 
             if (string.IsNullOrEmpty(ddlType.SelectedValue))
             {
                 ShowMessage("Choose a payment type.", false);
-                ShowDetails();
+                if (isBooking) ShowDetails();
                 return;
             }
 
             try
             {
+                // ---- NEW: vehicle return / inspection charges ----
+                if (!isBooking)
+                {
+                    bool paid = BookingService.PayCharge(
+                        ddlPaymentFor.SelectedValue,   // "Return" or "Inspection"
+                        ddlBooking.SelectedValue,      // ReturnID or InspectionCode
+                        ddlType.SelectedValue);
+
+                    if (paid)
+                    {
+                        pnlForm.Visible = false;
+                        pnlDone.Visible = true;
+                        ShowMessage("Payment recorded.", true);
+                    }
+                    else
+                    {
+                        LoadItems();
+                        ShowMessage("This charge can't be paid. It may already be paid or have no amount due.", false);
+                    }
+                    return;
+                }
+
+                // ---- EXISTING: booking payment (unchanged) ----
+                if (!int.TryParse(ddlBooking.SelectedValue, out int bookingId))
+                {
+                    ShowMessage("Choose a booking to pay.", false);
+                    return;
+                }
+
                 DataRow[] rows = BookingService.GetPendingBookings().Select("BookingID = " + bookingId);
                 if (rows.Length == 0)
                 {
@@ -90,8 +135,6 @@ namespace AvisSystem.AvisPages
                 }
 
                 int customerId = Convert.ToInt32(rows[0]["CustomerID"]);
-                // Confirms the booking, reserves the vehicle and inserts the PAYMENT row
-                // in one transaction. Adjust the arguments if your signature differs.
                 bool ok = BookingService.ConfirmPayment(bookingId, ddlType.SelectedValue, customerId);
 
                 if (ok)
@@ -110,16 +153,85 @@ namespace AvisSystem.AvisPages
             catch (Exception ex)
             {
                 System.Diagnostics.Trace.TraceError("Record payment failed: " + ex);
-                ShowDetails();
+                if (isBooking) ShowDetails();
                 ShowMessage("The payment wasn't saved. Try again, and contact support if it keeps happening.", false);
             }
         }
+
+
 
         private void ShowMessage(string text, bool success)
         {
             lblMessage.Text = Server.HtmlEncode(text);
             pnlMessage.CssClass = "pay-msg " + (success ? "ok" : "err");
             pnlMessage.Visible = true;
+        }
+        protected void ddlPaymentFor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadItems();
+        }
+
+        private void LoadItems()
+        {
+            string sql;
+            switch (ddlPaymentFor.SelectedValue)
+            {
+                case "Return":
+                    lblItem.Text = "Vehicle return with charges due";
+                    sql = @"SELECT r.ReturnID AS ItemID,
+                   'Return ' + CAST(r.ReturnID AS varchar(10)) + ' - ' + c.FullName AS ItemText,
+                   c.FullName AS CustomerName, r.VehicleVinNo AS Vehicle, r.Charges AS Amount
+            FROM [VEHICLE RETURN] r
+            INNER JOIN BOOKING b ON b.BookingID = r.BookingID
+            INNER JOIN CUSTOMER c ON c.CustomerID = b.CustomerID
+            WHERE r.Charges > 0
+              AND NOT EXISTS (SELECT 1 FROM PAYMENT p WHERE p.ReturnID = r.ReturnID)";
+                    break;
+
+                case "Inspection":
+                    lblItem.Text = "Inspection with damage charges due";
+                    sql = @"SELECT i.InspectionCode AS ItemID,
+                   'Inspection ' + CAST(i.InspectionCode AS varchar(20)) + ' - ' + c.FullName AS ItemText,
+                   c.FullName AS CustomerName, i.VehicleMakeModel AS Vehicle, i.DamageCharges AS Amount
+            FROM [VEHICLE INSPECTION] i
+            INNER JOIN RENTAL rt ON rt.RentalID = i.RentalID
+            INNER JOIN BOOKING b ON b.BookingID = rt.BookingID
+            INNER JOIN CUSTOMER c ON c.CustomerID = b.CustomerID
+            WHERE i.DamageCharges > 0
+              AND NOT EXISTS (SELECT 1 FROM PAYMENT p WHERE p.InspectionCode = i.InspectionCode)";
+                    break;
+
+                default:
+                    lblItem.Text = "Pending booking";
+                    BindBookings();     // your existing method for the booking list
+                    return;
+            }
+            DataTable items = GetTable(sql);
+            ViewState["Items"] = items;
+            ddlBooking.DataSource = items;
+            ddlBooking.DataTextField = "ItemText";
+            ddlBooking.DataValueField = "ItemID";
+            ddlBooking.DataBind();
+            ddlBooking.Items.Insert(0, new ListItem("-- Select --", ""));
+            ClearDetails();
+
+        }
+        private DataTable GetTable(string sql)
+        {
+            var dt = new DataTable();
+            string cs = ConfigurationManager.ConnectionStrings["GroupPmb3ConnectionString"].ConnectionString;
+            using (var con = new SqlConnection(cs))
+            using (var da = new SqlDataAdapter(sql, con))
+            {
+                da.Fill(dt);
+            }
+            return dt;
+        }
+
+        private void ClearDetails()
+        {
+            pnlDetails.Visible = false;
+            // also clear the Customer / Vehicle / Amount controls inside pnlDetails here
         }
     }
 }

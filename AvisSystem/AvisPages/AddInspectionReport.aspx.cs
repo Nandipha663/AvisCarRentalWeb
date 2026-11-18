@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Data;
+using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -30,12 +32,19 @@ namespace AvisSystem.AvisPages
         {
             if (GVRentals.SelectedDataKey == null)
             {
+                
                 TxtOdometerR.Text = "";
+                TxtCustomerName.Text = "";
+                TxtRentalID.Text = "";
+                TxtVehicle.Text = "";
                 return;
             }
 
+            object rentalKey = GVRentals.SelectedDataKey.Values["RentalID"];
+            TxtCustomerName.Text = rentalKey == null ? "" : GetCustomerName(rentalKey.ToString());
             object vinValue = GVRentals.SelectedDataKey.Values["VehicleVinNo"];
-
+            TxtRentalID.Text = rentalKey == null ? "" : rentalKey.ToString();
+            TxtVehicle.Text = vinValue == null ? "" : vinValue.ToString();
             if (vinValue == null || string.IsNullOrWhiteSpace(vinValue.ToString()))
             {
                 TxtOdometerR.Text = "";
@@ -45,22 +54,32 @@ namespace AvisSystem.AvisPages
             string vehicleVinNo = vinValue.ToString();
 
             SqlDSGetVVN.SelectParameters["VehicleVinNo"].DefaultValue = vehicleVinNo;
+            DataView dv = (DataView)SqlDSGetVVN.Select(DataSourceSelectArguments.Empty);
+            TxtOdometerR.Text = (dv != null && dv.Count > 0 && dv[0]["OdometerReading"] != DBNull.Value)
+                ? dv[0]["OdometerReading"].ToString()
+                : "";
+        }
 
-            DataView dv =
-                (DataView)SqlDSGetVVN.Select(DataSourceSelectArguments.Empty);
 
-            if (dv.Count > 0)
+
+
+    
+        private string GetCustomerName(string rentalId)
+        {
+            const string sql = @"SELECT c.FullName
+                         FROM RENTAL rt
+                         INNER JOIN BOOKING b ON b.BookingID = rt.BookingID
+                         INNER JOIN CUSTOMER c ON c.CustomerID = b.CustomerID
+                         WHERE rt.RentalID = @RentalID";
+            string cs = ConfigurationManager.ConnectionStrings["GroupPmb3ConnectionString"].ConnectionString;
+            using (var con = new SqlConnection(cs))
+            using (var cmd = new SqlCommand(sql, con))
             {
-                TxtOdometerR.Text = dv[0]["OdometerReading"].ToString();
+                cmd.Parameters.AddWithValue("@RentalID", rentalId);
+                con.Open();
+                object result = cmd.ExecuteScalar();
+                return result == null ? "" : result.ToString();
             }
-            else
-            {
-                TxtOdometerR.Text = "";
-            }
-
-            TxtRentalID.Text = GVRentals.SelectedRow.Cells[1].Text;
-            TxtVehicle.Text = GVRentals.SelectedRow.Cells[12].Text;
-            
         }
 
         protected void BtnClear_Click(object sender, EventArgs e)
@@ -70,6 +89,7 @@ namespace AvisSystem.AvisPages
             TxtOdometerR.Text = "";
             TxtInspectionN.Text = "";
             TxtDamageCharges.Text = "";
+            TxtCustomerName.Text = "";
             RBLDamageFound.ClearSelection();
             DDLDamageType.SelectedIndex = 0;
             DamageTypeSection.Visible = false;
@@ -89,6 +109,7 @@ namespace AvisSystem.AvisPages
             if (string.IsNullOrWhiteSpace(TxtRentalID.Text) ||
                 string.IsNullOrWhiteSpace(TxtOdometerR.Text) ||
                 string.IsNullOrWhiteSpace(TxtEmpID.Text) ||
+                string.IsNullOrWhiteSpace(TxtCustomerName.Text)||
                 string.IsNullOrWhiteSpace(TxtDateTime.Text))
             {
                 Response.Write("<script>alert('Please make sure all required fields are filled in.');</script>");

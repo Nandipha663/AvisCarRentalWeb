@@ -141,13 +141,13 @@ namespace AvisSystem.CustomerPages
         protected global::System.Web.UI.WebControls.TextBox txtExpiry;
 
         /// <summary>
-        /// txtCvv control.
+        /// txtCVV control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCvv;
+        protected global::System.Web.UI.WebControls.TextBox txtCVV;
 
         /// <summary>
         /// lblBankRef control.

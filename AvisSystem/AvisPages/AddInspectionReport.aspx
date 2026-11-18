@@ -541,6 +541,7 @@
                      <asp:BoundField DataField="RentalID" HeaderText="RentalID" SortExpression="RentalID" InsertVisible="False" ReadOnly="True"></asp:BoundField>
                      <asp:BoundField DataField="BookingID" HeaderText="BookingID" SortExpression="BookingID"></asp:BoundField>
                      <asp:BoundField DataField="CustomerID" HeaderText="CustomerID" SortExpression="CustomerID"></asp:BoundField>
+                        <asp:BoundField DataField="CustomerName" HeaderText="CustomerName" SortExpression="CustomerName" />
                         <asp:BoundField DataField="VehicleVinNo" HeaderText="VehicleVinNo" SortExpression="VehicleVinNo"></asp:BoundField>
                         <asp:BoundField DataField="EmployeeID" HeaderText="EmployeeID" SortExpression="EmployeeID"></asp:BoundField>
                         <asp:BoundField DataField="EmployeeName" HeaderText="EmployeeName" SortExpression="EmployeeName"></asp:BoundField>
@@ -552,7 +553,7 @@
                         <asp:BoundField DataField="VehicleMakeModel" HeaderText="VehicleMakeModel" SortExpression="VehicleMakeModel"></asp:BoundField>
                     </Columns>
                 </asp:GridView>
-<asp:SqlDataSource ID="SqlDSRentals" runat="server"  ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT RentalID, BookingID, CustomerID, VehicleVinNo, EmployeeID, EmployeeName, PickupDate, StartDate, ExpectedReturnDate, RentalStatus, DepositAmount, VehicleMakeModel FROM RENTAL WHERE (RentalStatus = 'Active') AND (CustomerName LIKE @CustName + '%' OR CustomerName = '')">
+<asp:SqlDataSource ID="SqlDSRentals" runat="server"  ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString2 %>" SelectCommand="SELECT RentalID, BookingID, CustomerID, VehicleVinNo, EmployeeID, EmployeeName, PickupDate, StartDate, ExpectedReturnDate, RentalStatus, DepositAmount, VehicleMakeModel, CustomerName FROM RENTAL WHERE (RentalStatus = 'Active') AND (CustomerName LIKE @CustName + '%' OR CustomerName = '')">
                  <SelectParameters>
                      <asp:ControlParameter ControlID="TxtSearch" PropertyName="Text" Name="CustName" ConvertEmptyStringToNull="False"></asp:ControlParameter>
                  </SelectParameters>
@@ -682,8 +683,15 @@
      <asp:TextBox ID="TxtEmpName" runat="server" ReadOnly="True"></asp:TextBox>
 
  </div>
+<!--Customer Name -->
+<div class="form-group">
+    <label class="form-label">
+        Customer full name
+    </label>
 
-    </div>
+    <asp:TextBox ID="TxtCustomerName" runat="server" ReadOnly="True"></asp:TextBox>
+
+</div>
 
 </div>
 

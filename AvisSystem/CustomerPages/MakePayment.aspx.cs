@@ -96,6 +96,7 @@ namespace AvisSystem.CustomerPages
 
         protected void btnPayNow_Click(object sender, EventArgs e)
         {
+
             string type = ddlPaymentType.SelectedValue;
             if (string.IsNullOrEmpty(type)) { ShowMessage("Please choose a payment method."); return; }
 
@@ -169,10 +170,20 @@ namespace AvisSystem.CustomerPages
 
         private bool TryValidateCard(out string error)
         {
+            if (!Regex.IsMatch(txtCardNumber.Text.Trim(), @"^\d{16}$"))
+            {
+                error = "Card number must be 16 digits.";
+                return false;
+            }
+            if (!Regex.IsMatch(txtCVV.Text.Trim(), @"^\d{3}$"))
+            {
+                error = "CVV must be 3 digits.";
+                return false;
+            }
             string name = txtCardName.Text.Trim();
             string number = new string(txtCardNumber.Text.Where(char.IsDigit).ToArray());
             string expiry = txtExpiry.Text.Trim();
-            string cvv = txtCvv.Text.Trim();
+            string cvv = txtCVV.Text.Trim();
 
             if (name.Length < 2) { error = "Enter the name on the card."; return false; }
 
@@ -214,7 +225,7 @@ namespace AvisSystem.CustomerPages
             txtCardName.Text = "";
             txtCardNumber.Text = "";
             txtExpiry.Text = "";
-            txtCvv.Text = "";
+            txtCVV.Text = "";
         }
 
     }
