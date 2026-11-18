@@ -628,11 +628,11 @@ color: #c8102e;
                 <asp:BoundField DataField="BookingID" HeaderText="BookingID" InsertVisible="False" ReadOnly="True" SortExpression="BookingID" />
                 <asp:BoundField DataField="CustomerID" HeaderText="CustomerID" SortExpression="CustomerID" />
                 <asp:BoundField DataField="VehicleVinNo" HeaderText="VehicleVinNo" SortExpression="VehicleVinNo" />
-                <asp:BoundField DataField="Booking Date" HeaderText="Booking Date" SortExpression="Booking Date" />
-                <asp:BoundField DataField="PickUp Date" HeaderText="PickUp Date" SortExpression="PickUp Date" />
-                <asp:BoundField DataField="ExpectedReturnDate" HeaderText="ExpectedReturnDate" SortExpression="ExpectedReturnDate" />
+                <asp:BoundField DataField="Booking Date" HeaderText="Booking Date" SortExpression="Booking Date" DataFormatString="{0:d}" />
+                <asp:BoundField DataField="PickUp Date" HeaderText="PickUp Date" SortExpression="PickUp Date" DataFormatString="{0:d}" />
+                <asp:BoundField DataField="ExpectedReturnDate" HeaderText="ExpectedReturnDate" SortExpression="ExpectedReturnDate" DataFormatString="{0:d}" />
                 <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" />
-                <asp:BoundField DataField="Invoice Amount" HeaderText="Invoice Amount" SortExpression="Invoice Amount" />
+                <asp:BoundField DataField="Invoice Amount" HeaderText="Invoice Amount" SortExpression="Invoice Amount" DataFormatString="{0:c}" />
                 <asp:BoundField DataField="EmployeeID" HeaderText="EmployeeID" SortExpression="EmployeeID" />
                 <asp:BoundField DataField="FullName" HeaderText="FullName" SortExpression="FullName" />
                 <asp:BoundField DataField="Position" HeaderText="Position" SortExpression="Position" />

@@ -240,9 +240,9 @@
             <asp:BoundField DataField="BookingID" HeaderText="BookingID" ReadOnly="True" InsertVisible="False" SortExpression="BookingID"></asp:BoundField>
             <asp:BoundField DataField="CustomerID" HeaderText="CustomerID" SortExpression="CustomerID"></asp:BoundField>
             <asp:BoundField DataField="VehicleVinNo" HeaderText="VehicleVinNo" SortExpression="VehicleVinNo"></asp:BoundField>
-            <asp:BoundField DataField="Booking Date" HeaderText="Booking Date" SortExpression="Booking Date"></asp:BoundField>
-            <asp:BoundField DataField="PickUp Date" HeaderText="PickUp Date" SortExpression="PickUp Date"></asp:BoundField>
-            <asp:BoundField DataField="ExpectedReturnDate" HeaderText="ExpectedReturnDate" SortExpression="ExpectedReturnDate"></asp:BoundField>
+            <asp:BoundField DataField="Booking Date" HeaderText="Booking Date" SortExpression="Booking Date" DataFormatString="{0:d}"></asp:BoundField>
+            <asp:BoundField DataField="PickUp Date" HeaderText="PickUp Date" SortExpression="PickUp Date" DataFormatString="{0:d}"></asp:BoundField>
+            <asp:BoundField DataField="ExpectedReturnDate" HeaderText="ExpectedReturnDate" SortExpression="ExpectedReturnDate" DataFormatString="{0:d}"></asp:BoundField>
             <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status"></asp:BoundField>
             <asp:BoundField DataField="Invoice Amount" HeaderText="Invoice Amount" SortExpression="Invoice Amount"></asp:BoundField>
             <asp:BoundField DataField="EmployeeID" HeaderText="EmployeeID" SortExpression="EmployeeID"></asp:BoundField>

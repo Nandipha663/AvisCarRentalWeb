@@ -462,7 +462,12 @@ color: #c8102e;
                 <asp:ControlParameter ControlID="DDLStatuses" PropertyName="SelectedValue" Name="Status" Type="String" DefaultValue="AllStatuses"></asp:ControlParameter>
             </SelectParameters>
         </asp:SqlDataSource>
-            <asp:GridView ID="GVRental" runat="server" DataSourceID="SqlDSRental" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="RentalID" OnSelectedIndexChanged="GVRental_SelectedIndexChanged">
+        <!-- RENTALS TABLE -->
+        <div class="booking-content">
+        <div class="table-card"> 
+    <div class="table-wrapper">
+
+            <asp:GridView ID="GVRental" runat="server" CssClass="booking-table" DataSourceID="SqlDSRental" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="RentalID" OnSelectedIndexChanged="GVRental_SelectedIndexChanged">
                 <Columns>
                     <asp:CommandField ShowSelectButton="True" />
                     <asp:BoundField DataField="RentalID" HeaderText="RentalID" ReadOnly="True" InsertVisible="False" SortExpression="RentalID"></asp:BoundField>
@@ -472,21 +477,20 @@ color: #c8102e;
                     <asp:BoundField DataField="VehicleVinNo" HeaderText="VehicleVinNo" SortExpression="VehicleVinNo"></asp:BoundField>
                     <asp:BoundField DataField="EmployeeID" HeaderText="EmployeeID" SortExpression="EmployeeID"></asp:BoundField>
                     <asp:BoundField DataField="EmployeeName" HeaderText="EmployeeName" SortExpression="EmployeeName"></asp:BoundField>
-                    <asp:BoundField DataField="PickupDate" HeaderText="PickupDate" SortExpression="PickupDate"></asp:BoundField>
-                    <asp:BoundField DataField="StartDate" HeaderText="StartDate" SortExpression="StartDate"></asp:BoundField>
-                    <asp:BoundField DataField="ExpectedReturnDate" HeaderText="ExpectedReturnDate" SortExpression="ExpectedReturnDate"></asp:BoundField>
+                    <asp:BoundField DataField="PickupDate" HeaderText="PickupDate" SortExpression="PickupDate" DataFormatString="{0:d}"></asp:BoundField>
+                    <asp:BoundField DataField="StartDate" HeaderText="StartDate" SortExpression="StartDate" DataFormatString="{0:d}"></asp:BoundField>
+                    <asp:BoundField DataField="ExpectedReturnDate" HeaderText="ExpectedReturnDate" SortExpression="ExpectedReturnDate" DataFormatString="{0:d}"></asp:BoundField>
                     <asp:BoundField DataField="RentalStatus" HeaderText="RentalStatus" SortExpression="RentalStatus"></asp:BoundField>
-                    <asp:BoundField DataField="DepositAmount" HeaderText="DepositAmount" SortExpression="DepositAmount"></asp:BoundField>
+                    <asp:BoundField DataField="DepositAmount" HeaderText="DepositAmount" SortExpression="DepositAmount" DataFormatString="{0:c}"></asp:BoundField>
                     <asp:BoundField DataField="VehicleMakeModel" HeaderText="VehicleMakeModel" SortExpression="VehicleMakeModel"></asp:BoundField>
                 </Columns>
             </asp:GridView>
-            <div class="booking-content"> 
-                <!-- RENTALS TABLE -->
-    <div class="table-card"> 
-        <div class="table-wrapper">
-            </div>
-        </div>
-            </div>
+             
+        </div></div></div>
+                
+    
+            
+       
 
 
             <!-- RENTAL SUMMARY -->
