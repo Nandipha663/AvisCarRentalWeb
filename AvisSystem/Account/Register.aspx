@@ -1,17 +1,18 @@
 ﻿<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="AvisSystem.Account.Register" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="register-page">
+<div class="register-page">
 
-        <div class="register-card"></div>
+    <div class="register-card">
 
-            <!-- LEFT SIDE -->
-            <div class="register-left">
+        <!-- LEFT SIDE -->
+        <div class="register-left">
+            <div class="register-logo">AVIS</div>
 
-                <div class="register-logo">
-                    AVIS
-                </div>
-
+            <asp:Image ID="imgRegister" runat="server"
+                ImageUrl="~/Account/RegisterImage/Register picture.jpg"
+                AlternateText="AVIS car rental"
+                CssClass="register-image" />
                 <h2>Join AVIS<asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>" InsertCommand="INSERT INTO CUSTOMER(FullName, Address, ContactNumber, EmailAddress, LicenceNumber, LicenceCode, CustomerUsername, CustomerPassword, LicenceCountryOfIssue) VALUES (@FullName, @Address, @ContactNumber, @EmailAddress, @LicenceNumber,@LicenceCode, @CustomerUsername, @CustomerPassword, @LicenceCountryOfIssue)" SelectCommand="SELECT * FROM CUSTOMER">
                     <InsertParameters>
                         <asp:Parameter Name="FullName" />
@@ -448,6 +449,8 @@
             </div>
 
         </div>
+
+     </div> 
 
   
 </asp:Content>

@@ -137,21 +137,20 @@ input[type="select"] {
    ========================= */
 
 .register-page {
-    min-height: 100vh;
+    min-height: calc(100vh - 120px);
     background-image: url('/Content/images/AvisBackgroungImage.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 40px 20px;
+    align-items: flex-start;
+    padding: 40px 20px 60px;
+    box-sizing: border-box;
 }
+    /* MAIN CARD */
 
-
-/* MAIN CARD */
-
-.register-card {
+    .register-card {
     width: 900px;
     max-width: 100%;
     min-height: 560px;
@@ -163,11 +162,19 @@ input[type="select"] {
 }
 
 
-/* =========================
+.register-image {
+    display: block;
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+    /* =========================
    LEFT SIDE
    ========================= */
 
-.register-left {
+    .register-left {
     width: 35%;
     background: #c8102e;
     color: white;
@@ -290,7 +297,10 @@ input[type="select"] {
     font-size: 13px;
     color: #666;
 }
-
+.register-card {
+    flex-shrink: 0;
+    margin: 0 auto;
+}
 
     .terms input {
         margin-right: 6px;

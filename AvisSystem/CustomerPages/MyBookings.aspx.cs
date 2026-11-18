@@ -12,7 +12,8 @@ namespace AvisSystem.CustomerPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack) LoadBookings();
+            try { BookingService.CancelExpiredBookings(); } catch { }   // must run BEFORE LoadBookings()
+            LoadBookings();
         }
 
         private void LoadBookings()
@@ -32,7 +33,7 @@ namespace AvisSystem.CustomerPages
                 INNER JOIN CUSTOMER c ON c.CustomerID = b.CustomerID
                 LEFT JOIN VEHICLE v   ON v.VehicleVinNo = b.VehicleVinNo
                 WHERE c.CustomerUsername = @u OR c.EmailAddress = @u
-                ORDER BY b.[PickUp Date] DESC";
+                 ORDER BY b.BookingID DESC";
 
             var table = new DataTable();
             string cs = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
