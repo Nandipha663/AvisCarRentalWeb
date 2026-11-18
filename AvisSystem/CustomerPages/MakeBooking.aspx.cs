@@ -117,20 +117,77 @@ namespace AvisSystem.CustomerPages
 
             DateTime pickDT, retDT;
             if (isValid
-                && DateTime.TryParse(txtPickupDate.Text + " " + ddlPickupTime.SelectedValue, out pickDT)
-                && DateTime.TryParse(txtReturnDate.Text + " " + ddlReturnTime.SelectedValue, out retDT))
+    && DateTime.TryParse(
+        txtPickupDate.Text + " " + ddlPickupTime.SelectedValue,
+        out pickDT)
+    && DateTime.TryParse(
+        txtReturnDate.Text + " " + ddlReturnTime.SelectedValue,
+        out retDT))
             {
-                if (pickDT < DateTime.Now)
+                DateTime today = DateTime.Now.Date;
+
+                // ==========================================
+                // PICKUP DATE CANNOT BE BEFORE TODAY
+                // ==========================================
+
+                if (pickDT.Date < today)
                 {
-                    ShowError(txtPickupDate, lblPickupDateError,
-                        "The pickup date and time cannot be in the past.");
+                    ShowError(
+                        txtPickupDate,
+                        lblPickupDateError,
+                        "The pickup date cannot be before today's date."
+                    );
+
                     isValid = false;
                 }
-                else if (retDT <= pickDT)
+
+                // ==========================================
+                // RETURN DATE CANNOT BE BEFORE TODAY
+                // ==========================================
+
+                if (isValid && retDT.Date < today)
                 {
-                    ShowError(txtReturnDate, lblReturnDateError,
-                        "The return must be after the pickup.");
+                    ShowError(
+                        txtReturnDate,
+                        lblReturnDateError,
+                        "The return date cannot be before today's date."
+                    );
+
                     isValid = false;
+                }
+
+                // ==========================================
+                // RETURN DATE CANNOT BE BEFORE PICKUP DATE
+                // ==========================================
+
+                if (isValid && retDT.Date < pickDT.Date)
+                {
+                    ShowError(
+                        txtReturnDate,
+                        lblReturnDateError,
+                        "The return date must be the same as or after the pickup date."
+                    );
+
+                    isValid = false;
+                }
+
+                // ==========================================
+                // SAME DATE
+                // RETURN TIME MUST BE AFTER PICKUP TIME
+                // ==========================================
+
+                if (isValid && retDT.Date == pickDT.Date)
+                {
+                    if (retDT.TimeOfDay <= pickDT.TimeOfDay)
+                    {
+                        ShowError(
+                            ddlReturnTime,
+                            lblReturnTimeError,
+                            "When the pickup and return dates are the same, the return time must be after the pickup time."
+                        );
+
+                        isValid = false;
+                    }
                 }
             }
 

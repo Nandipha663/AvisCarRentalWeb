@@ -402,37 +402,199 @@
          JAVASCRIPT
          ============================== -->
 
-    <script>
+   <script>
 
-        function toggleReturnLocation() {
+       function toggleReturnLocation() {
 
-            var checkbox =
-                document.getElementById("chkDifferentLocation");
+           var checkbox =
+               document.getElementById("chkDifferentLocation");
 
-            var returnSection =
-                document.getElementById("returnLocationSection");
+           var returnSection =
+               document.getElementById("returnLocationSection");
 
-            if (checkbox.checked) {
+           if (checkbox.checked) {
 
-                returnSection.style.display = "block";
+               returnSection.style.display = "block";
 
-            } else {
+           } else {
 
-                returnSection.style.display = "none";
+               returnSection.style.display = "none";
+
+           }
+
+       }
+
+
+       // ==========================================
+       // SET DATE RESTRICTIONS
+       // ==========================================
+
+       function setDateRestrictions() {
+
+           var pickupDate =
+               document.getElementById("<%= txtPickupDate.ClientID %>");
+
+        var returnDate =
+            document.getElementById("<%= txtReturnDate.ClientID %>");
+
+
+           // Get today's date in local time
+
+           var today = new Date();
+
+           var year = today.getFullYear();
+
+           var month = String(today.getMonth() + 1).padStart(2, "0");
+
+           var day = String(today.getDate()).padStart(2, "0");
+
+           var todayString =
+               year + "-" + month + "-" + day;
+
+
+           // ==========================================
+           // PICKUP DATE
+           // ==========================================
+
+           // Pickup cannot be before today
+
+           pickupDate.min = todayString;
+
+
+           // ==========================================
+           // RETURN DATE
+           // ==========================================
+
+           // Return cannot be before today
+
+           returnDate.min = todayString;
+
+
+           // If a pickup date has already been selected,
+           // return date cannot be before pickup date.
+
+           if (pickupDate.value !== "") {
+
+               returnDate.min = pickupDate.value;
+
+           }
+
+       }
+
+
+       // ==========================================
+       // WHEN PICKUP DATE CHANGES
+       // ==========================================
+
+       function pickupDateChanged() {
+
+           var pickupDate =
+               document.getElementById("<%= txtPickupDate.ClientID %>");
+
+        var returnDate =
+            document.getElementById("<%= txtReturnDate.ClientID %>");
+
+
+           // Return date cannot be before pickup date
+
+           if (pickupDate.value !== "") {
+
+               returnDate.min = pickupDate.value;
+
+
+               // If the currently selected return date
+               // is before the new pickup date,
+               // clear it.
+
+               if (returnDate.value !== "" &&
+                   returnDate.value < pickupDate.value) {
+
+                   returnDate.value = "";
+
+               }
+
+           }
+
+       }
+
+
+       // ==========================================
+       // CHECK RETURN TIME
+       // ==========================================
+
+       function validateReturnTime() {
+
+           var pickupDate =
+               document.getElementById("<%= txtPickupDate.ClientID %>");
+
+        var returnDate =
+            document.getElementById("<%= txtReturnDate.ClientID %>");
+
+        var pickupTime =
+            document.getElementById("<%= ddlPickupTime.ClientID %>");
+
+        var returnTime =
+            document.getElementById("<%= ddlReturnTime.ClientID %>");
+
+
+        // Only compare the times when the dates
+        // are exactly the same.
+
+        if (pickupDate.value !== "" &&
+            returnDate.value !== "" &&
+            pickupDate.value === returnDate.value) {
+
+
+            if (returnTime.value !== "" &&
+                pickupTime.value !== "" &&
+                returnTime.value <= pickupTime.value) {
+
+                alert("The return time must be after the pickup time when the pickup and return dates are the same.");
+
+                returnTime.value = "";
 
             }
+
         }
 
+    }
 
-        // Hide return location when page loads
 
-        window.onload = function () {
+    // ==========================================
+    // PAGE LOAD
+    // ==========================================
 
-            toggleReturnLocation();
+    window.onload = function () {
 
-        };
+        toggleReturnLocation();
 
-    </script>
+        setDateRestrictions();
+
+        document
+            .getElementById("<%= txtPickupDate.ClientID %>")
+            .addEventListener("change", pickupDateChanged);
+
+
+        document
+            .getElementById("<%= txtReturnDate.ClientID %>")
+            .addEventListener("change", function () {
+
+                validateReturnTime();
+
+            });
+
+
+        document
+            .getElementById("<%= ddlReturnTime.ClientID %>")
+               .addEventListener("change", function () {
+
+                   validateReturnTime();
+
+               });
+
+       };
+
+</script>
 
 
 
