@@ -20,6 +20,7 @@ namespace AvisSystem.CustomerPages
             // the customer is identified from the login, never from the address bar
             const string sql = @"
                 SELECT b.BookingID,
+                       b.VehicleVinNo,
                        ISNULL(v.Make + ' ' + v.Model, b.VehicleVinNo) AS Vehicle,
                        v.RegistrationNo,
                        b.PickUpBranchName, b.DropOffBranchName,
@@ -61,6 +62,43 @@ namespace AvisSystem.CustomerPages
                 case "Completed": cell.ForeColor = ColorTranslator.FromHtml("#555555"); break;
                 case "Cancelled": cell.ForeColor = ColorTranslator.FromHtml("#C8102E"); break;
             }
+        }
+
+        protected void GVMyBookings_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LblBID.Text = GVMyBookings.SelectedRow.Cells[1].Text;
+            LblStatus.Text = GVMyBookings.SelectedRow.Cells[9].Text;
+            
+            LblVehicle_make.Text = GVMyBookings.SelectedRow.Cells[2].Text;
+            LblPDate.Text = GVMyBookings.SelectedRow.Cells[6].Text;
+            LblRDate.Text = GVMyBookings.SelectedRow.Cells[7].Text;
+            LblPBranch.Text = GVMyBookings.SelectedRow.Cells[4].Text;
+            LblDBranch.Text = GVMyBookings.SelectedRow.Cells[5].Text;
+            LblTotAmt.Text = GVMyBookings.SelectedRow.Cells[8].Text;
+        }
+
+        protected void btnCancelBooking_Click(object sender, EventArgs e)
+        {
+            int bookingID = Convert.ToInt32(
+    GVMyBookings.SelectedDataKey.Values["BookingID"]);
+
+            string vehicleVinNo =
+                GVMyBookings.SelectedDataKey.Values["VehicleVinNo"].ToString();
+
+            SqlDSCancelBooking.UpdateParameters["BookingID"].DefaultValue =
+                bookingID.ToString();
+
+            SqlDSCancelBooking.UpdateParameters["VehicleVinNo"].DefaultValue =
+                vehicleVinNo;
+
+            SqlDSCancelBooking.Update();
+
+            GVMyBookings.DataBind();
+        }
+
+        protected void BtnClear_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
