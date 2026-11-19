@@ -23,18 +23,11 @@ namespace AvisSystem.AvisPages
         // 1. SEARCH BUTTON CLICK
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtSearchName.Text))
-            {
-                lblMessage.Text = "Please enter a name to search.";
-                lblMessage.ForeColor = System.Drawing.Color.Red;
-                GVSearchResults.Visible = false;
-                return;
-            }
-            // Bind the grid using the SqlDataSource1 you created in the toolbox
-            GVSearchResults.DataBind();
+            GVSearchResults.PageIndex = 0;
+            GVSearchResults.SelectedIndex = -1;
             GVSearchResults.Visible = true;
+            GVSearchResults.DataBind();
 
-            // Clear previous states
             pnlSelectedBooking.Visible = false;
             pnlClaimForm.Visible = false;
             lblMessage.Text = "";
@@ -43,28 +36,29 @@ namespace AvisSystem.AvisPages
         // 2. USER CLICKS "SELECT" ON A GRID ROW
         protected void GVSearchResults_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Get the Booking ID from the DataKeyNames attribute
-            string selectedBookingId = GVSearchResults.SelectedDataKey.Value.ToString();
 
-            // Get the Customer Name from the selected row (Column index 2)
-            string selectedCustomerName = GVSearchResults.SelectedRow.Cells[2].Text;
-            string vehicleVinNo = GVSearchResults.SelectedRow.Cells[5].Text;
-            string vehicleMake = GVSearchResults.SelectedRow.Cells[3].Text;
-            string vehicleModel = GVSearchResults.SelectedRow.Cells[4].Text;
+            DataKey key = GVSearchResults.SelectedDataKey;
 
-            // Store the ID in the HiddenField so SqlDataSource2 can grab it later
+            if (key == null || key.Values["BookingID"] == null)
+            {
+                lblMessage.Text = "This inspection has no booking linked, so a claim can't be filed.";
+                lblMessage.ForeColor = System.Drawing.Color.Red;
+                return;
+            }
+
+            string inspectionCode = Convert.ToString(key.Values["InspectionCode"]);
+            string selectedBookingId = Convert.ToString(key.Values["BookingID"]);
+            string selectedCustomerName = Convert.ToString(key.Values["CustomerFullName"]);
+
             hfSelectedBookingID.Value = selectedBookingId;
+            hfVehicleVinNo.Value = Convert.ToString(key.Values["VehicleVinNo"]);
+            hfVehicleMake.Value = Convert.ToString(key.Values["Vehicle_make"]);
+            hfVehicleModel.Value = Convert.ToString(key.Values["Vehicle_model"]);
 
-            // Store vehicle information in HiddenFields
-            hfVehicleVinNo.Value = vehicleVinNo;
-            hfVehicleMake.Value = vehicleMake;
-            hfVehicleModel.Value = vehicleModel;
-
-            // Update the UI
-            lblSelectedBooking.Text = $"Booking #{selectedBookingId} - {selectedCustomerName}";
+            lblSelectedBooking.Text = $"Inspection #{inspectionCode} - Booking #{selectedBookingId} - {selectedCustomerName}";
             pnlSelectedBooking.Visible = true;
-            pnlClaimForm.Visible = true;      // Show the claim form
-            GVSearchResults.Visible = false;  // Hide the search grid
+            pnlClaimForm.Visible = true;
+            GVSearchResults.Visible = false;
             lblMessage.Text = "";
         }
 
@@ -87,10 +81,15 @@ namespace AvisSystem.AvisPages
                 lblMessage.Text = "Claim submitted successfully!";
                 lblMessage.ForeColor = System.Drawing.Color.Green;
 
-                // Reset the UI for the next claim
-                pnlSelectedBooking.Visible = false;
-                pnlClaimForm.Visible = false;
-                GVSearchResults.Visible = false;
+                GVSearchResults.SelectedIndex = -1;
+                GVSearchResults.Visible = true;
+                GVSearchResults.DataBind();
+
+               // Reset the UI for the next claim
+
+               //pnlSelectedBooking.Visible = false;
+               // pnlClaimForm.Visible = false;
+               // GVSearchResults.Visible = false;
                 hfSelectedBookingID.Value = "";
                 txtSearchName.Text = "";
                 txtDescription.Text = "";
@@ -100,6 +99,30 @@ namespace AvisSystem.AvisPages
                 lblMessage.Text = "Database Error: " + ex.Message;
                 lblMessage.ForeColor = System.Drawing.Color.Red;
             }
+        }
+        protected void btnClear_Click(object sender, EventArgs e)
+        {
+            // Search and form fields
+            txtSearchName.Text = "";
+            txtDescription.Text = "";
+            ddlResponsibleParty.SelectedIndex = 0;
+            ddlClaimType.SelectedIndex = 0;
+            ddlStatus.SelectedIndex = 0;
+
+            // Selected inspection and booking details
+            hfSelectedBookingID.Value = "";
+            hfVehicleVinNo.Value = "";
+            hfVehicleMake.Value = "";
+            hfVehicleModel.Value = "";
+            lblSelectedBooking.Text = "";
+            lblMessage.Text = "";
+
+            // Panels and grid back to the first-load state
+            pnlSelectedBooking.Visible = false;
+            pnlClaimForm.Visible = false;
+            GVSearchResults.SelectedIndex = -1;
+            GVSearchResults.PageIndex = 0;
+            GVSearchResults.Visible = false;
         }
     }
 }

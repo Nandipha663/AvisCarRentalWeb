@@ -60,6 +60,15 @@ namespace AvisSystem.AvisPages
         protected global::System.Web.UI.WebControls.Button btnSearch;
 
         /// <summary>
+        /// btnClearSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnClearSearch;
+
+        /// <summary>
         /// GVSearchResults control.
         /// </summary>
         /// <remarks>
@@ -175,5 +184,14 @@ namespace AvisSystem.AvisPages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSubmitClaim;
+
+        /// <summary>
+        /// btnClearForm control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnClearForm;
     }
 }

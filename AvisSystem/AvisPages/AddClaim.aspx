@@ -1,36 +1,76 @@
 ﻿<%@ Page Title="Add Claim" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddClaim.aspx.cs" Inherits="AvisSystem.AvisPages.AddClaim" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    
     <style>
-        .form-page { padding: 30px; background: #f7f7f7; min-height: calc(100vh - 70px); }
-        .form-card { background: white; padding: 30px; border-radius: 12px; border: 1px solid #e5e5e5; max-width: 1000px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); margin: 0 auto; }
-        .form-group { margin-bottom: 20px; }
-        .form-label { font-weight: 600; display: block; margin-bottom: 8px; color: #333; }
-        .modern-input, .modern-select, .modern-textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; box-sizing: border-box; }
-        .modern-input:focus, .modern-select:focus, .modern-textarea:focus { outline: none; border-color: #c8102e; }
-        .btn-submit { background: #c8102e; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; float: right; }
-        .btn-submit:hover { background: #a90d27; }
-        
-        /* SEARCH & GRID STYLES */
-        .search-row { display: flex; gap: 10px; margin-bottom: 20px; }
-        .search-btn { background: #c8102e; color: white; border: none; padding: 0 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        
-        .booking-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px; }
-        .booking-table th { background: #fafafa; color: #555; padding: 10px; text-align: left; border-bottom: 2px solid #ddd; }
-        .booking-table td { padding: 10px; border-bottom: 1px solid #eee; }
-        .booking-table tr:hover { background: #fff5f6; }
-        
-        .selected-banner { background: #e8f7ed; color: #218838; padding: 15px; border-radius: 8px; font-weight: bold; margin-bottom: 20px; border: 1px solid #c3e6cb; }
-    </style>
+    .form-page { padding: 30px; background: #f7f7f7; min-height: calc(100vh - 70px); }
+    .form-card { background: #fff; padding: 30px; border-radius: 12px; border: 1px solid #e5e5e5;
+                 max-width: 1200px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); margin: 0 auto; }
+
+    .form-group { margin-bottom: 20px; }
+    .form-label { font-weight: 600; display: block; margin-bottom: 8px; color: #333; }
+    .modern-input, .modern-select, .modern-textarea { width: 100%; padding: 12px; border: 1px solid #ddd;
+                 border-radius: 8px; font-size: 14px; box-sizing: border-box; background: #fff; }
+    .modern-input:focus, .modern-select:focus, .modern-textarea:focus { outline: none; border-color: #c8102e; }
+    .modern-select { max-width: 400px; }
+    .modern-textarea { resize: vertical; }
+
+    .btn-submit { background: #c8102e; color: #fff; border: none; padding: 12px 24px; border-radius: 8px;
+                  font-weight: bold; cursor: pointer; float: right; }
+    .btn-submit:hover { background: #a90d27; }
+
+    .search-row { display: flex; gap: 10px; margin-bottom: 20px; }
+    .search-btn { background: #c8102e; color: #fff; border: none; padding: 0 24px; border-radius: 8px;
+                  font-weight: bold; cursor: pointer; }
+    .search-btn:hover { background: #a90d27; }
+
+    .table-wrap { overflow-x: auto; border: 1px solid #eee; border-radius: 10px; margin-bottom: 20px; }
+    .booking-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .booking-table th { background: #fafafa; color: #555; padding: 10px 12px; text-align: left;
+                        border-bottom: 2px solid #ddd; white-space: nowrap; font-weight: 600; }
+    .booking-table td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+    .booking-table tr:hover td { background: #fff5f6; }
+    .booking-table .col-nowrap { white-space: nowrap; }
+    .booking-table .col-wrap { min-width: 140px; max-width: 200px; }
+    .booking-table a { color: #c8102e; font-weight: 600; text-decoration: none; }
+    .booking-table a:hover { text-decoration: underline; }
+    .booking-table .pager td { padding: 12px; text-align: center; border-bottom: none; background: #fafafa; }
+    .booking-table .pager a, .booking-table .pager span { display: inline-block; padding: 4px 10px; margin: 0 2px; border-radius: 6px; }
+    .booking-table .pager span { background: #c8102e; color: #fff; }
+
+    .search-row { display: flex; gap: 10px; margin-bottom: 20px; align-items: stretch; }
+.search-row .modern-input { flex: 1; }
+.search-row .search-btn,
+.search-row .btn-clear { padding: 0 24px; white-space: nowrap; }
+
+.btn-clear { background: #f0f0f0; color: #333; border: 1px solid #ddd; border-radius: 8px;
+             font-weight: bold; cursor: pointer; }
+.btn-clear:hover { background: #e4e4e4; }
+.btn-submit + .btn-clear { float: right; margin-right: 10px; padding: 12px 24px; }
+</style>
 
     <div class="form-page">
-        <div class="page-title" style="font-size: 30px; font-weight: 700; margin-bottom: 5px;">File a Claim<asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>" SelectCommand="SELECT BookingID, CustomerFullName, Vehicle_make, Vehicle_model, VehicleVinNo FROM BOOKING WHERE (CustomerFullName LIKE @CustomerFullName + '%') ORDER BY CustomerFullName">
-            <SelectParameters>
-                <asp:ControlParameter ControlID="txtSearchName" Name="CustomerFullName" PropertyName="Text" />
-            </SelectParameters>
-            </asp:SqlDataSource>
+        <div class="page-title" style="font-size: 30px; font-weight: 700; margin-bottom: 5px;">File a Claim
+           <asp:SqlDataSource ID="SqlDataSource1" runat="server"
+    ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>"
+    SelectCommand="SELECT i.InspectionCode, i.RentalID, rt.BookingID AS BookingID, b.CustomerFullName,
+                          b.Vehicle_make, b.Vehicle_model, b.VehicleVinNo,
+                          i.InspectionType, i.InspectionDateTime, i.DamageFound,
+                          i.[Damage Type] AS DamageType, i.DamageCharges
+                   FROM [VEHICLE INSPECTION] AS i
+                   INNER JOIN RENTAL AS rt ON rt.RentalID = i.RentalID
+                   INNER JOIN BOOKING AS b ON b.BookingID = rt.BookingID
+                   WHERE (@Search IS NULL
+                          OR CAST(i.InspectionCode AS varchar(20)) LIKE @Search + '%'
+                          OR CAST(i.RentalID AS varchar(20)) LIKE @Search + '%'
+                          OR b.CustomerFullName LIKE @Search + '%'
+                          OR b.VehicleVinNo LIKE @Search + '%')
+                   ORDER BY i.InspectionDateTime DESC">
+    <SelectParameters>
+        <asp:ControlParameter ControlID="txtSearchName" Name="Search" PropertyName="Text"
+            Type="String" ConvertEmptyStringToNull="true" />
+    </SelectParameters>
+</asp:SqlDataSource>
         </div>
-        <div class="page-subtitle" style="color: #777; margin-bottom: 25px;">Search for a customer's booking to file a new claim.</div>
+        <div class="page-subtitle" style="color: #777; margin-bottom: 25px;">Select an inspection report to file a claim against.</div>
 
         <div class="form-card">
             <asp:Label ID="lblMessage" runat="server" Font-Bold="true" style="display:block; margin-bottom:15px;"></asp:Label>
@@ -52,22 +92,36 @@
 
             <!-- SEARCH SECTION -->
             <div class="search-row">
-                <asp:TextBox ID="txtSearchName" runat="server" CssClass="modern-input" placeholder="Type part of a customer's name (e.g. 'Joh')..." style="flex: 1;"></asp:TextBox>
-                <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="search-btn" OnClick="btnSearch_Click" />
-            </div>
-
-            <!-- RESULTS GRID (Only shows if search finds results) -->
-            <asp:GridView ID="GVSearchResults" runat="server" AutoGenerateColumns="False" CssClass="booking-table" 
-                OnSelectedIndexChanged="GVSearchResults_SelectedIndexChanged" DataKeyNames="BookingID" GridLines="None" DataSourceID="SqlDataSource1">
-                <Columns>
-                    <asp:CommandField ShowSelectButton="True" />
-                    <asp:BoundField DataField="BookingID" HeaderText="BookingID" InsertVisible="False" ReadOnly="True" SortExpression="BookingID" />
-                    <asp:BoundField DataField="CustomerFullName" HeaderText="CustomerFullName" SortExpression="CustomerFullName" />
-                    <asp:BoundField DataField="Vehicle_make" HeaderText="Vehicle_make" SortExpression="Vehicle_make" />
-                    <asp:BoundField DataField="Vehicle_model" HeaderText="Vehicle_model" SortExpression="Vehicle_model" />
-                    <asp:BoundField DataField="VehicleVinNo" HeaderText="VehicleVinNo" SortExpression="VehicleVinNo" />
-                </Columns>
-            </asp:GridView>
+    <asp:TextBox ID="txtSearchName" runat="server" CssClass="modern-input"
+        placeholder="Search by Customer name"></asp:TextBox>
+    <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="search-btn" OnClick="btnSearch_Click" />
+    <asp:Button ID="btnClearSearch" runat="server" Text="Clear" CssClass="btn-clear"
+        OnClick="btnClear_Click" CausesValidation="false" />
+</div>
+            <div class="table-wrap">
+<asp:GridView ID="GVSearchResults" runat="server" AutoGenerateColumns="False" CssClass="booking-table"
+    OnSelectedIndexChanged="GVSearchResults_SelectedIndexChanged"
+    DataKeyNames="InspectionCode,BookingID,CustomerFullName,Vehicle_make,Vehicle_model,VehicleVinNo"
+    GridLines="None" DataSourceID="SqlDataSource1" AllowPaging="True" PageSize="10"
+    PagerStyle-CssClass="pager" EmptyDataText="No inspection reports found.">
+    <Columns>
+        <asp:CommandField ShowSelectButton="True" SelectText="Select" />
+        <asp:BoundField DataField="InspectionCode" HeaderText="Insp. #" ItemStyle-CssClass="col-nowrap" />
+        <asp:BoundField DataField="RentalID" HeaderText="Rental #" ItemStyle-CssClass="col-nowrap" />
+        <asp:BoundField DataField="BookingID" HeaderText="Booking #" ItemStyle-CssClass="col-nowrap" />
+        <asp:BoundField DataField="CustomerFullName" HeaderText="Customer" ItemStyle-CssClass="col-nowrap" />
+        <asp:TemplateField HeaderText="Vehicle">
+            <ItemTemplate><%# Eval("Vehicle_make") + " " + Eval("Vehicle_model") %></ItemTemplate>
+            <ItemStyle CssClass="col-nowrap" />
+        </asp:TemplateField>
+        <asp:BoundField DataField="VehicleVinNo" HeaderText="VIN" ItemStyle-CssClass="col-nowrap" />
+        <asp:BoundField DataField="InspectionType" HeaderText="Type" ItemStyle-CssClass="col-nowrap" />
+        <asp:BoundField DataField="InspectionDateTime" HeaderText="Date" DataFormatString="{0:yyyy-MM-dd HH:mm}" ItemStyle-CssClass="col-nowrap" />
+        <asp:BoundField DataField="DamageType" HeaderText="Damage" ItemStyle-CssClass="col-wrap" />
+        <asp:BoundField DataField="DamageCharges" HeaderText="Charges" DataFormatString="R {0:N2}" ItemStyle-CssClass="col-nowrap" />
+    </Columns>
+</asp:GridView>
+</div>
 
             <!-- SELECTED BOOKING BANNER -->
             <asp:Panel ID="pnlSelectedBooking" runat="server" Visible="false" CssClass="selected-banner">
@@ -118,6 +172,8 @@
 
                 <div style="overflow: hidden; margin-top: 20px;">
                     <asp:Button ID="btnSubmitClaim" runat="server" Text="Submit Claim" CssClass="btn-submit" OnClick="btnSubmitClaim_Click" />
+                    <asp:Button ID="btnClearForm" runat="server" Text="Clear" CssClass="btn-clear"
+    OnClick="btnClear_Click" CausesValidation="false" />
                 </div>
             </asp:Panel>
 

@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddPayment.aspx.cs" Inherits="AvisSystem.AvisPages.AddPayment" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-      <style>
+     <style>
         .pay-wrap { max-width: 620px; padding-bottom: 48px; }
         .pay-wrap h3 { margin: 0 0 4px; font-size: 32px; }
         .pay-sub { margin: 0 0 22px; color: #6b6b6b; }
@@ -49,7 +49,14 @@
         </asp:Panel>
 
         <asp:Panel ID="pnlForm" runat="server">
-            <label for="<%= ddlBooking.ClientID %>">Pending booking</label>
+            <label for="<%= ddlPaymentFor.ClientID %>">Payment for</label>
+       <asp:DropDownList ID="ddlPaymentFor" runat="server" AutoPostBack="true"
+        OnSelectedIndexChanged="ddlPaymentFor_SelectedIndexChanged">
+        <asp:ListItem Value="Booking" Text="Booking (pay later)" />
+        <asp:ListItem Value="Return" Text="Vehicle return: additional charges" />
+          <asp:ListItem Value="Inspection" Text="Inspection charges" />
+         </asp:DropDownList>
+            <asp:Label ID="lblItem" runat="server" AssociatedControlID="ddlBooking" Text="Pending booking" />
             <asp:DropDownList ID="ddlBooking" runat="server" AutoPostBack="true"
                 OnSelectedIndexChanged="ddlBooking_SelectedIndexChanged" />
 
@@ -84,6 +91,7 @@
             </div>
         </asp:Panel>
     </div>
+   
 
     
 </asp:Content>

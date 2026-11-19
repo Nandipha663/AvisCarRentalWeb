@@ -85,8 +85,12 @@
  
     <div class="pm-field">
         <label for="<%= txtCardNumber.ClientID %>">Card number</label>
-        <asp:TextBox ID="txtCardNumber" runat="server" MaxLength="23" placeholder="1234 5678 9012 3456"
-            autocomplete="cc-number" inputmode="numeric" />
+        <asp:TextBox ID="txtCardNumber" runat="server" MaxLength="16"
+    placeholder="1234567890123456" inputmode="numeric"
+    oninput="this.value = this.value.replace(/\D/g, '');" />
+       <asp:RegularExpressionValidator runat="server" ControlToValidate="txtCardNumber"
+    ValidationExpression="^\d{16}$" ErrorMessage="Card number must be 16 digits."
+    CssClass="field-error" Display="Dynamic" ValidationGroup="PayNow" />
     </div>
  
     <div class="pm-two">
@@ -96,9 +100,10 @@
                 autocomplete="cc-exp" inputmode="numeric" />
         </div>
         <div class="pm-field">
-            <label for="<%= txtCvv.ClientID %>">CVV</label>
-            <asp:TextBox ID="txtCvv" runat="server" MaxLength="4" placeholder="CVV" TextMode="Password"
-                autocomplete="cc-csc" inputmode="numeric" />
+            <label for="<%= txtCVV.ClientID %>">CVV</label>
+            <asp:TextBox ID="txtCVV" runat="server" MaxLength="3" placeholder="CVV" inputmode="numeric"
+    TextMode="Password" oninput="this.value = this.value.replace(/\D/g, '');" />
+            <asp:RegularExpressionValidator runat="server" ControlToValidate="txtCVV" ValidationExpression="^\d{3}$" ErrorMessage="CVV must be 3 digits." CssClass="field-error" Display="Dynamic" ValidationGroup="PayNow" />
         </div>
     </div>
 </div>
@@ -129,7 +134,7 @@
     var cash = document.getElementById('pmCash');
     var num  = document.getElementById('<%= txtCardNumber.ClientID %>');
     var exp  = document.getElementById('<%= txtExpiry.ClientID %>');
-    var cvv  = document.getElementById('<%= txtCvv.ClientID %>');
+    var cvv  = document.getElementById('<%= txtCVV.ClientID %>');
 
         function sync() {
             var v = method.value;

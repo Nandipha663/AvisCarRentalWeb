@@ -271,5 +271,44 @@ namespace AvisSystem.Models
                 return dt;
             }
         }
+        
+           
+        public static bool PayCharge(string kind, string id, string paymentType)
+        {
+            const string head = @"
+        DECLARE @Inv varchar(20) =
+          'INV' + CAST(ISNULL((SELECT MAX(TRY_CAST(SUBSTRING(InvoiceID, 4, 20) AS INT))
+                               FROM PAYMENT WITH (UPDLOCK, HOLDLOCK)), 1000) + 1 AS varchar(20));
+        INSERT INTO PAYMENT (InvoiceID, BookingID, ReturnID, InspectionCode, PaymentType, PaymentDate,
+                             PaymentAmount, PaymentStatus, PaymentDescription, CustomerName) ";
+
+            string body = kind == "Return"
+              ? @"SELECT @Inv, r.BookingID, r.ReturnID, NULL, @Type, GETDATE(), r.Charges, 'Completed',
+                 'Additional charges for return ' + CAST(r.ReturnID AS varchar(10)), c.FullName
+          FROM [VEHICLE RETURN] r
+          INNER JOIN BOOKING b ON b.BookingID = r.BookingID
+          INNER JOIN CUSTOMER c ON c.CustomerID = b.CustomerID
+          WHERE r.ReturnID = @Id AND r.Charges > 0
+            AND NOT EXISTS (SELECT 1 FROM PAYMENT p WHERE p.ReturnID = r.ReturnID)"
+              : @"SELECT @Inv, rt.BookingID, NULL, i.InspectionCode, @Type, GETDATE(), i.DamageCharges, 'Completed',
+                 'Damage charges for inspection ' + CAST(i.InspectionCode AS varchar(20)), c.FullName
+          FROM [VEHICLE INSPECTION] i
+          INNER JOIN RENTAL rt ON rt.RentalID = i.RentalID
+          INNER JOIN BOOKING b ON b.BookingID = rt.BookingID
+          INNER JOIN CUSTOMER c ON c.CustomerID = b.CustomerID
+          WHERE i.InspectionCode = @Id AND i.DamageCharges > 0
+            AND NOT EXISTS (SELECT 1 FROM PAYMENT p WHERE p.InspectionCode = i.InspectionCode)";
+
+            string cs = ConfigurationManager.ConnectionStrings["GroupPmb3ConnectionString"].ConnectionString;
+            using (var con = new SqlConnection(cs))
+            using (var cmd = new SqlCommand(head + body, con))
+            {
+                cmd.Parameters.AddWithValue("@Type", paymentType);
+                cmd.Parameters.AddWithValue("@Id", id);
+                con.Open();
+                return cmd.ExecuteNonQuery() == 1;
+            }
+        }
+
     }
 }

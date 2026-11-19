@@ -360,10 +360,12 @@
 
     <asp:SqlDataSource ID="SqlDSAddPayment" runat="server"
         ConnectionString="<%$ ConnectionStrings:GroupPmb3ConnectionString %>"
-        InsertCommand="INSERT INTO PAYMENT (InvoiceID, BookingID, PaymentType, PaymentDate, PaymentAmount, PaymentStatus, PaymentDescription, CustomerName)
-                       SELECT 'INV' + CAST(ISNULL(MAX(TRY_CAST(SUBSTRING(InvoiceID, 4, 20) AS INT)), 1000) + 1 AS VARCHAR(20)),
-                              @BookingID, @PaymentType, @PaymentDate, @PaymentAmount, 'Completed', @PaymentDescription, @CustomerName
-                       FROM PAYMENT WITH (UPDLOCK, HOLDLOCK)">
+       InsertCommand="INSERT INTO PAYMENT (InvoiceID, BookingID, ReturnID, PaymentType, PaymentDate, PaymentAmount, PaymentStatus, PaymentDescription, CustomerName)
+               SELECT 'INV' + CAST(ISNULL(MAX(TRY_CAST(SUBSTRING(InvoiceID, 4, 20) AS INT)), 1000) + 1 AS VARCHAR(20)),
+                      @BookingID,
+                      (SELECT MAX(ReturnID) FROM [VEHICLE RETURN] WHERE BookingID = @BookingID),
+                      @PaymentType, @PaymentDate, @PaymentAmount, 'Completed', @PaymentDescription, @CustomerName
+               FROM PAYMENT WITH (UPDLOCK, HOLDLOCK)">
         <InsertParameters>
             <asp:ControlParameter ControlID="txtBookingID" Name="BookingID" PropertyName="Text" Type="Int32" />
             <asp:ControlParameter ControlID="ddlPaymentType" Name="PaymentType" PropertyName="SelectedValue" Type="String" />
