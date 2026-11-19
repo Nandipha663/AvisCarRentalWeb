@@ -166,6 +166,37 @@ namespace AvisSystem.AvisPages
                 return;
             }
 
+
+            // 5. Check if this inspection type already exists for this rental
+            string cs = ConfigurationManager.ConnectionStrings["GroupPmb3ConnectionString"].ConnectionString;
+
+            string checkSql = @"
+    SELECT COUNT(*)
+    FROM [VEHICLE INSPECTION]
+    WHERE RentalID = @RentalID
+      AND InspectionType = @InspectionType";
+
+            using (SqlConnection con = new SqlConnection(cs))
+            using (SqlCommand cmd = new SqlCommand(checkSql, con))
+            {
+                cmd.Parameters.AddWithValue("@RentalID", TxtRentalID.Text);
+                cmd.Parameters.AddWithValue("@InspectionType", DDLInspectionType.SelectedValue);
+
+                con.Open();
+
+                int existingInspection = (int)cmd.ExecuteScalar();
+
+                if (existingInspection > 0)
+                {
+                    Response.Write("<script>alert('A " +
+                        DDLInspectionType.SelectedValue +
+                        " inspection has already been recorded for this rental.');</script>");
+
+                    return;
+                }
+            }
+
+
             // 5. All checks passed
             SqlDSAddInspection.Insert();
             LblMessage.Visible = true;
