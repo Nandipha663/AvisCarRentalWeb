@@ -44,6 +44,12 @@ namespace AvisSystem.Account
                 return;
             }
 
+            if (digitCount < 10)
+            {
+                ShowError("Contact number cannot be less than 10 digits.");
+                return;
+            }
+
             // Get Identity managers
             var manager = Context.GetOwinContext()
                 .GetUserManager<ApplicationUserManager>();
