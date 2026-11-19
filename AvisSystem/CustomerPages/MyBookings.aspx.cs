@@ -76,10 +76,33 @@ namespace AvisSystem.CustomerPages
             LblPBranch.Text = GVMyBookings.SelectedRow.Cells[4].Text;
             LblDBranch.Text = GVMyBookings.SelectedRow.Cells[5].Text;
             LblTotAmt.Text = GVMyBookings.SelectedRow.Cells[8].Text;
+
+            BtnPay.Visible = GVMyBookings.SelectedRow.Cells[9].Text.Trim() == "Pending";
         }
 
         protected void btnCancelBooking_Click(object sender, EventArgs e)
         {
+            if (GVMyBookings.SelectedIndex == -1)
+                return;
+
+            // Get the selected booking's status
+            string status = GVMyBookings.SelectedRow.Cells[9].Text.Trim();
+
+            // Prevent cancellation of these bookings
+            if (status == "Completed" || status == "Checked Out" || status == "Cancelled")
+            {
+                string message = "You cannot cancel a booking with the status: " + status;
+
+                ClientScript.RegisterStartupScript(
+                    this.GetType(),
+                    "CancelError",
+                    "alert('" + message + "');",
+                    true);
+
+                return;
+            }
+
+
             int bookingID = Convert.ToInt32(
     GVMyBookings.SelectedDataKey.Values["BookingID"]);
 
@@ -94,12 +117,43 @@ namespace AvisSystem.CustomerPages
 
             SqlDSCancelBooking.Update();
 
-            GVMyBookings.DataBind();
+            // Reload the GridView with updated database records
+            LoadBookings();
+
+            // Clear the selected row
+            GVMyBookings.SelectedIndex = -1;
+
+            // Update the summary
+            LblStatus.Text = "Cancelled";
+            BtnPay.Visible = false;
+
+            // Display success message
+            ClientScript.RegisterStartupScript(
+    this.GetType(),
+    "CancelSuccess",
+    "alert('Booking Cancelled Successfully!');",
+    true);
         }
 
         protected void BtnClear_Click(object sender, EventArgs e)
         {
 
+        }
+
+        protected void BtnPay_Click(object sender, EventArgs e)
+        {
+            if (GVMyBookings.SelectedIndex == -1)
+                return;
+
+            string status = GVMyBookings.SelectedRow.Cells[9].Text.Trim();
+
+            if (status == "Pending")
+            {
+                string bookingID =
+                    GVMyBookings.SelectedDataKey.Values["BookingID"].ToString();
+
+                Response.Redirect("~/CustomerPages/MakePayment.aspx?BookingID=" + bookingID);
+            }
         }
     }
 }

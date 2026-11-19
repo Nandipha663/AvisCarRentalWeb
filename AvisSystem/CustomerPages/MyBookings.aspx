@@ -521,8 +521,19 @@
     ID="SqlDSCancelBooking"
     runat="server"
     ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True"
-    UpdateCommand="CancelBooking"
-    UpdateCommandType="StoredProcedure">
+    UpdateCommand="UPDATE BOOKING
+
+SET Status = 'Cancelled'
+
+WHERE BookingID = @BookingID;
+
+
+UPDATE VEHICLE
+
+SET Status = 'Available'
+
+WHERE VehicleVinNo = @VehicleVinNo;"
+    UpdateCommandType="Text">
 
     <UpdateParameters>
         <asp:Parameter Name="BookingID" Type="Int32" />
@@ -536,6 +547,13 @@
                 ========================================= -->
 
                 <div class="summary-actions">
+
+                    <asp:Button ID="BtnPay"
+    runat="server"
+    Text="Pay"
+    CssClass="clear-btn"
+    Visible="False"
+    OnClick="BtnPay_Click" />
 
                     <asp:Button ID="BtnCancelBooking"
                         runat="server"

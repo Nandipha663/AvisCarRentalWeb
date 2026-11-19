@@ -123,6 +123,15 @@ namespace AvisSystem.CustomerPages
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDSCancelBooking;
 
         /// <summary>
+        /// BtnPay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnPay;
+
+        /// <summary>
         /// BtnCancelBooking control.
         /// </summary>
         /// <remarks>

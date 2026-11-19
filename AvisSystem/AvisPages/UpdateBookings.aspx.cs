@@ -45,12 +45,16 @@ namespace AvisSystem.AvisPages
             // Check whether a booking has been selected.
             if (GVBooking.SelectedDataKey == null)
             {
-                lblCancelMessage.Visible = true;
-                lblCancelMessage.Text = "Please select a booking first.";
-                lblCancelMessage.ForeColor =
-                    System.Drawing.Color.Red;
+                string message = "Please select a booking first";
+
+                ClientScript.RegisterStartupScript(
+                    this.GetType(),
+                    "CancelError",
+                    "alert('" + message + "');",
+                    true);
 
                 return;
+
             }
 
             // Get the selected booking ID.
@@ -64,12 +68,13 @@ namespace AvisSystem.AvisPages
             if (status.Equals("Checked Out",
                 StringComparison.OrdinalIgnoreCase))
             {
-                lblCancelMessage.Visible = true;
-                lblCancelMessage.Text =
-                    "This booking cannot be cancelled because the vehicle has already been checked out.";
+                string message = "The booking cannot be Cancelled.It has already been Checked Out";
 
-                lblCancelMessage.ForeColor =
-                    System.Drawing.Color.Red;
+                ClientScript.RegisterStartupScript(
+                    this.GetType(),
+                    "CancelError",
+                    "alert('" + message + "');",
+                    true);
 
                 return;
             }
@@ -78,12 +83,13 @@ namespace AvisSystem.AvisPages
             if (status.Equals("Completed",
                 StringComparison.OrdinalIgnoreCase))
             {
-                lblCancelMessage.Visible = true;
-                lblCancelMessage.Text =
-                    "This booking cannot be cancelled because it is already completed.";
+                string message = "You cannot cancel a Completed booking";
 
-                lblCancelMessage.ForeColor =
-                    System.Drawing.Color.Red;
+                ClientScript.RegisterStartupScript(
+                    this.GetType(),
+                    "CancelError",
+                    "alert('" + message + "');",
+                    true);
 
                 return;
             }
@@ -92,12 +98,13 @@ namespace AvisSystem.AvisPages
             if (status.Equals("Cancelled",
                 StringComparison.OrdinalIgnoreCase))
             {
-                lblCancelMessage.Visible = true;
-                lblCancelMessage.Text =
-                    "This booking has already been cancelled.";
+                string message = "The booking has already been cancelled";
 
-                lblCancelMessage.ForeColor =
-                    System.Drawing.Color.Red;
+                ClientScript.RegisterStartupScript(
+                    this.GetType(),
+                    "CancelError",
+                    "alert('" + message + "');",
+                    true);
 
                 return;
             }
@@ -111,16 +118,19 @@ namespace AvisSystem.AvisPages
 
             if (rowsAffected > 0)
             {
-                lblCancelMessage.Visible = true;
-                lblCancelMessage.Text =
-                    "Booking cancelled successfully.";
+                // Display success message
+                ClientScript.RegisterStartupScript(
+        this.GetType(),
+        "CancelSuccess",
+        "alert('Booking Cancelled Successfully!');",
+        true);
 
-                lblCancelMessage.ForeColor =
-                    System.Drawing.Color.Green;
+                
 
                 // Refresh the bookings displayed in the GridView.
                 GVBooking.DataBind();
 
+                LblStatus.Text = GVBooking.SelectedRow.Cells[7].Text;
                 // Clear the selection after cancellation.
                 GVBooking.SelectedIndex = -1;
 

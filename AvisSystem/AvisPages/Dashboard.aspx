@@ -296,11 +296,24 @@
                     <i class="fas fa-car"></i>
                 </div>
 
+
+                <asp:SqlDataSource ID="SqlDSAvailableCars"
+    runat="server"
+    ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True"
+    SelectCommand="
+        SELECT COUNT(*) AS AvailableCars
+        FROM VEHICLE
+        WHERE Status = 'Available'">
+</asp:SqlDataSource>
+
                 <div class="dashboard-card-text">
 
                     <h3>Available Cars</h3>
 
-                    <p class="dashboard-number">24</p>
+                    <asp:Label ID="LblAvailableCars"
+    runat="server"
+    CssClass="dashboard-number">
+</asp:Label>
 
                 </div>
 
@@ -316,11 +329,25 @@
                     <i class="fas fa-calendar-check"></i>
                 </div>
 
+
+                <asp:SqlDataSource ID="SqlDSBookingsToday"
+    runat="server"
+    ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True"
+    SelectCommand="
+        SELECT COUNT(*) AS BookingsToday
+        FROM BOOKING
+        WHERE [Booking Date] >= CAST(GETDATE() AS DATE)
+        AND [Booking Date] < DATEADD(DAY, 1, CAST(GETDATE() AS DATE))">
+</asp:SqlDataSource>
+
                 <div class="dashboard-card-text">
 
                     <h3>Bookings Today</h3>
 
-                    <p class="dashboard-number">12</p>
+                    <asp:Label ID="LblBookingsToday"
+    runat="server"
+    CssClass="dashboard-number">
+</asp:Label>
 
                 </div>
 
@@ -336,11 +363,25 @@
                     <i class="fas fa-key"></i>
                 </div>
 
+
+                <asp:SqlDataSource ID="SqlDSActiveRentalsCount"
+    runat="server"
+    DataSourceMode="DataSet"
+    ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True"
+    SelectCommand="
+        SELECT COUNT(*) AS ActiveRentals
+        FROM RENTAL
+        WHERE RentalStatus = 'Active'">
+</asp:SqlDataSource>
+
                 <div class="dashboard-card-text">
 
                     <h3>Active Rentals</h3>
 
-                    <p class="dashboard-number">18</p>
+                    <asp:Label ID="LblActiveRentals"
+    runat="server"
+    CssClass="dashboard-number">
+</asp:Label>
 
                 </div>
 
@@ -356,11 +397,25 @@
                     <i class="fas fa-calendar-day"></i>
                 </div>
 
+                <asp:SqlDataSource ID="SqlDSRentalsDueToday"
+    runat="server"
+    ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True"
+    SelectCommand="
+        SELECT COUNT(*) AS RentalsDueToday
+        FROM RENTAL
+        WHERE ExpectedReturnDate >= CAST(GETDATE() AS DATE)
+        AND ExpectedReturnDate < DATEADD(DAY, 1, CAST(GETDATE() AS DATE))
+        AND RentalStatus = 'Active'">
+</asp:SqlDataSource>
+
                 <div class="dashboard-card-text">
 
                     <h3>Rentals Due Today</h3>
 
-                    <p class="dashboard-number">7</p>
+                    <asp:Label ID="LblRentalsDueToday"
+    runat="server"
+    CssClass="dashboard-number">
+</asp:Label>
 
                 </div>
 
@@ -393,9 +448,12 @@
 
                 <!-- VIEW ALL -->
 
-                <a href="UpdateRentals.aspx" class="view-all-btn">
-                    View All
-                </a>
+               <asp:HyperLink ID="HLViewAll"
+    runat="server"
+    NavigateUrl="~/AvisPages/UpdateRentals.aspx"
+    CssClass="view-all-btn">
+    View All
+</asp:HyperLink>
 
             </div>
 
@@ -409,146 +467,16 @@
 
                 <table class="rental-table">
 
-                    <thead>
-
-                        <tr>
-
-                            <th>RentalID</th>
-
-                            <th>CustomerName</th>
-
-                            <th>StartDate</th>
-
-                            <th>PickUpDate</th>
-
-                            <th>ExpectedReturnDate</th>
-
-                            <th>RentalStatus</th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-
-                        <!-- RENTAL 1 -->
-
-                        <tr>
-
-                            <td>RNT001</td>
-
-                            <td>John Smith</td>
-
-                            <td>01/09/2026</td>
-
-                            <td>01/09/2026</td>
-
-                            <td>02/09/2026</td>
-
-                            <td>
-                                <span class="status-active">
-                                    Active
-                                </span>
-                            </td>
-
-                        </tr>
-
-
-                        <!-- RENTAL 2 -->
-
-                        <tr>
-
-                            <td>RNT002</td>
-
-                            <td>Sarah Williams</td>
-
-                            <td>30/08/2026</td>
-
-                            <td>30/08/2026</td>
-
-                            <td>02/09/2026</td>
-
-                            <td>
-                                <span class="status-active">
-                                    Active
-                                </span>
-                            </td>
-
-                        </tr>
-
-
-                        <!-- RENTAL 3 -->
-
-                        <tr>
-
-                            <td>RNT003</td>
-
-                            <td>David Johnson</td>
-
-                            <td>31/08/2026</td>
-
-                            <td>31/08/2026</td>
-
-                            <td>02/09/2026</td>
-
-                            <td>
-                                <span class="status-active">
-                                    Active
-                                </span>
-                            </td>
-
-                        </tr>
-
-
-                        <!-- RENTAL 4 -->
-
-                        <tr>
-
-                            <td>RNT004</td>
-
-                            <td>Emily Brown</td>
-
-                            <td>29/08/2026</td>
-
-                            <td>29/08/2026</td>
-
-                            <td>02/09/2026</td>
-
-                            <td>
-                                <span class="status-active">
-                                    Active
-                                </span>
-                            </td>
-
-                        </tr>
-
-
-                        <!-- RENTAL 5 -->
-
-                        <tr>
-
-                            <td>RNT005</td>
-
-                            <td>Michael Adams</td>
-
-                            <td>28/08/2026</td>
-
-                            <td>28/08/2026</td>
-
-                            <td>02/09/2026</td>
-
-                            <td>
-                                <span class="status-active">
-                                    Active
-                                </span>
-                            </td>
-
-                        </tr>
-
-
-                    </tbody>
+                    <asp:SqlDataSource ID="SqlDSActiveRentals"
+    runat="server"
+    ConnectionString="Data Source=146.230.177.46;Initial Catalog=GroupPmb3;User ID=GroupPmb3;Password=tt9d2h;TrustServerCertificate=True"
+    SelectCommand="
+        SELECT *
+        FROM RENTAL
+        WHERE CAST(ExpectedReturnDate AS DATE) = CAST(GETDATE() AS DATE)
+        AND RentalStatus = 'Active'">
+</asp:SqlDataSource>
+                    <asp:GridView ID="GVActiveRentals" runat="server" EmptyDataText="There are no rentals due today." DataSourceID="SqlDSActiveRentals" AllowPaging="True"></asp:GridView>
 
                 </table>
 

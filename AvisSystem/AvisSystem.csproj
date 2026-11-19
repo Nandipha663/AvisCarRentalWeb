@@ -435,6 +435,7 @@
     </Compile>
     <Compile Include="AvisPages\AddVehicleReturn.aspx.cs">
       <DependentUpon>AddVehicleReturn.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="AvisPages\AddVehicleReturn.aspx.designer.cs">
       <DependentUpon>AddVehicleReturn.aspx</DependentUpon>

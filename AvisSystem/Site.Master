@@ -1079,6 +1079,23 @@
 
                                     </li>
 
+                                    <!-- MY BOOKINGS -->
+    <li class="nav-item">
+        <a class="nav-link"
+           runat="server"
+           href="~/CustomerPages/MyBookings.aspx">
+            My Bookings
+        </a>
+    </li>
+
+    <!-- BRANCHES -->
+    <li class="nav-item">
+        <a class="nav-link"
+           runat="server"
+           href="~/CustomerPages/Branches.aspx">
+            Branches
+        </a>
+    </li>
 
                                 </ContentTemplate>
 
