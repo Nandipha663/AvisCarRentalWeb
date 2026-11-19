@@ -63,9 +63,20 @@ namespace AvisSystem.AvisPages
             SqlDSDeleteRental.DeleteParameters["RentalID"].DefaultValue =
                 rentalID.ToString();
 
+
             SqlDSDeleteRental.Delete();
 
             GVRental.DataBind();
+
+            string message = "Rental Deleted Successfully";
+
+            ClientScript.RegisterStartupScript(
+                this.GetType(),
+                "CancelError",
+                "alert('" + message + "');",
+                true);
+
+            return;
         }
     }
 }
